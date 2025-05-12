@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://gorgeous-dance-5030c0a68a.strapiapp.com/api';
+const BASE_URL = 'https://successful-basket-8a975a30ee.strapiapp.com/api';
 
 const apiData = axios.create({
   baseURL: BASE_URL,

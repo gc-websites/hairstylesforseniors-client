@@ -13,7 +13,7 @@ import Disclaimer from '../views/Disclaimer';
 import RenderDescription from '../components/RenderDescription';
 // import { io } from 'socket.io-client';
 
-// const socket = io('https://uplifting-cats-c168e828d2.strapiapp.com');
+// const socket = io('https://successful-basket-8a975a30ee.strapiapp.com');
 
 const Category = () => {
   const [category, setCategory] = useState({});
