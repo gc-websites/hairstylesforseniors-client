@@ -16,16 +16,23 @@ export default {
           DEFAULT: '1.25rem',
           sm: '1.25rem',
           md: '2rem',
-          lg: '5rem',
+          lg: '2.25rem',
+          xxl: '3rem',
         },
       },
       colors: {
-        main: '#1F252E',
-        additionalText: '#2f353d',
+        main: '#4BC8BE',
+        main2: '#28A99E',
+        main3: '#039185',
+        mainText: '#333333',
+        additionalText: '#666666',
+        light: '#F6F6F6',
       },
       fontFamily: {
         playfair: ['Playfair Display', 'serif'],
         inter: ['Inter', 'sans-serif'],
+        merriweather: ['Merriweather', 'serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
       keyframes: {
         myshine: {

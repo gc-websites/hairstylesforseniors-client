@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://uplifting-cats-c168e828d2.strapiapp.com/api';
+const BASE_URL = 'https://gorgeous-dance-5030c0a68a.strapiapp.com/api';
 
 const apiData = axios.create({
   baseURL: BASE_URL,
@@ -16,7 +16,7 @@ export const getCategories = async () => {
 
 export const getPopularPosts = async () => {
   const popularPosts = await apiData.get(
-    '/posts?populate[category][populate]=*&populate[image][populate]=*&filters[isPopular][$eq]=true&pagination[page]=1&pagination[pageSize]=4',
+    '/posts?populate[category][populate]=*&populate[author][populate]=*&populate[image][populate]=*&filters[isPopular][$eq]=true&pagination[page]=1&pagination[pageSize]=3',
   );
   return popularPosts.data;
 };
@@ -30,7 +30,7 @@ export const getPost = async documentId => {
 
 export const getRelatedPosts = async () => {
   const relatedPosts = await apiData.get(
-    '/posts?populate[category][populate]=*&populate[image][populate]=*&filters[isPopular][$eq]=true&pagination[page]=1&pagination[pageSize]=4',
+    '/posts?populate[category][populate]=*&populate[author][populate]=*&populate[image][populate]=*&filters[isPopular][$eq]=true&pagination[page]=1&pagination[pageSize]=4',
   );
   return relatedPosts.data;
 };

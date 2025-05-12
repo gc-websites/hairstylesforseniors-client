@@ -1,6 +1,6 @@
 const HorizontalAdBanner = ({ image, url }) => {
   return (
-    <section className="bg-slate-50 p-4 dark:bg-gray-900">
+    <section className="bg-white p-4 dark:bg-additionalText">
       <div className="container">
         <a href={url} target="_blank" rel="noreferrer">
           <img

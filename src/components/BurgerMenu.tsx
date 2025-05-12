@@ -5,6 +5,7 @@ import { close } from '../utils/Icons';
 import NavBar from './NavBar';
 import Logo from './Logo';
 import Socials from './Socials';
+import ThemeToggle from './ThemeToggle';
 
 interface Category {
   documentId: number | string;
@@ -47,7 +48,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
       onClick={handleBackdropClick}
     >
       <div
-        className={`absolute top-0 left-0 w-[80vw] md:w-[20vw] h-screen bg-[#F0F0F0] dark:bg-main grain-effect container max-w-none flex flex-col gap-y-20 py-10 transition-transform duration-300 overflow-y-auto shadow-2xl ${
+        className={`absolute top-0 left-0 w-[80vw] md:w-[20vw] h-screen bg-[#F0F0F0] dark:bg-mainText grain-effect container max-w-none flex flex-col gap-y-20 py-10 transition-transform duration-300 overflow-y-auto shadow-2xl ${
           isBurgerOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -64,7 +65,8 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
             {close}
           </svg>
         </button>
-        <Logo className="w-fit" />
+        <Logo className="text-3xl w-fit" />
+        <ThemeToggle />
         <NavBar
           className="flex flex-col gap-y-5"
           textClassName="text-xl break-words text-additionalText dark:text-white"

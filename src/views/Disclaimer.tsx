@@ -1,6 +1,6 @@
 const Disclaimer = () => {
   return (
-    <section className="section__padding bg-slate-50 dark:bg-gray-900">
+    <section className="section__padding bg-slate-50 dark:bg-additionalText">
       <div className="container">
         <h4 className="section__title text-base pb-4">Disclaimer</h4>
         <p className="section__description text-sm">

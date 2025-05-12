@@ -47,50 +47,67 @@ const Author = () => {
   return (
     <div>
       <section>
-        <div className="bg-slate-50 section__padding dark:bg-gray-900">
-          <div className="container">
+        <div className="bg-main pt-16 md:pt-36 pb-10">
+          <div className="relative container">
             <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="relative">
+                <p className="section__title pb-8 text-white text-3xl font-normal">
+                  Writer
+                </p>
+                <h4 className="section__title text-white text-4xl md:text-6xl">
+                  {author.name}
+                </h4>
+              </div>
               <img
                 src={author.avatar.url}
                 alt={author.name}
-                className="rounded-full max-w-52 max-h-52 border-[30px] border-white"
+                className="absolute md:top-8 -top-12 right-12 sm:right-0 rounded-full max-w-28 max-h-28 sm:max-w-32 sm:max-h-32 md:max-w-64 md:max-h-64"
               />
-              <div>
-                <h4 className="section__title pb-4">{author.name}</h4>
-                <RenderDescription
-                  description={author.description}
-                  className="section__description"
-                />
-              </div>
             </div>
           </div>
         </div>
+        <div className="container mt-8">
+          <div className="max-w-full md:max-w-[70%]">
+            <RenderDescription
+              description={author.description}
+              className="section__description"
+            />
+          </div>
+        </div>
         <div className="container section__padding">
-          <h4 className="section__title pb-4">Latest from {author.name}:</h4>
-          {posts?.map(({ documentId, image, title, description, category }) => (
-            <Link
-              key={documentId}
-              to={`/post/${documentId}`}
-              className="flex gap-4 items-start p-4 rounded-lg transition duration-300 hover:shadow-lg hover:bg-gray-100 dark:hover:bg-gray-900"
-            >
-              <img
-                src={image.url}
-                alt={title}
-                className="w-32 h-24 object-cover rounded-lg"
-              />
-              <div>
-                <span className="text-green-600 section__title dark:text-green-600 text-sm">
-                  {category.name}
-                </span>
-                <h3 className="section__title text-xl">{title}</h3>
-                <RenderDescription
-                  description={description}
-                  className="section__description text-base mt-1"
-                  truncate={true}
-                />
-              </div>
-            </Link>
-          ))}
+          <h4 className="section__title pb-4 text-2xl md:text-3xl">
+            Latest from {author.name}:
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 h-full">
+            {posts?.map(post => (
+              <Link
+                key={post.documentId}
+                to={`/post/${post.documentId}`}
+                className="group p-4 hover:shadow-lg rounded-lg bg-white dark:bg-additionalText transition duration-300 flex flex-col"
+              >
+                <div className="w-full aspect-[4/3] overflow-hidden rounded-lg">
+                  <img
+                    src={post.image.url}
+                    alt={post.title}
+                    className="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-300"
+                  />
+                </div>
+                <div className="mt-3 flex flex-col gap-4">
+                  <h3 className="section__title text-2xl md:text-3xl text-mainText">
+                    {post.title}
+                  </h3>
+                  <RenderDescription
+                    description={post.description}
+                    className="section__description text-base"
+                    truncate={true}
+                  />
+                  <p className="section__description text-main dark:text-main text-base">
+                    Read more
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
           <Pagination
             currentPage={currentPage}
             totalPages={pageCount}

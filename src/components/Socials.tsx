@@ -20,7 +20,7 @@ const Socials = ({ textClassName, IconsClassName }) => {
               <li key={idx}>
                 <a
                   href={socialsData.links[idx]}
-                  className={`font-inter text-xl break-words flex gap-4 items-center ${textClassName}`}
+                  className={`font-poppins text-xl break-words flex gap-4 items-center ${textClassName}`}
                   target="_blank"
                   rel="noreferrer"
                 >

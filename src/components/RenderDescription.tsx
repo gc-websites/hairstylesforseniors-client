@@ -19,7 +19,7 @@ const RenderDescription = ({
                 href={child.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline text-green-600"
+                className="underline text-main"
               >
                 {child.children.map(linkText => linkText.text)}
               </a>

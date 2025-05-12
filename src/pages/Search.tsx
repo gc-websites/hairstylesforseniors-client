@@ -44,39 +44,43 @@ const Search = ({ categories }) => {
   return (
     <div>
       <section className="container pt-12">
-        <h2 className="section__title mb-6 text-green-600 break-words">
+        <h2 className="section__title mb-6 text-mainText break-words">
           Search results for: "{query}"
         </h2>
         {posts.length > 0 ? (
           <div>
-            <ul className="grid gap-4">
-              {posts.map(
-                ({ documentId, image, title, description, category }) => (
+            <div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 h-full">
+                {posts?.map(post => (
                   <Link
-                    key={documentId}
-                    to={`/post/${documentId}`}
-                    className="flex gap-4 items-start p-4 rounded-lg transition duration-300 hover:shadow-lg hover:bg-gray-100 dark:hover:bg-gray-900 border shadow-sm"
+                    key={post.documentId}
+                    to={`/post/${post.documentId}`}
+                    className="group p-4 hover:shadow-lg rounded-lg bg-white dark:bg-additionalText transition duration-300 flex flex-col"
                   >
-                    <img
-                      src={image.url}
-                      alt={title}
-                      className="w-32 h-24 object-cover rounded-lg"
-                    />
-                    <div>
-                      <span className="text-green-600 section__title dark:text-green-600 text-sm">
-                        {category.name}
-                      </span>
-                      <h3 className="section__title text-xl">{title}</h3>
-                      <RenderDescription
-                        description={description}
-                        className="section__description text-base mt-1"
-                        truncate={true}
+                    <div className="w-full aspect-[4/3] overflow-hidden rounded-lg">
+                      <img
+                        src={post.image.url}
+                        alt={post.title}
+                        className="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-300"
                       />
                     </div>
+                    <div className="mt-3 flex flex-col gap-4">
+                      <h3 className="section__title text-2xl md:text-3xl text-mainText">
+                        {post.title}
+                      </h3>
+                      <RenderDescription
+                        description={post.description}
+                        className="section__description text-base"
+                        truncate={true}
+                      />
+                      <p className="section__description text-main dark:text-main text-base">
+                        Read more
+                      </p>
+                    </div>
                   </Link>
-                ),
-              )}
-            </ul>
+                ))}
+              </div>
+            </div>
             <Pagination
               currentPage={currentPage}
               totalPages={pageCount}

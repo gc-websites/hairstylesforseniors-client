@@ -51,42 +51,46 @@ const Header: FC<HeaderProps> = ({ categories }) => {
   }, [location.pathname, scrollToSearch]);
 
   return (
-    <header className="flex justify-between items-center py-4 w-full container max-w-none gap-x-5 border-b">
-      <button
-        className="flex justify-center items-center"
-        onClick={() => setIsBurgerOpen(true)}
-      >
-        <svg
-          className="h-10 md:h-6 stroke-black dark:stroke-white"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {burger}
-        </svg>
-      </button>
-      <Logo className="lg:h-20 md:h-16 h-14" isLink />
-      <div className="flex items-center gap-4">
-        <ThemeToggle />
-        <a
-          className="justify-center items-center hidden md:flex cursor-pointer"
-          onClick={handleSearchClick}
+    <header className="border-b border-main">
+      <div className="flex justify-between items-center py-4 w-full container gap-x-5">
+        <button
+          className="flex justify-center items-center"
+          onClick={() => setIsBurgerOpen(true)}
         >
           <svg
-            className="h-4 fill-black dark:fill-white"
-            viewBox="0 0 32 32"
+            className="h-10 md:h-6 stroke-main3"
+            viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            {search}
+            {burger}
           </svg>
-        </a>
+        </button>
+        <Logo
+          className="lg:leading-[86px] lg:text-5xl md:text-4xl text-3xl leading-[72px]"
+          isLink
+        />
+        <div className="flex items-center gap-4">
+          <a
+            className="justify-center items-center cursor-pointer"
+            onClick={handleSearchClick}
+          >
+            <svg
+              className="h-4 fill-main3"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {search}
+            </svg>
+          </a>
+        </div>
+        <BurgerMenu
+          categories={categories}
+          isBurgerOpen={isBurgerOpen}
+          setIsBurgerOpen={setIsBurgerOpen}
+        />
       </div>
-      <BurgerMenu
-        categories={categories}
-        isBurgerOpen={isBurgerOpen}
-        setIsBurgerOpen={setIsBurgerOpen}
-      />
     </header>
   );
 };

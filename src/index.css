@@ -16,7 +16,7 @@
 }
 
 body {
-  @apply bg-white text-main dark:bg-main dark:text-white;
+  @apply bg-light text-mainText dark:bg-mainText dark:text-white;
 }
 
 body::-webkit-scrollbar {

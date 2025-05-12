@@ -1,23 +1,27 @@
 import { FC } from 'react';
 
-import logo from '../assets/img/logo.png';
-
 type LogoProps = {
   className?: string;
   isLink?: boolean;
+  spanClassName?: string;
 };
 
-const Logo: FC<LogoProps> = ({ className = '', isLink = false }) => {
-  const logoImage = (
-    <img src={logo} alt="logo" className={`h-20 ${className}`} />
-  );
-
+const Logo: FC<LogoProps> = ({
+  className = '',
+  spanClassName = '',
+  isLink = false,
+}) => {
   return isLink ? (
-    <a href="/" className="inline-block">
-      {logoImage}
+    <a
+      href="/"
+      className={`font-bold font-merriweather text-main ${className}`}
+    >
+      Nice<span className={`text-main3 ${spanClassName}`}>Advice</span>
     </a>
   ) : (
-    logoImage
+    <p className={`font-bold font-merriweather text-main ${className}`}>
+      Nice<span className={`text-main3 ${spanClassName}`}>Advice</span>
+    </p>
   );
 };
 

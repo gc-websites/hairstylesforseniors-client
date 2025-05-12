@@ -3,7 +3,7 @@ import { goals, vision, values } from '../utils/Icons';
 const About = () => {
   return (
     <section className="container section__padding">
-      <h2 className="section__title mb-6 text-center">About Us</h2>
+      <h2 className="section__title mb-6">About Us</h2>
       <p className="section__description mb-4">
         Welcome to our information portal! Our mission is to provide readers
         with the most engaging and up-to-date articles across various topics.
@@ -20,7 +20,7 @@ const About = () => {
       <div className="flex flex-wrap justify-center items-start mt-8">
         <div className="w-full md:w-1/3 p-4">
           <svg
-            className="w-16 h-16 mx-auto mb-4 fill-black dark:fill-white"
+            className="w-16 h-16 mx-auto mb-4 fill-main2"
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ const About = () => {
 
         <div className="w-full md:w-1/3 p-4">
           <svg
-            className="w-16 h-16 mx-auto mb-4 fill-black dark:fill-white"
+            className="w-16 h-16 mx-auto mb-4 fill-main2"
             viewBox="0 0 512 512"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ const About = () => {
 
         <div className="w-full md:w-1/3 p-4">
           <svg
-            className="w-16 h-16 mx-auto mb-4 fill-black dark:fill-white"
+            className="w-16 h-16 mx-auto mb-4 fill-main2"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

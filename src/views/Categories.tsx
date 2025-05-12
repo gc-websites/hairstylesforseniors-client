@@ -14,7 +14,7 @@ interface CategoriesProps {
 const Categories: FC<CategoriesProps> = ({ categories }) => {
   return (
     <section className="container section__padding">
-      <h2 className="section__title mb-6">Categories</h2>
+      <h2 className="section__title mb-6 text-mainText">Categories</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
         {categories?.map(({ name, documentId, image }) => (
           <Link
@@ -31,7 +31,7 @@ const Categories: FC<CategoriesProps> = ({ categories }) => {
               <span className="text-white font-inter text-3xl font-bold">
                 {name}
               </span>
-              <span className="text-white font-inter text-xl font-bold relative inline-block after:absolute after:left-0 after:bottom-0 after:w-2/3 after:h-[2px] after:bg-white after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-hover:after:origin-bottom-left">
+              <span className="text-white font-inter text-xl font-bold relative inline-block after:absolute after:left-0 after:bottom-0 after:w-2/3 after:h-[2px] after:bg-main after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-hover:after:origin-bottom-left">
                 Explore articles →
               </span>
             </div>

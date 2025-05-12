@@ -25,7 +25,7 @@ const NavBar: FC<NavBarProps> = ({
           <li key={documentId}>
             <a
               href={`/category/${documentId}`}
-              className={`font-inter md:text-base lg:text-lg text-sm ${textClassName}`}
+              className={`font-poppins md:text-base lg:text-lg text-sm ${textClassName}`}
               onClick={() => {
                 if (setIsBurgerOpen) {
                   setIsBurgerOpen(false);
