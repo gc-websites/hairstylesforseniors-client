@@ -1,11 +1,22 @@
 import { useState } from 'react';
+import { signUpForNewsletter } from '../services/postsAPI';
 
 const Newsletter = () => {
   const [query, setQuery] = useState('');
+  const [status, setStatus] = useState(null);
 
-  const handleSubmit = () => {
-    if (query.length >= 3) {
-      return;
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    if (query.length < 3) return;
+
+    try {
+      await signUpForNewsletter(query);
+      setStatus('success');
+      setQuery('');
+    } catch (error) {
+      console.error('Newsletter sign-up failed:', error);
+      setStatus('error');
     }
   };
 
@@ -26,7 +37,10 @@ const Newsletter = () => {
           <input
             type="email"
             value={query}
-            onChange={e => setQuery(e.target.value)}
+            onChange={e => {
+              setQuery(e.target.value);
+              setStatus(null);
+            }}
             placeholder="Enter email here"
             className="section__description text-base flex-grow px-4 py-4 text-gray-800 focus:outline-none bg-white dark:bg-additionalText"
           />
@@ -40,6 +54,16 @@ const Newsletter = () => {
             ➔
           </button>
         </form>
+        {status === 'success' && (
+          <p className="section__description text-base text-white mt-4">
+            Thank you for subscribing!
+          </p>
+        )}
+        {status === 'error' && (
+          <p className="section__description text-base text-red-300 dark:text-red-300 mt-4">
+            Something went wrong. Try again.
+          </p>
+        )}
       </div>
     </section>
   );
