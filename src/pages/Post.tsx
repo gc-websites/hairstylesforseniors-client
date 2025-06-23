@@ -13,7 +13,7 @@ import AdList from '../components/AdList';
 import InfinitePost from '../components/InfinitePost';
 import { io } from 'socket.io-client';
 
-const socket = io('https://successful-basket-8a975a30ee.strapiapp.com');
+const socket = io('https://vivid-triumph-4386b82e17.strapiapp.com');
 
 const Post = () => {
   const [post, setPost] = useState({});

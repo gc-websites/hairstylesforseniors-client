@@ -14,6 +14,7 @@ const Search = lazy(() => import('./pages/Search'));
 const Author = lazy(() => import('./pages/Author'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/Terms'));
+const Generation = lazy(() => import('./pages/Generation'));
 
 const App = () => {
   const [categories, setCategories] = useState([]);
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="/author/:authorId" element={<Author />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/generation" element={<Generation />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </Layout>

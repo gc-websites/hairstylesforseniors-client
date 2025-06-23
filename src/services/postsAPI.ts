@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://successful-basket-8a975a30ee.strapiapp.com/api';
+const BASE_URL = 'https://vivid-triumph-4386b82e17.strapiapp.com/api';
 // const BASE_URL = 'http://localhost:1337/api';
 
 const apiData = axios.create({

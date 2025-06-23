@@ -11,9 +11,9 @@ import Page404 from './Page404';
 import Pagination from '../components/Pagination';
 import Disclaimer from '../views/Disclaimer';
 import RenderDescription from '../components/RenderDescription';
-// import { io } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
-// const socket = io('https://successful-basket-8a975a30ee.strapiapp.com');
+const socket = io('https://vivid-triumph-4386b82e17.strapiapp.com');
 
 const Category = () => {
   const [category, setCategory] = useState({});
@@ -26,24 +26,24 @@ const Category = () => {
   const categoryId = pathname.split('/').pop();
   const pageSize = 10;
 
-  // const [activeUsers, setActiveUsers] = useState({});
+  const [activeUsers, setActiveUsers] = useState({});
 
-  // useEffect(() => {
-  //   socket.on('updateAllActiveUsers', data => {
-  //     setActiveUsers(data);
-  //   });
-  //   socket.on('updateActiveUsers', ({ postId, count }) => {
-  //     setActiveUsers(prev => ({
-  //       ...prev,
-  //       [postId]: count,
-  //     }));
-  //   });
+  useEffect(() => {
+    socket.on('updateAllActiveUsers', data => {
+      setActiveUsers(data);
+    });
+    socket.on('updateActiveUsers', ({ postId, count }) => {
+      setActiveUsers(prev => ({
+        ...prev,
+        [postId]: count,
+      }));
+    });
 
-  //   return () => {
-  //     socket.off('updateAllActiveUsers');
-  //     socket.off('updateActiveUsers');
-  //   };
-  // }, [categoryId]);
+    return () => {
+      socket.off('updateAllActiveUsers');
+      socket.off('updateActiveUsers');
+    };
+  }, [categoryId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +78,7 @@ const Category = () => {
     return <Page404 />;
   }
 
-  // const getReadingCount = postId => activeUsers[postId] || 0;
+  const getReadingCount = postId => activeUsers[postId] || 0;
 
   return (
     <div>
