@@ -8,6 +8,11 @@ const apiData = axios.create({
   withCredentials: true,
 });
 
+export const getProtectedPassword = async () => {
+  const res = await apiData.get('/protected-page');
+  return res.data?.data?.password || null;
+};
+
 export const getCategories = async () => {
   const categories = await apiData.get(
     '/categories?populate[image][populate]=*',

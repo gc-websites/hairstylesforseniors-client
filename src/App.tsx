@@ -6,6 +6,7 @@ import Layout from './layout/Layout';
 import Loader from './components/Loader';
 import Page404 from './pages/Page404';
 import ScrollToTop from './utils/ScrollToTop';
+import PrivateRouteWithPassword from './components/PrivateRouteWithPassword';
 
 const Home = lazy(() => import('./pages/Home'));
 const Post = lazy(() => import('./pages/Post'));
@@ -56,7 +57,14 @@ const App = () => {
           <Route path="/author/:authorId" element={<Author />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
-          <Route path="/generation" element={<Generation />} />
+          <Route
+            path="/generation"
+            element={
+              <PrivateRouteWithPassword>
+                <Generation />
+              </PrivateRouteWithPassword>
+            }
+          />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </Layout>
