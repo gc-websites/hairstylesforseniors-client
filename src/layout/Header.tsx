@@ -71,7 +71,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
           isLink
         />
         <div className="flex items-center gap-4">
-          <a
+          <button
             className="justify-center items-center cursor-pointer"
             onClick={handleSearchClick}
           >
@@ -83,7 +83,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
             >
               {search}
             </svg>
-          </a>
+          </button>
         </div>
         <BurgerMenu
           categories={categories}
