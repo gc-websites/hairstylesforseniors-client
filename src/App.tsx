@@ -16,6 +16,8 @@ const Author = lazy(() => import('./pages/Author'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Generation = lazy(() => import('./pages/Generation'));
+const Product = lazy(() => import('./pages/Product'));
+const ProductGeneration = lazy(() => import('./pages/ProductGeneration'));
 
 const App = () => {
   const [categories, setCategories] = useState([]);
@@ -66,6 +68,15 @@ const App = () => {
             }
           />
           <Route path="*" element={<Page404 />} />
+          <Route path="/product/:productId" element={<Product />} />
+          <Route
+            path="/generation/product"
+            element={
+              <PrivateRouteWithPassword>
+                <ProductGeneration />
+              </PrivateRouteWithPassword>
+            }
+          />
         </Routes>
       </Layout>
     </Suspense>
