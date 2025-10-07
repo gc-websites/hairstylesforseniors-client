@@ -49,6 +49,10 @@ const Product = () => {
       >
         VIEW ON AMAZON
       </button>
+      <p className="border p-2 md:w-[40vw]">
+        Editorial Note: We independently review all products. If you make a
+        purchase through our links, we may receive a commission
+      </p>
     </div>
   );
 };
