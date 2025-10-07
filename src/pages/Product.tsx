@@ -1,31 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Product = () => {
+  const url = window.location.href;
+  const id = url.split('/').pop();
+  const [productData, setProductData] = useState({});
+
+  useEffect(() => {
+    try {
+      fetch(`http://localhost:4000/get-product/${id}`, {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'GET',
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Failed to fetch products');
+          }
+          return res.json();
+        })
+        .then(data => {
+          setProductData(data.data);
+        });
+    } catch (err) {
+      console.error('❌ Error:', err);
+    }
+  }, []);
+
   return (
     <div className="flex flex-col justify-center items-center p-5">
       <img
-        src="https://homeaddict.ca/wp-content/uploads/2025/09/ai-generated-1758549078-1.png"
-        className="w-[90vw] md:w-[50vw] rounded-xl cursor-pointer"
+        src={productData?.image?.url}
+        onClick={() => window.open(productData?.link, '_blank')}
+        className="w-[90vw] md:w-[40vw] rounded-xl cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl"
       />
-      <h1 className="text-2xl md:text-3xl text-center font-bold">
-        Unbeatable Deals on Women's Puffer Jackets!
+      <h1 className="text-2xl md:text-3xl text-center font-bold w-[90%]">
+        {productData?.title}
       </h1>
-      <h2 className="text-2xl text-center font-bold text-red-400">
+      <h2 className="text-xl text-center font-bold text-red-400">
         Up to 50% OFF
       </h2>
-      <p className="md:text-xl p-1">
-        🧥 Stay Warm + Stylish: Puffer jackets with ultimate comfort.
-      </p>
-      <p className="md:text-xl p-1">
-        💰 Hot Deals: Save big — but only for a limited time!
-      </p>
-      <p className="md:text-xl p-1">
-        🌆 Versatile Wear: Perfect for chilly walks or city nights 🙂
-      </p>
-      <p className="md:text-xl p-1">
-        👉 Grab your puffer jacket today — comfort, style & savings in one!
-      </p>
-      <button className="w-[90vw] md:w-[50vw] p-5 m-5 rounded bg-[rgb(3,145,133)] text-2xl font-bold">
+      <p className="w-[90%] md:w-[40%]">{productData?.descriptionfield1}</p>
+      <p className="w-[90%] md:w-[40%]">{productData?.descriptionfield2}</p>
+      <p className="w-[90%] md:w-[40%]">{productData?.descriptionfield3}</p>
+      <p className="w-[90%] md:w-[40%]">{productData?.descriptionfield4}</p>
+      <button
+        className="w-[90vw] md:w-[40vw] p-5 m-5 rounded bg-[rgb(3,145,133)] text-2xl font-bold relative bg-[#eaa31e] border border-black rounded-lg py-[15px] px-[20px] mb-[10px] flex justify-center items-center cursor-pointer transition-colors duration-300 font-bold overflow-hidden text-[17px] hover:bg-[#c47f00]
+          before:content-[''] before:absolute before:top-[-150%] before:left-[-150%] before:w-full before:h-[50%] before:bg-[rgba(255,255,255,0.3)] before:-rotate-45 before:animate-myshine font-inter"
+        onClick={() => window.open(productData?.link, '_blank')}
+      >
         VIEW ON AMAZON
       </button>
     </div>

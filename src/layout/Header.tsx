@@ -52,7 +52,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
 
   return (
     <header className="border-b border-main">
-      <div className="flex justify-between items-center py-4 w-full container gap-x-5">
+      <div className="flex justify-between items-center w-full container gap-x-5">
         <button
           className="flex justify-center items-center"
           onClick={() => setIsBurgerOpen(true)}

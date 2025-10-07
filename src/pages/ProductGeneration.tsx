@@ -3,16 +3,26 @@ import React, { useState } from 'react';
 const ProductGeneration = () => {
   const [prompt, setPrompt] = useState('');
   const [link, setLink] = useState('');
+  const [postId, setPostId] = useState('');
+  const [status, setStatus] = useState('');
 
   const handleChangePrompt = value => setPrompt(value);
   const handleChangeLink = value => setLink(value);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    setPostId('');
+    setStatus('Creating link...');
+    const res = await fetch('http://localhost:4000/generate-product', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: prompt, link: link }),
+    });
+    const data = await res.json();
+    setPostId(data.id);
+    setStatus('Link created successfully.');
     setLink('');
     setPrompt('');
-    console.log(prompt);
-    console.log(link);
   };
 
   return (
@@ -44,6 +54,8 @@ const ProductGeneration = () => {
           GENERATE
         </button>
       </form>
+      {status && <p>{status}</p>}
+      {postId && <p>https://nice-advice.info/product/{postId}</p>}
     </div>
   );
 };
