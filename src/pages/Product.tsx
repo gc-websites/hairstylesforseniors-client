@@ -43,6 +43,7 @@ const Product = () => {
       <p className="w-[90%] md:w-[40%]">{productData?.descriptionfield3}</p>
       <p className="w-[90%] md:w-[40%]">{productData?.descriptionfield4}</p>
       <button
+        id="cta-btn"
         className="w-[90vw] md:w-[40vw] p-5 m-5 rounded bg-[rgb(3,145,133)] text-2xl font-bold relative bg-[#eaa31e] border border-black rounded-lg py-[15px] px-[20px] mb-[10px] flex justify-center items-center cursor-pointer transition-colors duration-300 font-bold overflow-hidden text-[17px] hover:bg-[#c47f00]
           before:content-[''] before:absolute before:top-[-150%] before:left-[-150%] before:w-full before:h-[50%] before:bg-[rgba(255,255,255,0.3)] before:-rotate-45 before:animate-myshine font-inter"
         onClick={() => window.open(productData?.link, '_blank')}
