@@ -28,6 +28,7 @@ const Product = () => {
   return (
     <div className="flex flex-col justify-center items-center p-5">
       <img
+        id="cta-image"
         src={productData?.image?.url}
         onClick={() => window.open(productData?.link, '_blank')}
         className="w-[90vw] md:w-[40vw] rounded-xl cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:shadow-xl"
