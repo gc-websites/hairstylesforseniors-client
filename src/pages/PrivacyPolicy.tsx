@@ -129,6 +129,13 @@ const PrivacyPolicy = () => {
         Privacy Policy will constitute your acknowledgment and acceptance of any
         and all changes.
       </p>
+      <h3 className="section__title">Amazon user agreement</h3>
+      <p className="section__description">
+        Nice-advice.info is a participant in the Amazon Services LLC Associates
+        Program, an affiliate advertising program designed to provide a means
+        for sites to earn advertising fees by advertising and linking to
+        Amazon.com.
+      </p>
     </div>
   );
 };
