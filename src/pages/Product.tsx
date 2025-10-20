@@ -7,7 +7,7 @@ const Product = () => {
 
   useEffect(() => {
     try {
-      fetch(`https://dev.nice-advice.info/get-product/${id}`, {
+      fetch(`http://localhost:4000/get-product/${id}`, {
         headers: { 'Content-Type': 'application/json' },
         method: 'GET',
       })
