@@ -32,7 +32,7 @@ const Product = () => {
   useEffect(() => {
     if (fbclid) {
       try {
-        fetch(`http://localhost:4000/get-product/ads/${id}`, {
+        fetch(`https://dev.nice-advice.info/get-product/ads/${id}`, {
           headers: { 'Content-Type': 'application/json' },
           method: 'POST',
           body: JSON.stringify({ fbclid: fbclid }),
