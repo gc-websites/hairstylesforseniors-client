@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Logo from '../components/Logo';
 import Socials from '../components/Socials';
 import NavBar from '../components/NavBar';
 import { Link } from 'react-router-dom';
+import EmailForm from '../components/EmailForm';
 
 interface Category {
   documentId: number | string;
@@ -14,6 +15,11 @@ interface FooterProps {
 }
 
 const Footer: FC<FooterProps> = ({ categories }) => {
+  const [openForm, setOpenForm] = useState(false);
+
+  const handleFormOpen = () => setOpenForm(true);
+  const handleFormClose = () => setOpenForm(false);
+
   return (
     <footer className="bg-main2">
       <div className="container pt-14 flex flex-col gap-16 text-white">
@@ -50,6 +56,9 @@ const Footer: FC<FooterProps> = ({ categories }) => {
               >
                 Terms
               </Link>
+              <button className="border rounded p-2" onClick={handleFormOpen}>
+                Contact us
+              </button>
             </div>
           </div>
           <div className="flex flex-col gap-8">
@@ -69,6 +78,7 @@ const Footer: FC<FooterProps> = ({ categories }) => {
           </p>
         </div>
       </div>
+      {openForm && <EmailForm handleFormClose={handleFormClose} />}
     </footer>
   );
 };

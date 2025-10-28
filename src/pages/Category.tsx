@@ -58,7 +58,7 @@ const Category = () => {
         const related = await getRelatedPosts();
         setCategory(category.data);
         setRelatedPosts(related.data);
-        setPosts(posts.data);
+        setPosts(posts.data.reverse());
         setPageCount(posts.meta.pagination.pageCount);
         window.scrollTo(0, 0);
       } catch (error) {
