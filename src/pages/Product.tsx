@@ -56,6 +56,9 @@ const Product = () => {
     if (productData && clickId) {
       setUrlWithSubtag(productData?.link + `&subtag=${clickId}`);
       console.log(urlWithSubtag);
+    } else {
+      setUrlWithSubtag(productData?.link);
+      console.log(urlWithSubtag);
     }
   }, [clickId, productData]);
 
