@@ -143,7 +143,7 @@ const Post = () => {
               truncate={false}
             />
 
-            <AdList ads={post.ads} />
+            {/* <AdList ads={post.ads} /> */}
 
             {post.paragraphs.map(
               ({ id, subtitle, description, image, ads }) => (
@@ -156,7 +156,7 @@ const Post = () => {
                     className="section__description text-base"
                     truncate={false}
                   />
-                  <AdList ads={ads} />
+                  {/* <AdList ads={ads} /> */}
                   <img
                     src={image.url}
                     alt={subtitle}
@@ -169,7 +169,7 @@ const Post = () => {
         </div>
 
         <div className="flex flex-col gap-6 h-full">
-          <div className="bg-white dark:bg-additionalText p-4 rounded-lg">
+          {/* <div className="bg-white dark:bg-additionalText p-4 rounded-lg">
             <h3 className="section__title text-xl font-bold mb-4">
               Advertisements
             </h3>
@@ -180,7 +180,7 @@ const Post = () => {
                 className="w-full border-gray-400 border-[1px] rounded"
               />
             </a>
-          </div>
+          </div> */}
 
           {relatedPosts.slice(0, 4).map(post => (
             <Link

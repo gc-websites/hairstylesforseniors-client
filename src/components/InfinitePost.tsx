@@ -127,7 +127,7 @@ const InfinitePost = ({ postIds, getReadingCount }) => {
                   truncate={false}
                 />
 
-                <AdList ads={post.ads} />
+                {/* <AdList ads={post.ads} /> */}
 
                 {post.paragraphs.map(
                   ({ id, subtitle, description, image, ads }) => (
@@ -140,7 +140,7 @@ const InfinitePost = ({ postIds, getReadingCount }) => {
                         className="section__description text-base"
                         truncate={false}
                       />
-                      <AdList ads={ads} />
+                      {/* <AdList ads={ads} /> */}
                       <img
                         src={image.url}
                         alt={subtitle}
