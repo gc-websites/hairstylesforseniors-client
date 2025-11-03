@@ -90,12 +90,12 @@ const Post = () => {
 
   return (
     <div className="flex flex-col gap-8">
-      <HorizontalAdBanner
+      {/* <HorizontalAdBanner
         image={post.firstAdBanner.image.url}
         url={post.firstAdBanner.url}
-      />
+      /> */}
 
-      <section className="container grid md:grid-cols-[70%_30%] gap-6">
+      <section className="container grid md:grid-cols-[70%_30%] gap-6 py-10">
         <div className="group p-4 rounded-lg h-full bg-white dark:bg-additionalText flex flex-col">
           <div className="flex items-center py-4 flex-wrap gap-4">
             <Link
