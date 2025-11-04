@@ -65,7 +65,7 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
             {close}
           </svg>
         </button>
-        <Logo className="text-3xl w-fit" />
+        <Logo className="text-xl w-fit" />
         <ThemeToggle />
         <NavBar
           className="flex flex-col gap-y-5"

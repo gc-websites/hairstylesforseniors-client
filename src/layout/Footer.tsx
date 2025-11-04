@@ -74,7 +74,7 @@ const Footer: FC<FooterProps> = ({ categories }) => {
         <div className="flex flex-col">
           <hr className="w-full border-t-2 border-white m-0 opacity-50" />
           <p className="section__description text-skin text-white py-12 font-light">
-            @2025 Nice Advice. All rights reserved.
+            @2025 HairStylesForSeniors. All rights reserved.
           </p>
         </div>
       </div>

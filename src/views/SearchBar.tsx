@@ -21,7 +21,9 @@ const SearchBar = () => {
   return (
     <section className="bg-main2" id="search">
       <div className="container section__padding flex flex-col gap-10">
-        <h2 className="section__title text-white">Search on Nice Advice</h2>
+        <h2 className="section__title text-white">
+          Search on HairStylesForSeniors
+        </h2>
         <div className="relative w-full">
           <svg
             className="absolute left-3 top-1/2 -translate-y-1/2 fill-white w-5 h-5 pointer-events-none"

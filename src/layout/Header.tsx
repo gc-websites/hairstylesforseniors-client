@@ -67,7 +67,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
           </svg>
         </button>
         <Logo
-          className="lg:leading-[86px] lg:text-5xl md:text-4xl text-3xl leading-[72px]"
+          className="lg:leading-[86px] lg:text-4xl md:text-3xl text-xl leading-[72px]"
           isLink
         />
         <div className="flex items-center gap-4">

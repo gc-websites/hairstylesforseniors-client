@@ -15,35 +15,35 @@ export const getProtectedPassword = async () => {
 
 export const getCategories = async () => {
   const categories = await apiData.get(
-    '/categories?populate[image][populate]=*',
+    '/category3s?populate[image][populate]=*',
   );
   return categories.data;
 };
 
 export const getPopularPosts = async () => {
   const popularPosts = await apiData.get(
-    '/posts?populate[category][populate]=*&populate[author][populate]=*&populate[image][populate]=*&filters[isPopular][$eq]=true&pagination[page]=1&pagination[pageSize]=3',
+    '/post3s?populate[category_3][populate]=*&populate[author_3][populate]=*&populate[image][populate]=*&filters[isPopular][$eq]=true&pagination[page]=1&pagination[pageSize]=3',
   );
   return popularPosts.data;
 };
 
 export const getPost = async documentId => {
   const post = await apiData.get(
-    `/posts/${documentId}?populate[paragraphs][populate]=*&populate[category][populate]=*&populate[image][populate]=*&populate[ads][populate]=*&populate[firstAdBanner][populate]=*&populate[secondAdBanner][populate]=*&populate[author][populate]=*`,
+    `/post3s/${documentId}?populate[paragraphs][populate]=*&populate[category_3][populate]=*&populate[image][populate]=*&populate[ads][populate]=*&populate[firstAdBanner][populate]=*&populate[secondAdBanner][populate]=*&populate[author_3][populate]=*`,
   );
   return post.data;
 };
 
 export const getRelatedPosts = async () => {
   const relatedPosts = await apiData.get(
-    '/posts?populate[category][populate]=*&populate[author][populate]=*&populate[image][populate]=*&filters[isPopular][$eq]=true&pagination[page]=1&pagination[pageSize]=4',
+    '/post3s?populate[category_3][populate]=*&populate[author_3][populate]=*&populate[image][populate]=*&filters[isPopular][$eq]=true&pagination[page]=1&pagination[pageSize]=4',
   );
   return relatedPosts.data;
 };
 
 export const getCategory = async documentId => {
   const category = await apiData.get(
-    `/categories/${documentId}?populate[image][populate]=*`,
+    `/category3s/${documentId}?populate[image][populate]=*`,
   );
   return category.data;
 };
@@ -54,14 +54,14 @@ export const getPostsByCategory = async (
   pageSize = 10,
 ) => {
   const posts = await apiData.get(
-    `/posts?filters[category][documentId][$eq]=${categoryDocumentId}&sort[0]=createdAt:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`,
+    `/post3s?filters[category_3][documentId][$eq]=${categoryDocumentId}&sort[0]=createdAt:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`,
   );
   return posts.data;
 };
 
 export const getAuthor = async authorDocumentId => {
   const author = await apiData.get(
-    `/authors/${authorDocumentId}?populate[avatar][populate]=*`,
+    `/author3s/${authorDocumentId}?populate[avatar][populate]=*`,
   );
   return author.data;
 };
@@ -72,21 +72,21 @@ export const getPostsByAuthor = async (
   pageSize = 10,
 ) => {
   const posts = await apiData.get(
-    `/posts?filters[author][documentId][$eq]=${authorDocumentId}&pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`,
+    `/post3s?filters[author_3][documentId][$eq]=${authorDocumentId}&pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`,
   );
   return posts.data;
 };
 
 export const getSearchedPosts = async (query, page = 1, pageSize = 10) => {
   const posts = await apiData.get(
-    `/posts?filters[title][$containsi]=${query}&pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`,
+    `/post3s?filters[title][$containsi]=${query}&pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`,
   );
   return posts.data;
 };
 
 export const getNewPosts = async (page = 1, pageSize = 10) => {
   const posts = await apiData.get(
-    `/posts?pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`,
+    `/post3s?pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`,
   );
   return posts.data;
 };
