@@ -83,16 +83,16 @@ const InfinitePost = ({ postIds, getReadingCount }) => {
             <div className="group p-4 rounded-lg h-full bg-white dark:bg-additionalText flex flex-col">
               <div className="flex items-center py-4 flex-wrap gap-4">
                 <Link
-                  to={`/author/${post.author.documentId}`}
+                  to={`/author/${post.author_3.documentId}`}
                   className="flex items-center flex-wrap gap-4"
                 >
                   <img
-                    src={post.author.avatar.url}
-                    alt={post.author.name}
+                    src={post.author_3.avatar.url}
+                    alt={post.author_3.name}
                     className="rounded-full w-12 h-12"
                   />
                   <h5 className="section__title underline hover:text-main transition text-base font-bold">
-                    {post.author.name}
+                    {post.author_3.name}
                   </h5>
                 </Link>
                 <img src={dot} alt="dot" className="w-2 h-2" />
@@ -109,7 +109,7 @@ const InfinitePost = ({ postIds, getReadingCount }) => {
                 {post.title}
               </h2>
               <span className="section__title block text-2xl text-main dark:text-main mb-6">
-                {post.category.name}
+                {post.category_3.name}
               </span>
 
               <div className="w-full aspect-[4/3] overflow-hidden rounded-lg">
@@ -178,12 +178,12 @@ const InfinitePost = ({ postIds, getReadingCount }) => {
                 >
                   <div className="flex items-center pb-2 flex-wrap gap-3">
                     <img
-                      src={post.author.avatar.url}
-                      alt={post.author.name}
+                      src={post.author_3.avatar.url}
+                      alt={post.author_3.name}
                       className="rounded-full w-9 h-9"
                     />
                     <h5 className="section__title text-sm font-bold">
-                      {post.author.name}
+                      {post.author_3.name}
                     </h5>
                     <img src={dot} alt="dot" className="w-2 h-2" />
                     <p className="section__description text-additionalText text-xs">
