@@ -45,13 +45,13 @@ const Hero = () => {
           >
             <div className="flex items-center py-4 flex-wrap gap-4">
               <img
-                src={popularPosts[2].author_3.avatar.url}
-                alt={popularPosts[2].author_3.name}
+                src={popularPosts[0].author_3.avatar.url}
+                alt={popularPosts[0].author_3.name}
                 className="rounded-full w-12 h-12"
               />
               <h5 className="section__title text-base font-bold">
                 <p className="text-mainText dark:text-white">
-                  {popularPosts[2].author_3.name}
+                  {popularPosts[0].author_3.name}
                 </p>
               </h5>
               <img src={dot} alt="dot" className="w-2 h-2" />

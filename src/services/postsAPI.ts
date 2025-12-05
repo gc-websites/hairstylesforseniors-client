@@ -21,10 +21,11 @@ export const getCategories = async () => {
 };
 
 export const getPopularPosts = async () => {
-  const popularPosts = await apiData.get(
-    '/post3s?populate[category_3][populate]=*&populate[author_3][populate]=*&populate[image][populate]=*&filters[isPopular][$eq]=true&pagination[page]=1&pagination[pageSize]=3',
+  const res = await apiData.get(
+    '/post3s?populate[category_3][populate]=*&populate[author_3][populate]=*&populate[image][populate]=*&sort=createdAt:desc&pagination[page]=1&pagination[pageSize]=5',
   );
-  return popularPosts.data;
+
+  return res.data; // возвращаем объект целиком
 };
 
 export const getPost = async documentId => {
