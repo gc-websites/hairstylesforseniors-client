@@ -25,6 +25,26 @@ const App = () => {
   const location = useLocation();
 
   useEffect(() => {
+    if (window.cookieconsent) {
+      window.cookieconsent.initialise({
+        palette: {
+          popup: { background: '#000' },
+          button: { background: '#f1d600', text: '#000' },
+        },
+        theme: 'classic',
+        type: 'opt-in', // opt-in = пользователь должен согласиться
+        content: {
+          message: 'We use cookies to improve website performance.',
+          allow: 'Allow',
+          deny: 'Deny',
+          link: 'Details',
+          href: '/privacy', // твоя страница политики
+        },
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {

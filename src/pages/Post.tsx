@@ -25,6 +25,72 @@ const Post = () => {
 
   const [activeUsers, setActiveUsers] = useState({});
 
+  const [isEmail, setIsEmail] = useState(false);
+  const [email, setEmail] = useState('');
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [submitEmail, setSubmitEmail] = useState(false);
+  const [hasConsent, setHasConsent] = useState(
+    document.cookie.includes('cookieconsent_status=allow'),
+  );
+
+  const handleEmailModalOpen = () => setEmailModalOpen(true);
+  const handleEmailModalClose = () => setEmailModalOpen(false);
+  const handleEmailChange = value => setEmail(value);
+
+  useEffect(() => {
+    if (!submitEmail) return;
+
+    fetch('https://dev.nice-advice.info/email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        source: 'hairshylesforseniors.com',
+      }),
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Failed to send email');
+        }
+        return res.json();
+      })
+      .then(() => {
+        setIsEmail(true);
+        setEmailModalOpen(false);
+        document.cookie = `email=true; path=/; max-age=31536000; SameSite=Lax`; // закрываем окно
+      })
+      .catch(err => {
+        console.error('Email error:', err);
+      })
+      .finally(() => {
+        setSubmitEmail(false);
+        setEmailModalOpen(false); // сбрасываем флаг
+      });
+  }, [submitEmail]);
+
+  useEffect(() => {
+    // Если cookie уже стоит — активируем сразу
+    if (document.cookie.includes('cookieconsent_status=allow')) {
+      setHasConsent(true);
+      return;
+    }
+
+    // Пуллинг каждые 300 ms — надёжно для мобильных браузеров
+    const interval = setInterval(() => {
+      if (document.cookie.includes('cookieconsent_status=allow')) {
+        setHasConsent(true);
+        clearInterval(interval); // прекращаем наблюдение
+      }
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    setSubmitEmail(true);
+  };
+
   useEffect(() => {
     socket.on('updateAllActiveUsers', data => {
       setActiveUsers(data);
@@ -145,26 +211,105 @@ const Post = () => {
 
             {/* <AdList ads={post.ads} /> */}
 
-            {post.paragraphs.map(
-              ({ id, subtitle, description, image, ads }) => (
-                <div key={id} className="pt-6 flex flex-col gap-4">
-                  <h3 className="section__title text-2xl text-mainText">
-                    {subtitle}
-                  </h3>
-                  <RenderDescription
-                    description={description}
-                    className="section__description text-base"
-                    truncate={false}
-                  />
-                  {/* <AdList ads={ads} /> */}
-                  <img
-                    src={image.url}
-                    alt={subtitle}
-                    className="w-full object-cover rounded"
-                  />
+            <div className="pt-6 flex flex-col gap-4">
+              <h3 className="section__title text-2xl text-mainText">
+                {post.paragraphs[0].subtitle}
+              </h3>
+
+              <RenderDescription
+                description={post.paragraphs[0].description}
+                className="section__description text-base"
+                truncate={false}
+              />
+
+              {/* <AdList ads={post.paragraphs[0].ads} /> */}
+
+              <img
+                src={post.paragraphs[0].image.url}
+                alt={post.paragraphs[0].subtitle}
+                className="w-full object-cover rounded"
+              />
+            </div>
+
+            <div className="pt-6 flex flex-col gap-4">
+              <h3 className="section__title text-2xl text-mainText">
+                {post.paragraphs[1].subtitle}
+              </h3>
+
+              {document.cookie.includes('email=true') && (
+                <RenderDescription
+                  description={post.paragraphs[1].description}
+                  className="section__description text-base"
+                  truncate={false}
+                />
+              )}
+
+              {/* <AdList ads={post.paragraphs[1].ads} /> */}
+
+              {document.cookie.includes('email=true') && (
+                <img
+                  src={post.paragraphs[1].image.url}
+                  alt={post.paragraphs[1].subtitle}
+                  className="w-full object-cover rounded"
+                />
+              )}
+              {!document.cookie.includes('email=true') && (
+                <div>
+                  <p className="text-red-400">
+                    Please allow cookies and share your email to access the full
+                    version of the article.
+                  </p>
+                  {hasConsent && (
+                    <button
+                      onClick={handleEmailModalOpen}
+                      className="block mx-auto mt-5 border rounded px-4 py-2"
+                    >
+                      Share🗝️
+                    </button>
+                  )}
                 </div>
-              ),
-            )}
+              )}
+              <form
+                onSubmit={handleSubmit}
+                className={`fixed inset-0 flex items-center justify-center bg-black/50 z-50 
+                  transition-opacity duration-300
+                  ${emailModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+              >
+                <div
+                  className={`bg-white p-6 rounded-lg shadow-xl w-[90%] max-w-sm 
+                    transition-all duration-300 transform dark:bg-[#2E2E2E]
+                    ${emailModalOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+                >
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center dark:text-white">
+                    Unlock article
+                  </h3>
+
+                  <input
+                    onChange={event => handleEmailChange(event.target.value)}
+                    type="email"
+                    placeholder="Enter your email"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 bg-gray-500 text-white"
+                  />
+
+                  <div className="flex justify-between mt-5">
+                    <button
+                      onClick={handleEmailModalClose}
+                      type="button"
+                      className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
+                    >
+                      Close
+                    </button>
+
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
 
