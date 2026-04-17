@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './QuizWheelCredit.css';
 
-/* ── Obfuscated offer URL (routerix.tech/direct/emp-en/) ── */
+/* ── Obfuscated offer URL ── */
 const _u = ['aHR0cHM6Ly9y', 'b3V0ZXJpeC50', 'ZWNoL2RpcmVj', 'dC9lbXAtZW4v'];
 function buildOfferUrl(): string {
   const base = new URL(atob(_u.join('')));
@@ -10,48 +10,40 @@ function buildOfferUrl(): string {
   return base.toString();
 }
 
-/* ── Wheel segments (index 0 = top-right, clockwise) ── */
+/* ── Segments (index 0 = top-right, clockwise) ── */
 const SEGMENTS = [
-  { label: '$2,000\nLIMIT', icon: '💳', color: '#f43f7f' },
-  { label: 'CREDIT\nAPPROVED', icon: '🤝', color: '#22c55e' },
-  { label: '$200\nLOAN', icon: '💵', color: '#f97316' },
-  { label: '$1,000\nAPPROVED', icon: '🏦', color: '#38bdf8' },
-  { label: '$50\nEXTRA', icon: '🐷', color: '#14b8a6' },
-  { label: '$1,500\nCASH', icon: '💰', color: '#7c3aed' }, // index 5 — winner
+  { label: '$2,000', sub: 'LIMIT', icon: '💳', color: '#f43f7f' },
+  { label: 'CREDIT', sub: 'APPROVED', icon: '🤝', color: '#22c55e' },
+  { label: '$200', sub: 'LOAN', icon: '💵', color: '#f97316' },
+  { label: '$1,000', sub: 'APPROVED', icon: '🏦', color: '#38bdf8' },
+  { label: '$50', sub: 'EXTRA', icon: '🐷', color: '#14b8a6' },
+  { label: '$1,500', sub: 'CASH', icon: '💰', color: '#7c3aed' }, // always wins
 ];
 
 const TOTAL = SEGMENTS.length;
 const SLICE = 360 / TOTAL; // 60°
+const WIN_IDX = 5;
 
-/** Compute final rotation so pointer (top) lands on segment index `winIdx` */
-function calcFinalAngle(winIdx: number, currentAngle: number): number {
-  // Pointer is at 12 o'clock. The wheel starts with segment 0 centred at the
-  // top (offset 0°). Each segment occupies SLICE degrees clockwise.
-  // To land winner at top: we need wheel rotated so that the midpoint of
-  // winIdx is at 0°.
-  const segMid = winIdx * SLICE + SLICE / 2; // mid of winning slice in wheel coords
-  const neededExtraAngle = (360 - segMid) % 360; // extra rotation to bring it to top
-  const fullSpins = 1440; // 4 full rotations
-  return currentAngle + fullSpins + neededExtraAngle;
+/** Mid-angle of a segment from 12-o'clock, clockwise (degrees) */
+const segMidAngle = (idx: number) => idx * SLICE + SLICE / 2;
+
+/**
+ * Returns { final, overshoot }:
+ * 1. Spin to `overshoot` (past winner)
+ * 2. Ease back to `final` (exactly on winner)
+ */
+function calcAngles(currentAngle: number) {
+  const mid = segMidAngle(WIN_IDX); // 330°
+  const needed = (360 - mid) % 360; // 30° extra → brings mid to top
+  const base = currentAngle + 1440 + needed; // 4 full rotations + alignment
+  return { final: base, overshoot: base + 38 };
 }
 
-/* ── Confetti helper ── */
+/* ── Confetti ── */
 function launchConfetti(canvas: HTMLCanvasElement) {
   const ctx = canvas.getContext('2d')!;
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-
-  const pieces: {
-    x: number;
-    y: number;
-    vx: number;
-    vy: number;
-    color: string;
-    size: number;
-    angle: number;
-    spin: number;
-  }[] = [];
-
   const colors = [
     '#7c3aed',
     '#f43f7f',
@@ -61,20 +53,18 @@ function launchConfetti(canvas: HTMLCanvasElement) {
     '#fbbf24',
     '#14b8a6',
   ];
-  for (let i = 0; i < 180; i++) {
-    pieces.push({
-      x: Math.random() * canvas.width,
-      y: -20,
-      vx: (Math.random() - 0.5) * 6,
-      vy: Math.random() * 4 + 2,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      size: Math.random() * 10 + 5,
-      angle: Math.random() * 360,
-      spin: (Math.random() - 0.5) * 8,
-    });
-  }
-
-  let frame: number;
+  const pieces = Array.from({ length: 160 }, () => ({
+    x: Math.random() * canvas.width,
+    y: -20,
+    vx: (Math.random() - 0.5) * 7,
+    vy: Math.random() * 4 + 2,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    w: Math.random() * 10 + 5,
+    h: Math.random() * 6 + 3,
+    angle: Math.random() * 360,
+    spin: (Math.random() - 0.5) * 10,
+  }));
+  let raf: number;
   const tick = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let alive = false;
@@ -82,294 +72,271 @@ function launchConfetti(canvas: HTMLCanvasElement) {
       p.x += p.vx;
       p.y += p.vy;
       p.angle += p.spin;
-      p.vy += 0.12; // gravity
+      p.vy += 0.15;
       if (p.y < canvas.height + 30) alive = true;
       ctx.save();
       ctx.translate(p.x, p.y);
       ctx.rotate((p.angle * Math.PI) / 180);
       ctx.fillStyle = p.color;
       ctx.globalAlpha = Math.max(0, 1 - p.y / canvas.height);
-      ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
       ctx.restore();
     }
-    if (alive) frame = requestAnimationFrame(tick);
+    if (alive) raf = requestAnimationFrame(tick);
     else ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
-  frame = requestAnimationFrame(tick);
+  raf = requestAnimationFrame(tick);
   setTimeout(() => {
-    cancelAnimationFrame(frame);
+    cancelAnimationFrame(raf);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }, 5000);
 }
 
-/* ── Main component ── */
+/* ── Wheel SVG ── */
+const CX = 200,
+  CY = 200,
+  R = 188;
+
+function WheelSVG({
+  angle,
+  transition,
+}: {
+  angle: number;
+  transition: string;
+}) {
+  return (
+    <div
+      className="qw-wheel"
+      style={{ transform: `rotate(${angle}deg)`, transition }}
+      aria-label="Prize wheel"
+      role="img"
+    >
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        {/* Segments */}
+        {SEGMENTS.map((seg, i) => {
+          const startRad = ((i * SLICE - 90) * Math.PI) / 180;
+          const endRad = (((i + 1) * SLICE - 90) * Math.PI) / 180;
+          const x1 = CX + R * Math.cos(startRad);
+          const y1 = CY + R * Math.sin(startRad);
+          const x2 = CX + R * Math.cos(endRad);
+          const y2 = CY + R * Math.sin(endRad);
+
+          // Mid-angle in SVG coords (0° = right, clockwise)
+          const midSVG = i * SLICE + SLICE / 2 - 90;
+
+          return (
+            <g key={i}>
+              <path
+                d={`M ${CX} ${CY} L ${x1} ${y1} A ${R} ${R} 0 0 1 ${x2} ${y2} Z`}
+                fill={seg.color}
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth="1.5"
+              />
+              {/*
+                Rotate group to the mid-angle of this segment,
+                then place content along the radius.
+                Within the rotated frame "up" = toward outer edge.
+              */}
+              <g transform={`rotate(${midSVG}, ${CX}, ${CY})`}>
+                {/* Icon — at outer area */}
+                <text
+                  x={CX}
+                  y={CY - R * 0.72}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize="22"
+                >
+                  {seg.icon}
+                </text>
+                {/* Line 1 */}
+                <text
+                  x={CX}
+                  y={CY - R * 0.52}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize="15"
+                  fontWeight="900"
+                  fontFamily="Inter, system-ui, sans-serif"
+                  fill="#fff"
+                >
+                  {seg.label}
+                </text>
+                {/* Line 2 */}
+                <text
+                  x={CX}
+                  y={CY - R * 0.36}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize="11"
+                  fontWeight="700"
+                  fontFamily="Inter, system-ui, sans-serif"
+                  fill="rgba(255,255,255,0.88)"
+                  letterSpacing="1"
+                >
+                  {seg.sub}
+                </text>
+              </g>
+            </g>
+          );
+        })}
+
+        {/* Dividers */}
+        {SEGMENTS.map((_, i) => {
+          const a = ((i * SLICE - 90) * Math.PI) / 180;
+          return (
+            <line
+              key={i}
+              x1={CX}
+              y1={CY}
+              x2={CX + R * Math.cos(a)}
+              y2={CY + R * Math.sin(a)}
+              stroke="rgba(255,255,255,0.6)"
+              strokeWidth="2"
+            />
+          );
+        })}
+
+        {/* Outer border */}
+        <circle
+          cx={CX}
+          cy={CY}
+          r={R + 1}
+          fill="none"
+          stroke="rgba(255,255,255,0.7)"
+          strokeWidth="3"
+        />
+
+        {/* Centre hub */}
+        <circle cx={CX} cy={CY} r={28} fill="white" />
+        <circle cx={CX} cy={CY} r={18} fill="#4c1d95" />
+        <circle cx={CX} cy={CY} r={8} fill="white" />
+      </svg>
+    </div>
+  );
+}
+
+/* ── Page component ── */
 type Phase = 'idle' | 'spinning' | 'won';
 
 export default function QuizWheelCredit() {
   const [phase, setPhase] = useState<Phase>('idle');
   const [angle, setAngle] = useState(0);
+  const [wheelTransition, setWheelTransition] = useState('none');
   const confettiRef = useRef<HTMLCanvasElement>(null);
   const angleRef = useRef(0);
 
-  const WIN_IDX = 5; // $1,500 CASH
+  useEffect(() => {
+    angleRef.current = angle;
+  }, [angle]);
 
   const handleSpin = () => {
     if (phase !== 'idle') return;
     setPhase('spinning');
 
-    const finalAngle = calcFinalAngle(WIN_IDX, angleRef.current);
-    angleRef.current = finalAngle;
-    setAngle(finalAngle);
+    const { final, overshoot } = calcAngles(angleRef.current);
 
-    // wheel CSS transition is 5s — wait then show result
+    // Step 1: fast spin to overshoot position
+    setWheelTransition('transform 4.6s cubic-bezier(0.12, 0.8, 0.2, 1)');
+    setAngle(overshoot);
+
+    // Step 2: elastic snap back to exact winner
+    setTimeout(() => {
+      setWheelTransition('transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)');
+      setAngle(final);
+      angleRef.current = final;
+    }, 4700);
+
+    // Step 3: show win panel + confetti
     setTimeout(() => {
       setPhase('won');
       if (confettiRef.current) launchConfetti(confettiRef.current);
-    }, 5200);
+    }, 5350);
   };
-
-  // keep angle ref synced
-  useEffect(() => {
-    angleRef.current = angle;
-  }, [angle]);
 
   return (
     <div className="qw-page">
-      {/* Confetti canvas — fullscreen overlay */}
       <canvas ref={confettiRef} className="qw-confetti" aria-hidden="true" />
-
-      {/* Glowing bg blobs */}
       <div className="qw-blob qw-blob--tl" aria-hidden="true" />
       <div className="qw-blob qw-blob--br" aria-hidden="true" />
 
       <main className="qw-main">
-        {/* ── Heading ── */}
+        {/* Heading */}
         <h1 className="qw-heading">
-          <span className="qw-heading-spin">Spin</span> the{' '}
-          <span className="qw-heading-acc">Financial Wheel</span> and Win Prizes
+          <span className="qw-hl-spin">Spin</span> the{' '}
+          <span className="qw-hl-acc">Financial Wheel</span> and Win Prizes
         </h1>
 
-        {/* ── Wheel container ── */}
+        {/* Wheel */}
         <div className="qw-wheel-wrap">
-          {/* Pointer */}
-          <div className="qw-pointer" aria-hidden="true">
-            ▼
-          </div>
-
-          {/* SVG Wheel */}
-          <div
-            className="qw-wheel"
-            style={{
-              transform: `rotate(${angle}deg)`,
-              transition:
-                phase === 'spinning'
-                  ? 'transform 5s cubic-bezier(0.17,0.67,0.12,1)'
-                  : 'none',
-            }}
-            aria-label="Prize wheel"
-            role="img"
-          >
-            <svg
-              viewBox="0 0 400 400"
-              width="400"
-              height="400"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {SEGMENTS.map((seg, i) => {
-                const startAngle = (i * SLICE - 90) * (Math.PI / 180);
-                const endAngle = ((i + 1) * SLICE - 90) * (Math.PI / 180);
-                const cx = 200,
-                  cy = 200,
-                  r = 190;
-
-                const x1 = cx + r * Math.cos(startAngle);
-                const y1 = cy + r * Math.sin(startAngle);
-                const x2 = cx + r * Math.cos(endAngle);
-                const y2 = cy + r * Math.sin(endAngle);
-
-                const midAngle = startAngle + (SLICE / 2) * (Math.PI / 180);
-                const labelR = r * 0.62;
-                const lx = cx + labelR * Math.cos(midAngle);
-                const ly = cy + labelR * Math.sin(midAngle);
-                const labelDeg = i * SLICE + SLICE / 2 - 90;
-
-                const lines = seg.label.split('\n');
-
-                return (
-                  <g key={i}>
-                    {/* Slice */}
-                    <path
-                      d={`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2} Z`}
-                      fill={seg.color}
-                      stroke="#fff"
-                      strokeWidth="2"
-                    />
-                    {/* Icon + text rotated to mid-angle */}
-                    <g transform={`rotate(${labelDeg}, ${cx}, ${cy})`}>
-                      <text
-                        x={lx}
-                        y={ly - 20}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        fontSize="26"
-                        transform={`rotate(0, ${lx}, ${ly})`}
-                      >
-                        {seg.icon}
-                      </text>
-                      {lines.map((line, li) => (
-                        <text
-                          key={li}
-                          x={lx}
-                          y={ly + 8 + li * 17}
-                          textAnchor="middle"
-                          dominantBaseline="middle"
-                          fontSize="13"
-                          fontWeight="800"
-                          fontFamily="Inter, system-ui, sans-serif"
-                          fill="#fff"
-                          letterSpacing="0.5"
-                        >
-                          {line}
-                        </text>
-                      ))}
-                    </g>
-                  </g>
-                );
-              })}
-
-              {/* Divider lines */}
-              {SEGMENTS.map((_, i) => {
-                const a = (i * SLICE - 90) * (Math.PI / 180);
-                return (
-                  <line
-                    key={i}
-                    x1={200}
-                    y1={200}
-                    x2={200 + 190 * Math.cos(a)}
-                    y2={200 + 190 * Math.sin(a)}
-                    stroke="#fff"
-                    strokeWidth="2"
-                  />
-                );
-              })}
-
-              {/* Outer ring */}
-              <circle
-                cx="200"
-                cy="200"
-                r="190"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="3"
-              />
-              <circle
-                cx="200"
-                cy="200"
-                r="192"
-                fill="none"
-                stroke="#7c3aed"
-                strokeWidth="5"
-                opacity="0.6"
-              />
-
-              {/* Centre hub */}
-              <circle
-                cx="200"
-                cy="200"
-                r="30"
-                fill="#fff"
-                stroke="#4c1d95"
-                strokeWidth="4"
-              />
-              <circle cx="200" cy="200" r="16" fill="#4c1d95" />
-            </svg>
-          </div>
+          <div className="qw-pointer" aria-hidden="true" />
+          <WheelSVG angle={angle} transition={wheelTransition} />
         </div>
 
-        {/* ── CTA area ── */}
-        {phase !== 'won' && (
-          <button
-            id="qw-spin-btn"
-            className={`qw-spin-btn ${phase === 'spinning' ? 'qw-spin-btn--disabled' : ''}`}
-            onClick={handleSpin}
-            disabled={phase === 'spinning'}
-            aria-label="Spin the wheel"
-          >
-            {phase === 'spinning' ? (
-              <span className="qw-spinning-text">
-                <span className="qw-dot-loader" />
-                Spinning…
-              </span>
-            ) : (
-              '🎡 Spin Now'
-            )}
-          </button>
-        )}
-
-        {/* ── Win panel ── */}
-        {phase === 'won' && (
-          <div className="qw-win-panel" role="status" aria-live="polite">
-            <div className="qw-win-badge">🎉</div>
-            <p className="qw-win-label">You Won!</p>
-            <p className="qw-win-prize">$1,500 CASH</p>
-            <p className="qw-win-sub">Instant money prize 💸</p>
-            <a
-              id="qw-claim-btn"
-              href={buildOfferUrl()}
-              className="qw-claim-btn"
-              aria-label="Claim your prize"
-            >
-              💰 CLAIM NOW ✅
-            </a>
-            <p className="qw-win-notice">
-              *Offer expires soon. Click to claim.
-            </p>
-          </div>
-        )}
-
-        {/* ── Trust line ── */}
-        {phase === 'idle' && (
-          <p className="qw-trust">
-            🔒 Verified &nbsp;·&nbsp; 🎁 Real Prizes &nbsp;·&nbsp; ⚡ Instant
-            Results
-          </p>
-        )}
+        {/* CTA area — fixed height to prevent layout shift */}
+        <div className="qw-cta-area">
+          {phase !== 'won' ? (
+            <>
+              <button
+                id="qw-spin-btn"
+                className="qw-spin-btn"
+                onClick={handleSpin}
+                disabled={phase === 'spinning'}
+                aria-label="Spin the wheel"
+              >
+                {phase === 'spinning' ? (
+                  <>
+                    <span className="qw-dot" />
+                    &nbsp;Spinning…
+                  </>
+                ) : (
+                  '🎡 Spin Now'
+                )}
+              </button>
+              {phase === 'idle' && (
+                <p className="qw-trust">
+                  🔒 Verified &nbsp;·&nbsp; 🎁 Real Prizes &nbsp;·&nbsp; ⚡
+                  Instant
+                </p>
+              )}
+            </>
+          ) : (
+            <div className="qw-win-panel" role="status" aria-live="polite">
+              <p className="qw-win-top">🎉 You Won!</p>
+              <p className="qw-win-prize">$1,500 CASH 💰</p>
+              <a
+                id="qw-claim-btn"
+                href={buildOfferUrl()}
+                className="qw-claim-btn"
+              >
+                CLAIM NOW ✅
+              </a>
+              <p className="qw-win-notice">⏳ Offer expires soon</p>
+            </div>
+          )}
+        </div>
       </main>
 
-      {/* ── Footer ── */}
+      {/* Footer */}
       <footer className="qw-footer">
-        <hr className="qw-divider" />
         <p className="qw-disclaimer">
-          The content that follows is for informational and educational purposes
-          only and does not constitute financial, legal, medical, or
-          professional advice. Results are not guaranteed and may vary. Enabling
-          browser notifications is optional and can be disabled at any time.
+          For informational purposes only. Not financial advice. Results may
+          vary. Browser notifications are optional and can be disabled at any
+          time.
         </p>
-        <p className="qw-legal-links">
-          By continuing, you agree to our{' '}
+        <p className="qw-legal">
+          By continuing you agree to our{' '}
           <a href="/terms" className="qw-link">
-            Terms of Service
+            Terms
           </a>{' '}
-          and{' '}
+          &amp;{' '}
           <a href="/privacy" className="qw-link">
             Privacy Policy
           </a>
-          .
+          . &nbsp;© 2026 VV7 HOLDING LLC · GB107069528 ·{' '}
+          <a href="mailto:contact@vv7.tech" className="qw-link">
+            contact@vv7.tech
+          </a>
         </p>
-        <div className="qw-company">
-          <p>© 2026 – VV7 HOLDING LLC. All rights reserved.</p>
-          <p>
-            <strong>Legal name:</strong> VV7 HOLDING LLC &nbsp;|&nbsp;{' '}
-            <strong>Reg. No.:</strong> GB107069528
-          </p>
-          <p>
-            <strong>Address:</strong> 1227 Sandestin Way, Orlando, FL, 32824
-            &nbsp;|&nbsp;{' '}
-            <a href="mailto:contact@vv7.tech" className="qw-link">
-              contact@vv7.tech
-            </a>
-          </p>
-        </div>
       </footer>
     </div>
   );

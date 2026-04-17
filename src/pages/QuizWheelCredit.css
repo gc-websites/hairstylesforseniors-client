@@ -1,25 +1,32 @@
 /* =============================================
-   QuizWheelCredit — standalone spin-the-wheel prelend
-   No header / no footer layout
+   QuizWheelCredit — fits on ONE screen, no scroll
    ============================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
 
-/* ── Page shell ── */
+/* ── Reset & page shell ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .qw-page {
   font-family: 'Inter', system-ui, sans-serif;
-  min-height: 100dvh;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(145deg, #ede9fe 0%, #f5f3ff 40%, #e0f2fe 100%);
+  justify-content: space-between;
+  background: linear-gradient(145deg, #ede9fe 0%, #f5f3ff 50%, #dbeafe 100%);
   position: relative;
-  overflow: hidden;
-  padding: 1.5rem 1rem;
+  padding: 0.6rem 1rem 0.5rem;
+  gap: 0;
 }
 
-/* ── Confetti canvas ── */
+/* ── Confetti ── */
 .qw-confetti {
   position: fixed;
   inset: 0;
@@ -31,119 +38,147 @@
 .qw-blob {
   position: fixed;
   border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.35;
+  filter: blur(80px);
+  opacity: 0.3;
   pointer-events: none;
+  z-index: 0;
 }
 .qw-blob--tl {
-  width: 480px; height: 480px;
-  top: -140px; left: -140px;
+  width: 400px;
+  height: 400px;
+  top: -120px;
+  left: -120px;
   background: radial-gradient(circle, #a78bfa 0%, transparent 70%);
-  animation: qwBlobPulse 8s ease-in-out infinite alternate;
+  animation: qwPulse 8s ease-in-out infinite alternate;
 }
 .qw-blob--br {
-  width: 560px; height: 560px;
-  bottom: -160px; right: -160px;
-  background: radial-gradient(circle, #f43f7f 0%, transparent 70%);
-  animation: qwBlobPulse 10s ease-in-out infinite alternate-reverse;
+  width: 500px;
+  height: 500px;
+  bottom: -140px;
+  right: -140px;
+  background: radial-gradient(circle, #f472b6 0%, transparent 70%);
+  animation: qwPulse 10s ease-in-out infinite alternate-reverse;
 }
-@keyframes qwBlobPulse {
-  from { opacity: 0.22; transform: scale(1); }
-  to   { opacity: 0.42; transform: scale(1.15); }
+@keyframes qwPulse {
+  from { opacity: 0.2; transform: scale(1); }
+  to   { opacity: 0.38; transform: scale(1.12); }
 }
 
-/* ── Main content ── */
+/* ── Main block ── */
 .qw-main {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.4rem;
+  gap: clamp(0.4rem, 1.2vh, 1.2rem);
+  flex: 1;
   width: 100%;
-  max-width: 520px;
+  max-width: 480px;
+  margin: 0 auto;
+  justify-content: center;
 }
 
 /* ── Heading ── */
 .qw-heading {
-  font-size: 1.75rem;
+  font-size: clamp(1.1rem, 3.5vw, 1.6rem);
   font-weight: 900;
   text-align: center;
   color: #1e1b4b;
-  line-height: 1.25;
+  line-height: 1.22;
   letter-spacing: -0.02em;
   margin: 0;
 }
-.qw-heading-spin {
+.qw-hl-spin {
   color: #7c3aed;
   text-decoration: underline;
   text-decoration-color: #c4b5fd;
-  text-underline-offset: 4px;
+  text-underline-offset: 3px;
 }
-.qw-heading-acc {
+.qw-hl-acc {
   color: #7c3aed;
 }
 
 /* ── Wheel wrapper ── */
 .qw-wheel-wrap {
   position: relative;
-  width: 340px;
-  height: 340px;
+  width: clamp(240px, 52vw, 320px);
+  height: clamp(240px, 52vw, 320px);
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 12px 40px rgba(124, 58, 237, 0.28));
+  flex-shrink: 0;
 }
 
-/* Outer glow ring */
+/* Animated conic ring glow */
 .qw-wheel-wrap::before {
   content: '';
   position: absolute;
-  inset: -8px;
+  inset: -6px;
   border-radius: 50%;
   background: conic-gradient(
-    #f43f7f, #7c3aed, #22c55e, #f97316, #38bdf8, #14b8a6, #f43f7f
+    #f43f7f 0deg, #7c3aed 60deg, #22c55e 120deg,
+    #f97316 180deg, #38bdf8 240deg, #14b8a6 300deg, #f43f7f 360deg
   );
-  animation: qwRingRotate 6s linear infinite;
+  animation: qwRingRotate 5s linear infinite;
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.55;
 }
 .qw-wheel-wrap::after {
   content: '';
   position: absolute;
-  inset: -4px;
+  inset: -2px;
   border-radius: 50%;
   background: linear-gradient(145deg, #ede9fe, #f5f3ff);
-  z-index: 0;
+  z-index: 1;
 }
 @keyframes qwRingRotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
 
+/* Pointer arrow */
 .qw-pointer {
   position: absolute;
-  top: -18px;
+  top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 2rem;
-  color: #7c3aed;
   z-index: 20;
-  filter: drop-shadow(0 2px 6px rgba(124, 58, 237, 0.6));
-  line-height: 1;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 22px solid #4c1d95;
+  filter: drop-shadow(0 3px 6px rgba(76, 29, 149, 0.55));
 }
 
+/* Wheel SVG div */
 .qw-wheel {
   position: relative;
   z-index: 10;
   will-change: transform;
-  cursor: pointer;
-  width: 320px;
-  height: 320px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow:
+    0 8px 32px rgba(124, 58, 237, 0.22),
+    0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .qw-wheel svg {
   width: 100%;
   height: 100%;
+  display: block;
+}
+
+/* ── CTA area — fixed height container ── */
+.qw-cta-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 96px;
+  justify-content: center;
+  width: 100%;
+  max-width: 340px;
 }
 
 /* ── Spin button ── */
@@ -151,77 +186,72 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  min-width: 200px;
-  min-height: 58px;
-  padding: 0 2rem;
+  gap: 0.45rem;
+  width: 100%;
+  height: 54px;
   border: none;
   border-radius: 14px;
   background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
   color: #fff;
   font-family: inherit;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
   font-weight: 800;
   letter-spacing: 0.04em;
   cursor: pointer;
-  box-shadow:
-    0 6px 20px rgba(124, 58, 237, 0.5),
-    0 2px 6px rgba(76, 29, 149, 0.3);
-  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, filter 0.18s ease;
+  box-shadow: 0 5px 18px rgba(124, 58, 237, 0.45);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.18s ease, filter 0.18s ease;
   position: relative;
   overflow: hidden;
 }
 .qw-spin-btn::after {
   content: '';
   position: absolute;
-  top: 0; left: -100%;
-  width: 60%; height: 100%;
-  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 60%, transparent 90%);
-  animation: qwShimmer 2.2s linear infinite;
+  top: 0;
+  left: -100%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.28) 60%, transparent 90%);
+  animation: qwShimmer 2.4s linear infinite;
 }
 @keyframes qwShimmer {
   from { left: -100%; }
   to   { left: 200%; }
 }
 .qw-spin-btn:hover:not(:disabled) {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 10px 28px rgba(124, 58, 237, 0.6), 0 4px 10px rgba(76, 29, 149, 0.35);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.55);
   filter: brightness(1.08);
 }
 .qw-spin-btn:active:not(:disabled) {
-  transform: translateY(0) scale(0.97);
+  transform: scale(0.97);
 }
-.qw-spin-btn--disabled {
-  opacity: 0.75;
+.qw-spin-btn:disabled {
+  opacity: 0.72;
   cursor: not-allowed;
 }
-
-.qw-spinning-text {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.qw-dot-loader {
+.qw-dot {
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  border: 2px solid rgba(255,255,255,0.4);
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
   border-top-color: #fff;
   border-radius: 50%;
-  animation: qwSpin 0.7s linear infinite;
+  animation: qwSpin 0.65s linear infinite;
+  flex-shrink: 0;
 }
 @keyframes qwSpin {
   to { transform: rotate(360deg); }
 }
 
-/* ── Trust line ── */
 .qw-trust {
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: #6d28d9;
   font-weight: 600;
   margin: 0;
-  opacity: 0.75;
+  opacity: 0.7;
   letter-spacing: 0.02em;
+  text-align: center;
 }
 
 /* ── Win panel ── */
@@ -229,44 +259,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(255,255,255,0.88);
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(16px);
   border: 2px solid rgba(124, 58, 237, 0.2);
-  border-radius: 20px;
-  padding: 2rem 2rem 1.8rem;
-  box-shadow: 0 8px 40px rgba(124, 58, 237, 0.18), 0 2px 8px rgba(0,0,0,0.06);
+  border-radius: 18px;
+  padding: 0.9rem 1.5rem 0.85rem;
+  box-shadow: 0 6px 30px rgba(124, 58, 237, 0.16);
   animation: qwWinPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  text-align: center;
-  max-width: 340px;
   width: 100%;
+  text-align: center;
 }
 @keyframes qwWinPop {
-  from { opacity: 0; transform: scale(0.75); }
+  from { opacity: 0; transform: scale(0.78); }
   to   { opacity: 1; transform: scale(1); }
 }
-.qw-win-badge {
-  font-size: 3.5rem;
-  line-height: 1;
-  animation: qwWinBounce 0.6s ease 0.3s both;
-}
-@keyframes qwWinBounce {
-  0%   { transform: scale(0.5) rotate(-15deg); }
-  60%  { transform: scale(1.3) rotate(10deg); }
-  100% { transform: scale(1) rotate(0deg); }
-}
-.qw-win-label {
-  font-size: 1rem;
-  font-weight: 700;
+.qw-win-top {
+  font-size: 0.85rem;
+  font-weight: 800;
   color: #7c3aed;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
   margin: 0;
 }
 .qw-win-prize {
-  font-size: 2.4rem;
+  font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 900;
-  color: #1e1b4b;
   letter-spacing: -0.02em;
   margin: 0.1rem 0;
   background: linear-gradient(135deg, #7c3aed, #f43f7f);
@@ -274,54 +292,47 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.qw-win-sub {
-  font-size: 0.9rem;
-  color: #6b7280;
-  margin: 0 0 0.5rem;
-}
-
-/* Claim button */
 .qw-claim-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
   width: 100%;
-  min-height: 58px;
-  border-radius: 14px;
+  height: 50px;
+  border-radius: 12px;
   background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
   color: #fff;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   text-decoration: none;
-  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
+  box-shadow: 0 5px 16px rgba(34, 197, 94, 0.45);
   transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.18s ease;
   position: relative;
   overflow: hidden;
-  animation: qwClaimAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+  animation: qwClaimIn 0.45s ease 0.3s both;
+  margin-top: 0.15rem;
 }
-@keyframes qwClaimAppear {
-  from { opacity: 0; transform: translateY(14px); }
+@keyframes qwClaimIn {
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .qw-claim-btn::after {
   content: '';
   position: absolute;
-  top: 0; left: -100%;
-  width: 60%; height: 100%;
-  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 60%, transparent 90%);
+  top: 0;
+  left: -100%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.28) 60%, transparent 90%);
   animation: qwShimmer 2s linear infinite;
 }
 .qw-claim-btn:hover {
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(-2px) scale(1.02);
   filter: brightness(1.07);
-  box-shadow: 0 10px 28px rgba(34, 197, 94, 0.6);
 }
-
 .qw-win-notice {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: #9ca3af;
   margin: 0;
 }
@@ -331,47 +342,57 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 700px;
-  margin-top: 2rem;
-  padding-bottom: 1rem;
-}
-.qw-divider {
-  border: none;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  margin-bottom: 0.8rem;
+  max-width: 640px;
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 0.4rem;
+  flex-shrink: 0;
 }
 .qw-disclaimer {
-  font-size: 0.75rem;
-  color: #9ca3af;
-  line-height: 1.65;
-  margin: 0 0 0.4rem;
-  text-align: center;
+  font-size: 0.62rem;
+  color: #a3a3a3;
+  line-height: 1.5;
+  margin: 0 0 0.2rem;
 }
-.qw-legal-links {
-  font-size: 0.75rem;
-  color: #9ca3af;
-  text-align: center;
-  margin: 0 0 0.5rem;
+.qw-legal {
+  font-size: 0.6rem;
+  color: #bbb;
+  line-height: 1.5;
+  margin: 0;
 }
 .qw-link {
   color: #7c3aed;
   text-decoration: underline;
   text-underline-offset: 2px;
-  transition: color 0.15s;
 }
-.qw-link:hover { color: #a78bfa; }
-.qw-company {
-  font-size: 0.7rem;
-  color: #bbb;
-  text-align: center;
-  line-height: 1.8;
+.qw-link:hover {
+  color: #a78bfa;
 }
-.qw-company strong { color: #aaa; font-weight: 600; }
 
-/* ── Responsive ── */
-@media (max-width: 400px) {
-  .qw-wheel-wrap { width: 290px; height: 290px; }
-  .qw-wheel { width: 270px; height: 270px; }
-  .qw-heading { font-size: 1.4rem; }
-  .qw-win-prize { font-size: 2rem; }
+/* ── Responsive fine-tuning ── */
+@media (max-height: 700px) {
+  .qw-heading {
+    font-size: 1rem;
+  }
+  .qw-wheel-wrap {
+    width: clamp(200px, 46vw, 260px);
+    height: clamp(200px, 46vw, 260px);
+  }
+  .qw-cta-area {
+    min-height: 80px;
+  }
+  .qw-spin-btn,
+  .qw-claim-btn {
+    height: 46px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .qw-page {
+    padding: 0.5rem 0.75rem 0.4rem;
+  }
+  .qw-heading {
+    font-size: 1rem;
+  }
 }
