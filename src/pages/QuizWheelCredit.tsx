@@ -142,15 +142,15 @@ function WheelSVG({
           const rad = ((rotDeg - 90) * Math.PI) / 180;
 
           // Absolute SVG coords for each label row
-          const iconR = R * 0.74;
+          const iconR = R * 0.77;
           const ix = CX + iconR * Math.cos(rad);
           const iy = CY + iconR * Math.sin(rad);
 
-          const lblR = R * 0.54;
+          const lblR = R * 0.58;
           const lx = CX + lblR * Math.cos(rad);
           const ly = CY + lblR * Math.sin(rad);
 
-          const subR = R * 0.37;
+          const subR = R * 0.42;
           const sx = CX + subR * Math.cos(rad);
           const sy = CY + subR * Math.sin(rad);
 

@@ -72,8 +72,14 @@
   animation: qwPulse 11s ease-in-out infinite alternate-reverse;
 }
 @keyframes qwPulse {
-  from { opacity: 0.18; transform: scale(1); }
-  to   { opacity: 0.4; transform: scale(1.14); }
+  from {
+    opacity: 0.18;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.4;
+    transform: scale(1.14);
+  }
 }
 
 /* ── Main block ── */
@@ -83,7 +89,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(0.65rem, 1.8vh, 1.4rem);
+  gap: clamp(1rem, 2.5vh, 2rem);
   flex: 1;
   width: 100%;
   max-width: 540px;
@@ -94,7 +100,7 @@
 
 @media (min-width: 768px) {
   .qw-main {
-    gap: 2rem;
+    gap: 2.8rem;
     max-width: 720px;
   }
 }
@@ -155,8 +161,13 @@
   inset: -7px;
   border-radius: 50%;
   background: conic-gradient(
-    #f43f7f 0deg, #7c3aed 60deg, #22c55e 120deg,
-    #f97316 180deg, #38bdf8 240deg, #14b8a6 300deg, #f43f7f 360deg
+    #f43f7f 0deg,
+    #7c3aed 60deg,
+    #22c55e 120deg,
+    #f97316 180deg,
+    #38bdf8 240deg,
+    #14b8a6 300deg,
+    #f43f7f 360deg
   );
   animation: qwRingRotate 5s linear infinite;
   z-index: 0;
@@ -171,7 +182,9 @@
   z-index: 1;
 }
 @keyframes qwRingRotate {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Pointer arrow */
@@ -245,7 +258,7 @@
   cursor: pointer;
   box-shadow:
     0 5px 20px rgba(124, 58, 237, 0.48),
-    inset 0 1px 0 rgba(255,255,255,0.15);
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition:
     transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
     box-shadow 0.18s ease,
@@ -269,32 +282,50 @@
   left: -100%;
   width: 55%;
   height: 100%;
-  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.28) 60%, transparent 90%);
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 60%,
+    transparent 90%
+  );
   animation: qwShimmer 2.4s linear infinite;
 }
 @keyframes qwShimmer {
-  from { left: -100%; }
-  to   { left: 200%; }
+  from {
+    left: -100%;
+  }
+  to {
+    left: 200%;
+  }
 }
 .qw-spin-btn:hover:not(:disabled) {
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 10px 28px rgba(124, 58, 237, 0.58);
   filter: brightness(1.09);
 }
-.qw-spin-btn:active:not(:disabled) { transform: scale(0.97); }
-.qw-spin-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.qw-spin-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.qw-spin-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 
 .qw-dot {
   display: inline-block;
   width: 13px;
   height: 13px;
-  border: 2px solid rgba(255,255,255,0.35);
+  border: 2px solid rgba(255, 255, 255, 0.35);
   border-top-color: #fff;
   border-radius: 50%;
   animation: qwSpin 0.65s linear infinite;
   flex-shrink: 0;
 }
-@keyframes qwSpin { to { transform: rotate(360deg); } }
+@keyframes qwSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .qw-trust {
   font-size: 0.75rem;
@@ -312,21 +343,27 @@
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(20px);
   border: 2px solid rgba(124, 58, 237, 0.18);
   border-radius: 20px;
   padding: 1rem 1.75rem 1rem;
   box-shadow:
     0 8px 40px rgba(124, 58, 237, 0.18),
-    0 2px 8px rgba(0,0,0,0.06);
+    0 2px 8px rgba(0, 0, 0, 0.06);
   animation: qwWinPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   width: 100%;
   text-align: center;
 }
 @keyframes qwWinPop {
-  from { opacity: 0; transform: scale(0.78); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.78);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .qw-win-top {
   font-size: 0.8rem;
@@ -361,22 +398,37 @@
   letter-spacing: 0.07em;
   text-decoration: none;
   box-shadow: 0 5px 18px rgba(34, 197, 94, 0.48);
-  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), filter 0.18s ease;
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.18s ease;
   position: relative;
   overflow: hidden;
   animation: qwClaimIn 0.45s ease 0.3s both;
   margin-top: 0.15rem;
 }
 @keyframes qwClaimIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .qw-claim-btn::after {
   content: '';
   position: absolute;
-  top: 0; left: -100%;
-  width: 55%; height: 100%;
-  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.28) 60%, transparent 90%);
+  top: 0;
+  left: -100%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 60%,
+    transparent 90%
+  );
   animation: qwShimmer 2s linear infinite;
 }
 .qw-claim-btn:hover {
@@ -397,7 +449,7 @@
   width: 100%;
   max-width: 680px;
   text-align: center;
-  border-top: 1px solid rgba(0,0,0,0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   padding-top: 0.45rem;
   flex-shrink: 0;
 }
@@ -418,18 +470,31 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.qw-link:hover { color: #a78bfa; }
+.qw-link:hover {
+  color: #a78bfa;
+}
 
 /* ── Mobile fine-tuning (very small screens) ── */
 @media (max-height: 700px) and (max-width: 767px) {
-  .qw-page { padding: 0.5rem 0.75rem 0.4rem; }
-  .qw-heading { font-size: 1.1rem; }
-  .qw-main { gap: 0.5rem; }
+  .qw-page {
+    padding: 0.5rem 0.75rem 0.4rem;
+  }
+  .qw-heading {
+    font-size: 1.1rem;
+  }
+  .qw-main {
+    gap: 0.5rem;
+  }
   .qw-wheel-wrap {
     width: clamp(220px, min(60vw, 38vh), 290px);
     height: clamp(220px, min(60vw, 38vh), 290px);
   }
-  .qw-cta-area { min-height: 72px; }
+  .qw-cta-area {
+    min-height: 72px;
+  }
   .qw-spin-btn,
-  .qw-claim-btn { height: 46px; font-size: 0.88rem; }
+  .qw-claim-btn {
+    height: 46px;
+    font-size: 0.88rem;
+  }
 }
