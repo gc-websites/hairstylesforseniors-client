@@ -115,6 +115,14 @@
   margin: 0;
 }
 
+/* Mobile: larger heading + extra breathing room above the wheel */
+@media (max-width: 767px) {
+  .qw-heading {
+    font-size: clamp(1.55rem, 7vw, 2rem);
+    margin-bottom: 0.85rem;
+  }
+}
+
 @media (min-width: 768px) {
   .qw-heading {
     font-size: clamp(1.7rem, 3vw, 2.1rem);
