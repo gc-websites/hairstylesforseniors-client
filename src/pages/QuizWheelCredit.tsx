@@ -112,75 +112,105 @@ function WheelSVG({
       role="img"
     >
       <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-        {/* Segments */}
+        {/* ── Pass 1: all slice fills ── */}
         {SEGMENTS.map((seg, i) => {
-          const startRad = ((i * SLICE - 90) * Math.PI) / 180;
-          const endRad = (((i + 1) * SLICE - 90) * Math.PI) / 180;
-          const x1 = CX + R * Math.cos(startRad);
-          const y1 = CY + R * Math.sin(startRad);
-          const x2 = CX + R * Math.cos(endRad);
-          const y2 = CY + R * Math.sin(endRad);
+          const s = ((i * SLICE - 90) * Math.PI) / 180;
+          const e = (((i + 1) * SLICE - 90) * Math.PI) / 180;
+          return (
+            <path
+              key={i}
+              d={`M ${CX} ${CY} L ${CX + R * Math.cos(s)} ${CY + R * Math.sin(s)} A ${R} ${R} 0 0 1 ${CX + R * Math.cos(e)} ${CY + R * Math.sin(e)} Z`}
+              fill={seg.color}
+              stroke="rgba(255,255,255,0)"
+              strokeWidth="1"
+            />
+          );
+        })}
 
-          // Mid-angle in SVG coords (0° = right, clockwise)
-          const midSVG = i * SLICE + SLICE / 2 - 90;
+        {/* ── Pass 2: labels — absolute coords, individual text rotation ── */}
+        {SEGMENTS.map((seg, i) => {
+          /**
+           * rotDeg: mid-angle of segment i, measured CLOCKWISE FROM 12 O'CLOCK.
+           * This is the angle in our "wheel space" where angle=0 is straight up.
+           */
+          const rotDeg = i * SLICE + SLICE / 2;
+
+          /**
+           * angleRad: same angle but in standard SVG math convention
+           * (0 = right, positive = clockwise). Used for cos/sin to get x/y.
+           */
+          const rad = ((rotDeg - 90) * Math.PI) / 180;
+
+          // Absolute SVG coords for each label row
+          const iconR = R * 0.67;
+          const ix = CX + iconR * Math.cos(rad);
+          const iy = CY + iconR * Math.sin(rad);
+
+          const lblR = R * 0.49;
+          const lx = CX + lblR * Math.cos(rad);
+          const ly = CY + lblR * Math.sin(rad);
+
+          const subR = R * 0.32;
+          const sx = CX + subR * Math.cos(rad);
+          const sy = CY + subR * Math.sin(rad);
+
+          /**
+           * Text rotation angle:
+           * - For top-right / top-left segments (rotDeg ≤ 90 or ≥ 270):
+           *   rotate by rotDeg — text reads "from center outward" radially.
+           * - For bottom segments (90 < rotDeg < 270):
+           *   add 180° so the characters are NOT upside-down. Text then reads
+           *   "from rim inward" which is perfectly readable.
+           */
+          const needsFlip = rotDeg > 90 && rotDeg < 270;
+          const ta = needsFlip ? rotDeg - 180 : rotDeg;
+
+          const rot = (px: number, py: number) => `rotate(${ta},${px},${py})`;
 
           return (
             <g key={i}>
-              <path
-                d={`M ${CX} ${CY} L ${x1} ${y1} A ${R} ${R} 0 0 1 ${x2} ${y2} Z`}
-                fill={seg.color}
-                stroke="rgba(255,255,255,0.15)"
-                strokeWidth="1.5"
-              />
-              {/*
-                Rotate group to the mid-angle of this segment,
-                then place content along the radius.
-                Within the rotated frame "up" = toward outer edge.
-              */}
-              <g transform={`rotate(${midSVG}, ${CX}, ${CY})`}>
-                {/* Icon — at outer area */}
-                <text
-                  x={CX}
-                  y={CY - R * 0.72}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize="22"
-                >
-                  {seg.icon}
-                </text>
-                {/* Line 1 */}
-                <text
-                  x={CX}
-                  y={CY - R * 0.52}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize="15"
-                  fontWeight="900"
-                  fontFamily="Inter, system-ui, sans-serif"
-                  fill="#fff"
-                >
-                  {seg.label}
-                </text>
-                {/* Line 2 */}
-                <text
-                  x={CX}
-                  y={CY - R * 0.36}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontSize="11"
-                  fontWeight="700"
-                  fontFamily="Inter, system-ui, sans-serif"
-                  fill="rgba(255,255,255,0.88)"
-                  letterSpacing="1"
-                >
-                  {seg.sub}
-                </text>
-              </g>
+              <text
+                x={ix}
+                y={iy}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize="20"
+                transform={rot(ix, iy)}
+              >
+                {seg.icon}
+              </text>
+              <text
+                x={lx}
+                y={ly}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize="14"
+                fontWeight="900"
+                fill="#fff"
+                fontFamily="Inter,system-ui,sans-serif"
+                transform={rot(lx, ly)}
+              >
+                {seg.label}
+              </text>
+              <text
+                x={sx}
+                y={sy}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize="9.5"
+                fontWeight="700"
+                fill="rgba(255,255,255,0.92)"
+                fontFamily="Inter,system-ui,sans-serif"
+                letterSpacing="0.8"
+                transform={rot(sx, sy)}
+              >
+                {seg.sub}
+              </text>
             </g>
           );
         })}
 
-        {/* Dividers */}
+        {/* Dividers on top of text */}
         {SEGMENTS.map((_, i) => {
           const a = ((i * SLICE - 90) * Math.PI) / 180;
           return (
@@ -190,26 +220,26 @@ function WheelSVG({
               y1={CY}
               x2={CX + R * Math.cos(a)}
               y2={CY + R * Math.sin(a)}
-              stroke="rgba(255,255,255,0.6)"
-              strokeWidth="2"
+              stroke="rgba(255,255,255,0.75)"
+              strokeWidth="2.5"
             />
           );
         })}
 
-        {/* Outer border */}
+        {/* Outer ring */}
         <circle
           cx={CX}
           cy={CY}
-          r={R + 1}
+          r={R}
           fill="none"
-          stroke="rgba(255,255,255,0.7)"
-          strokeWidth="3"
+          stroke="rgba(255,255,255,0.8)"
+          strokeWidth="3.5"
         />
 
         {/* Centre hub */}
-        <circle cx={CX} cy={CY} r={28} fill="white" />
-        <circle cx={CX} cy={CY} r={18} fill="#4c1d95" />
-        <circle cx={CX} cy={CY} r={8} fill="white" />
+        <circle cx={CX} cy={CY} r={26} fill="white" />
+        <circle cx={CX} cy={CY} r={17} fill="#4c1d95" />
+        <circle cx={CX} cy={CY} r={7} fill="white" />
       </svg>
     </div>
   );
