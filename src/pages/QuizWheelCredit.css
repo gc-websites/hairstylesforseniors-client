@@ -77,12 +77,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(0.4rem, 1.2vh, 1.2rem);
+  gap: clamp(0.75rem, 2vh, 1.8rem);
   flex: 1;
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
   justify-content: center;
+  padding: 0 0.5rem;
 }
 
 /* ── Heading ── */
@@ -108,8 +109,9 @@
 /* ── Wheel wrapper ── */
 .qw-wheel-wrap {
   position: relative;
-  width: clamp(240px, 52vw, 320px);
-  height: clamp(240px, 52vw, 320px);
+  /* larger wheel — still fits on screen because gaps grow proportionally */
+  width: clamp(280px, min(60vw, 50vh), 420px);
+  height: clamp(280px, min(60vw, 50vh), 420px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -415,16 +417,19 @@
 }
 
 /* ── Responsive fine-tuning ── */
-@media (max-height: 700px) {
+@media (max-height: 720px) {
   .qw-heading {
     font-size: 1rem;
   }
+  .qw-main {
+    gap: clamp(0.4rem, 1vh, 0.9rem);
+  }
   .qw-wheel-wrap {
-    width: clamp(200px, 46vw, 260px);
-    height: clamp(200px, 46vw, 260px);
+    width: clamp(220px, min(50vw, 42vh), 300px);
+    height: clamp(220px, min(50vw, 42vh), 300px);
   }
   .qw-cta-area {
-    min-height: 80px;
+    min-height: 76px;
   }
   .qw-spin-btn,
   .qw-claim-btn {
