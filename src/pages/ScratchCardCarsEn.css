@@ -58,8 +58,14 @@
   animation: scPulse 12s ease-in-out infinite alternate-reverse;
 }
 @keyframes scPulse {
-  from { opacity: 0.12; transform: scale(1); }
-  to   { opacity: 0.26; transform: scale(1.1); }
+  from {
+    opacity: 0.12;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.26;
+    transform: scale(1.1);
+  }
 }
 
 /* ── Header ── */
@@ -190,30 +196,53 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg, transparent 40%, rgba(212, 175, 55, 0.06) 60%, transparent 80%);
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(212, 175, 55, 0.06) 60%,
+    transparent 80%
+  );
   opacity: 0;
   transition: opacity 0.25s ease;
 }
-.sc-opt-btn:hover::before { opacity: 1; }
+.sc-opt-btn:hover::before {
+  opacity: 1;
+}
 .sc-opt-btn:hover {
   background: rgba(212, 175, 55, 0.08);
   border-color: rgba(212, 175, 55, 0.5);
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.15), 0 4px 20px rgba(212, 175, 55, 0.1);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.15),
+    0 4px 20px rgba(212, 175, 55, 0.1);
   transform: translateX(5px);
 }
 .sc-opt-btn--active {
   background: rgba(212, 175, 55, 0.12);
   border-color: #d4af37;
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.35), 0 6px 24px rgba(212, 175, 55, 0.18);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.35),
+    0 6px 24px rgba(212, 175, 55, 0.18);
   transform: translateX(6px);
 }
 /* Staggered entrance */
-.sc-opt-btn:nth-child(1) { animation: scOptIn 0.4s ease 0.05s both; }
-.sc-opt-btn:nth-child(2) { animation: scOptIn 0.4s ease 0.15s both; }
-.sc-opt-btn:nth-child(3) { animation: scOptIn 0.4s ease 0.25s both; }
+.sc-opt-btn:nth-child(1) {
+  animation: scOptIn 0.4s ease 0.05s both;
+}
+.sc-opt-btn:nth-child(2) {
+  animation: scOptIn 0.4s ease 0.15s both;
+}
+.sc-opt-btn:nth-child(3) {
+  animation: scOptIn 0.4s ease 0.25s both;
+}
 @keyframes scOptIn {
-  from { opacity: 0; transform: translateX(-12px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Icon badge circle */
@@ -260,7 +289,9 @@
   flex-shrink: 0;
   font-size: 1rem;
   color: rgba(212, 175, 55, 0.5);
-  transition: color 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    color 0.2s ease,
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .sc-opt-btn:hover .sc-opt-arrow,
 .sc-opt-btn--active .sc-opt-arrow {
@@ -376,34 +407,61 @@
   animation:
     scRevealCtaIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both,
     scRevealCtaPulse 2.2s ease-in-out 0.8s infinite;
-  transition: transform 0.18s ease, filter 0.18s ease;
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease;
 }
 /* Shimmer sweep */
 .sc-reveal-cta::after {
   content: '';
   position: absolute;
-  top: 0; left: -100%;
-  width: 60%; height: 100%;
-  background: linear-gradient(105deg, transparent 25%, rgba(255,255,255,0.38) 60%, transparent 85%);
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.38) 60%,
+    transparent 85%
+  );
   animation: scRevealShimmer 2s linear 1.2s infinite;
 }
 @keyframes scRevealCtaIn {
-  from { opacity: 0; transform: scale(0.85) translateY(8px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 @keyframes scRevealCtaPulse {
-  0%, 100% { box-shadow: 0 4px 18px rgba(34, 197, 94, 0.5), 0 0 0 0 rgba(34, 197, 94, 0.4); }
-  50%       { box-shadow: 0 6px 28px rgba(34, 197, 94, 0.65), 0 0 0 8px rgba(34, 197, 94, 0); }
+  0%,
+  100% {
+    box-shadow:
+      0 4px 18px rgba(34, 197, 94, 0.5),
+      0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 6px 28px rgba(34, 197, 94, 0.65),
+      0 0 0 8px rgba(34, 197, 94, 0);
+  }
 }
 @keyframes scRevealShimmer {
-  from { left: -100%; }
-  to   { left: 200%; }
+  from {
+    left: -100%;
+  }
+  to {
+    left: 200%;
+  }
 }
 .sc-reveal-cta:hover {
   filter: brightness(1.08);
   transform: translateY(-2px) scale(1.02);
 }
-
 
 /* Canvas sits on top */
 .sc-canvas {
@@ -423,8 +481,13 @@
   animation: scBlink 2s ease-in-out infinite;
 }
 @keyframes scBlink {
-  0%, 100% { opacity: 0.4; }
-  50%       { opacity: 0.85; }
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.85;
+  }
 }
 
 /* ── Approved badge ── */
@@ -466,8 +529,14 @@
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
 }
 @keyframes scWinPop {
-  from { opacity: 0; transform: scale(0.82); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .sc-won-title {
   font-size: clamp(1.3rem, 4vw, 1.8rem);
@@ -492,7 +561,9 @@
   letter-spacing: 0.06em;
   text-decoration: none;
   box-shadow: 0 6px 24px rgba(245, 158, 11, 0.5);
-  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.18s ease;
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.18s ease;
   position: relative;
   overflow: hidden;
   animation: scClaimIn 0.5s ease 0.2s both;
@@ -505,20 +576,37 @@
   box-shadow: 0 6px 24px rgba(34, 197, 94, 0.5) !important;
 }
 @keyframes scClaimIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .sc-claim-btn::after {
   content: '';
   position: absolute;
-  top: 0; left: -100%;
-  width: 55%; height: 100%;
-  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 60%, transparent 90%);
+  top: 0;
+  left: -100%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 60%,
+    transparent 90%
+  );
   animation: scShimmer 2.2s linear infinite;
 }
 @keyframes scShimmer {
-  from { left: -100%; }
-  to   { left: 200%; }
+  from {
+    left: -100%;
+  }
+  to {
+    left: 200%;
+  }
 }
 .sc-claim-btn:hover {
   transform: translateY(-3px) scale(1.02);
@@ -571,13 +659,22 @@
   text-underline-offset: 2px;
   opacity: 0.7;
 }
-.sc-link:hover { opacity: 1; }
+.sc-link:hover {
+  opacity: 1;
+}
 
 /* ── Mobile fine-tuning ── */
 @media (max-width: 420px) {
-  .sc-header-badges { display: none; }
-  .sc-opt-btn { padding: 0.75rem 0.85rem; }
-  .sc-trust { gap: 0.75rem; font-size: 0.72rem; }
+  .sc-header-badges {
+    display: none;
+  }
+  .sc-opt-btn {
+    padding: 0.75rem 0.85rem;
+  }
+  .sc-trust {
+    gap: 0.75rem;
+    font-size: 0.72rem;
+  }
 }
 
 /* ── Mobile scratch ticket overrides ── */
@@ -598,7 +695,7 @@
   .sc-ticket-wrap {
     max-width: 100%;
     border-radius: 14px;
-    aspect-ratio: 4 / 3;     /* wider on mobile for better thumb reach */
+    aspect-ratio: 4 / 3; /* wider on mobile for better thumb reach */
     box-shadow:
       0 6px 28px rgba(0, 0, 0, 0.55),
       0 0 0 2px rgba(212, 175, 55, 0.3);

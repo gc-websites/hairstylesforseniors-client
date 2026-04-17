@@ -25,6 +25,7 @@ const CaptchaVideoEn = lazy(() => import('./pages/CaptchaVideoEn'));
 const QuizWheelCredit = lazy(() => import('./pages/QuizWheelCredit'));
 const QuizWheelCreditFr = lazy(() => import('./pages/QuizWheelCreditFr'));
 const ScratchCardCarsEn = lazy(() => import('./pages/ScratchCardCarsEn'));
+const ScratchCardVideoEn = lazy(() => import('./pages/ScratchCardVideoEn'));
 
 const App = () => {
   const [categories, setCategories] = useState([]);
@@ -86,6 +87,7 @@ const App = () => {
         <Route path="/rtcredit/en" element={<QuizWheelCredit />} />
         <Route path="/rtcredit/fr" element={<QuizWheelCreditFr />} />
         <Route path="/worldcars/en" element={<ScratchCardCarsEn />} />
+        <Route path="/videomkt/en" element={<ScratchCardVideoEn />} />
 
         {/* Layout-wrapped routes */}
         <Route
