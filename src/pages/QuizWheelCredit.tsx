@@ -142,15 +142,15 @@ function WheelSVG({
           const rad = ((rotDeg - 90) * Math.PI) / 180;
 
           // Absolute SVG coords for each label row
-          const iconR = R * 0.7;
+          const iconR = R * 0.74;
           const ix = CX + iconR * Math.cos(rad);
           const iy = CY + iconR * Math.sin(rad);
 
-          const lblR = R * 0.5;
+          const lblR = R * 0.54;
           const lx = CX + lblR * Math.cos(rad);
           const ly = CY + lblR * Math.sin(rad);
 
-          const subR = R * 0.32;
+          const subR = R * 0.37;
           const sx = CX + subR * Math.cos(rad);
           const sy = CY + subR * Math.sin(rad);
 
@@ -174,7 +174,7 @@ function WheelSVG({
                 y={iy}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize="22"
+                fontSize="24"
                 transform={rot(ix, iy)}
               >
                 {seg.icon}
@@ -184,7 +184,7 @@ function WheelSVG({
                 y={ly}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize="15.5"
+                fontSize="17"
                 fontWeight="900"
                 fill="#fff"
                 fontFamily="Inter,system-ui,sans-serif"
@@ -197,7 +197,7 @@ function WheelSVG({
                 y={sy}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize="10.5"
+                fontSize="12"
                 fontWeight="700"
                 fill="rgba(255,255,255,0.92)"
                 fontFamily="Inter,system-ui,sans-serif"
