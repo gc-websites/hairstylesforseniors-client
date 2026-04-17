@@ -1,0 +1,649 @@
+/* =============================================
+   ScratchCardCarsEn — Quiz + Scratch Card prelend
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ── Page shell ── */
+.sc-page {
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #0f172a 100%);
+  position: relative;
+  overflow-x: hidden;
+  padding: 0 1rem 1.5rem;
+  color: #fff;
+}
+
+/* ── Confetti ── */
+.sc-confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ── Blobs ── */
+.sc-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+.sc-blob--tl {
+  width: 500px;
+  height: 500px;
+  top: -150px;
+  left: -150px;
+  background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+  animation: scPulse 9s ease-in-out infinite alternate;
+}
+.sc-blob--br {
+  width: 600px;
+  height: 600px;
+  bottom: -200px;
+  right: -200px;
+  background: radial-gradient(circle, #f59e0b 0%, transparent 70%);
+  animation: scPulse 12s ease-in-out infinite alternate-reverse;
+}
+@keyframes scPulse {
+  from { opacity: 0.12; transform: scale(1); }
+  to   { opacity: 0.26; transform: scale(1.1); }
+}
+
+/* ── Header ── */
+.sc-header {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+.sc-logo {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.sc-logo span {
+  color: #f59e0b;
+}
+.sc-header-badges {
+  display: flex;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ── Main ── */
+.sc-main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+}
+
+/* ── Card ── */
+.sc-card {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  backdrop-filter: blur(16px);
+  transition: box-shadow 0.4s ease;
+}
+.sc-card--glow {
+  box-shadow:
+    0 0 0 1px rgba(245, 158, 11, 0.3),
+    0 8px 48px rgba(245, 158, 11, 0.12);
+}
+
+/* ── Step shared ── */
+.sc-step-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #f59e0b;
+  margin: 0 0 0.75rem;
+}
+.sc-heading {
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 0.5rem;
+  color: #fff;
+}
+.sc-subheading {
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 1.5rem;
+  line-height: 1.55;
+}
+.sc-hl {
+  color: #f59e0b;
+  font-weight: 900;
+}
+
+/* ── Question step ── */
+.sc-q {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 1rem;
+  letter-spacing: 0.01em;
+}
+.sc-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.sc-opt-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.95rem 1.1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+/* Shimmer on hover */
+.sc-opt-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(212, 175, 55, 0.06) 60%, transparent 80%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.sc-opt-btn:hover::before { opacity: 1; }
+.sc-opt-btn:hover {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.15), 0 4px 20px rgba(212, 175, 55, 0.1);
+  transform: translateX(5px);
+}
+.sc-opt-btn--active {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: #d4af37;
+  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.35), 0 6px 24px rgba(212, 175, 55, 0.18);
+  transform: translateX(6px);
+}
+/* Staggered entrance */
+.sc-opt-btn:nth-child(1) { animation: scOptIn 0.4s ease 0.05s both; }
+.sc-opt-btn:nth-child(2) { animation: scOptIn 0.4s ease 0.15s both; }
+.sc-opt-btn:nth-child(3) { animation: scOptIn 0.4s ease 0.25s both; }
+@keyframes scOptIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Icon badge circle */
+.sc-opt-icon {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: background 0.2s ease;
+}
+.sc-opt-btn:hover .sc-opt-icon,
+.sc-opt-btn--active .sc-opt-icon {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* Text group */
+.sc-opt-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sc-opt-label {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.sc-opt-sub {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+}
+
+/* Right chevron */
+.sc-opt-arrow {
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: rgba(212, 175, 55, 0.5);
+  transition: color 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sc-opt-btn:hover .sc-opt-arrow,
+.sc-opt-btn--active .sc-opt-arrow {
+  color: #d4af37;
+  transform: translateX(4px);
+}
+
+/* ── Scratch step ── */
+.sc-step--scratch {
+  text-align: center;
+}
+
+/* ── Scratch ticket wrapper ── */
+.sc-ticket-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto 0.5rem;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.45),
+    0 0 0 2px rgba(245, 158, 11, 0.2);
+  cursor: crosshair;
+  user-select: none;
+  touch-action: none;
+  /* Make it closer to square */
+  aspect-ratio: 500 / 380;
+}
+
+/* Revealed prize — premium dark ticket underneath */
+.sc-reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  /* Rich dark luxury — matches the gold scratch overlay*/
+  background: linear-gradient(160deg, #0a0f1e 0%, #14102b 50%, #0a0f1e 100%);
+  padding: 2rem 1.75rem;
+  text-align: center;
+  box-shadow:
+    inset 0 0 0 3px rgba(212, 175, 55, 0.4),
+    inset 4px 4px 30px rgba(212, 175, 55, 0.06),
+    inset -4px -4px 30px rgba(212, 175, 55, 0.06);
+}
+/* Decorative stars row */
+.sc-reveal-stars {
+  font-size: 1.1rem;
+  letter-spacing: 0.5em;
+  color: rgba(212, 175, 55, 0.7);
+  user-select: none;
+}
+.sc-reveal-stars--btm {
+  opacity: 0.5;
+  letter-spacing: 0.4em;
+  font-size: 0.9rem;
+}
+.sc-approved-pill {
+  display: inline-block;
+  border: 2px solid rgba(212, 175, 55, 0.7);
+  /* Gold accent in ticket context */
+  color: #d4af37;
+  background: rgba(212, 175, 55, 0.1);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 5px 18px;
+  border-radius: 100px;
+}
+.sc-approved-pill--lg {
+  font-size: 1rem;
+  padding: 7px 22px;
+}
+.sc-reveal-title {
+  font-size: clamp(1.35rem, 4vw, 1.9rem);
+  font-weight: 900;
+  color: #f8f8f8;
+  margin: 0;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  max-width: 380px;
+}
+.sc-underline {
+  text-decoration: underline;
+  text-decoration-color: rgba(212, 175, 55, 0.7);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.sc-reveal-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 58px;
+  border-radius: 14px;
+  background: #22c55e;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-decoration: none;
+  box-shadow:
+    0 4px 18px rgba(34, 197, 94, 0.5),
+    0 0 0 0 rgba(34, 197, 94, 0.4);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer !important;
+  /* Pop in when it appears */
+  animation:
+    scRevealCtaIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    scRevealCtaPulse 2.2s ease-in-out 0.8s infinite;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+/* Shimmer sweep */
+.sc-reveal-cta::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(105deg, transparent 25%, rgba(255,255,255,0.38) 60%, transparent 85%);
+  animation: scRevealShimmer 2s linear 1.2s infinite;
+}
+@keyframes scRevealCtaIn {
+  from { opacity: 0; transform: scale(0.85) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes scRevealCtaPulse {
+  0%, 100% { box-shadow: 0 4px 18px rgba(34, 197, 94, 0.5), 0 0 0 0 rgba(34, 197, 94, 0.4); }
+  50%       { box-shadow: 0 6px 28px rgba(34, 197, 94, 0.65), 0 0 0 8px rgba(34, 197, 94, 0); }
+}
+@keyframes scRevealShimmer {
+  from { left: -100%; }
+  to   { left: 200%; }
+}
+.sc-reveal-cta:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px) scale(1.02);
+}
+
+
+/* Canvas sits on top */
+.sc-canvas {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+}
+
+.sc-hint {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  margin: 0.5rem 0 0;
+  animation: scBlink 2s ease-in-out infinite;
+}
+@keyframes scBlink {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.85; }
+}
+
+/* ── Approved badge ── */
+.sc-approved-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1.5px solid rgba(16, 185, 129, 0.5);
+  color: #10b981;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 4px 14px;
+  border-radius: 100px;
+}
+.sc-approved-badge--lg {
+  font-size: 1rem;
+  padding: 6px 20px;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Win state ── */
+.sc-won-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  animation: scWinPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-top: 1.25rem;
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem 1.75rem;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+}
+@keyframes scWinPop {
+  from { opacity: 0; transform: scale(0.82); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.sc-won-title {
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  margin: 0;
+  color: #111827;
+  line-height: 1.3;
+}
+.sc-claim-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 58px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.5);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.18s ease;
+  position: relative;
+  overflow: hidden;
+  animation: scClaimIn 0.5s ease 0.2s both;
+  margin-top: 0.25rem;
+}
+/* Green variant — matches reference design */
+.sc-claim-btn--green {
+  background: #22c55e !important;
+  color: #fff !important;
+  box-shadow: 0 6px 24px rgba(34, 197, 94, 0.5) !important;
+}
+@keyframes scClaimIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.sc-claim-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 55%; height: 100%;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 60%, transparent 90%);
+  animation: scShimmer 2.2s linear infinite;
+}
+@keyframes scShimmer {
+  from { left: -100%; }
+  to   { left: 200%; }
+}
+.sc-claim-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  filter: brightness(1.08);
+}
+.sc-won-notice {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.35);
+  margin: 0;
+}
+
+/* ── Trust bar ── */
+.sc-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ── Footer ── */
+.sc-footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 680px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: 0.75rem;
+  flex-shrink: 0;
+}
+.sc-disclaimer {
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.3);
+  line-height: 1.5;
+  margin: 0 0 0.25rem;
+}
+.sc-legal {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.2);
+  line-height: 1.5;
+  margin: 0;
+}
+.sc-link {
+  color: #f59e0b;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.7;
+}
+.sc-link:hover { opacity: 1; }
+
+/* ── Mobile fine-tuning ── */
+@media (max-width: 420px) {
+  .sc-header-badges { display: none; }
+  .sc-opt-btn { padding: 0.75rem 0.85rem; }
+  .sc-trust { gap: 0.75rem; font-size: 0.72rem; }
+}
+
+/* ── Mobile scratch ticket overrides ── */
+@media (max-width: 767px) {
+  /* Card outer wrapper — full width, no horizontal overflow */
+  .sc-card {
+    padding: 1rem;
+    border-radius: 18px;
+  }
+
+  /* Step tag above ticket */
+  .sc-step-tag {
+    font-size: 0.72rem;
+    margin-bottom: 0.65rem;
+  }
+
+  /* Ticket itself — taller aspect to show more content on narrow screens */
+  .sc-ticket-wrap {
+    max-width: 100%;
+    border-radius: 14px;
+    aspect-ratio: 4 / 3;     /* wider on mobile for better thumb reach */
+    box-shadow:
+      0 6px 28px rgba(0, 0, 0, 0.55),
+      0 0 0 2px rgba(212, 175, 55, 0.3);
+  }
+
+  /* Revealed prize content — tighter padding on phone */
+  .sc-reveal {
+    padding: 1.25rem 1rem;
+    gap: 0.65rem;
+  }
+
+  /* Stars decoration — smaller on mobile */
+  .sc-reveal-stars {
+    font-size: 0.85rem;
+    letter-spacing: 0.35em;
+  }
+  .sc-reveal-stars--btm {
+    font-size: 0.7rem;
+  }
+
+  /* Approved pill */
+  .sc-approved-pill {
+    font-size: 0.78rem;
+    padding: 4px 14px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Prize title */
+  .sc-reveal-title {
+    font-size: clamp(1rem, 5vw, 1.3rem);
+    max-width: 100%;
+    line-height: 1.3;
+  }
+
+  /* CTA button — full width, good touch target */
+  .sc-reveal-cta {
+    height: 52px;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Hint text under ticket */
+  .sc-hint {
+    font-size: 0.72rem;
+    margin-top: 0.4rem;
+  }
+}
