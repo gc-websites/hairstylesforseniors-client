@@ -18,6 +18,10 @@ const Terms = lazy(() => import('./pages/Terms'));
 const Generation = lazy(() => import('./pages/Generation'));
 const Product = lazy(() => import('./pages/Product'));
 const ProductGeneration = lazy(() => import('./pages/ProductGeneration'));
+const CaptchaCredit = lazy(() => import('./pages/CaptchaCredit'));
+const CaptchaCreditFr = lazy(() => import('./pages/CaptchaCreditFr'));
+const CaptchaCarsEn = lazy(() => import('./pages/CaptchaCarsEn'));
+const CaptchaVideoEn = lazy(() => import('./pages/CaptchaVideoEn'));
 
 const App = () => {
   const [categories, setCategories] = useState([]);
@@ -69,36 +73,53 @@ const App = () => {
 
   return (
     <Suspense fallback={<Loader />}>
-      <Layout categories={categories}>
-        <ScrollToTop trigger={location} />
-        <Routes>
-          <Route path="/" element={<Home categories={categories} />} />
-          <Route path="/post/:postId" element={<Post />} />
-          <Route path="/category/:categoryId" element={<Category />} />
-          <Route path="/search" element={<Search categories={categories} />} />
-          <Route path="/author/:authorId" element={<Author />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route
-            path="/generation"
-            element={
-              <PrivateRouteWithPassword>
-                <Generation />
-              </PrivateRouteWithPassword>
-            }
-          />
-          <Route path="*" element={<Page404 />} />
-          <Route path="/product/:productId" element={<Product />} />
-          <Route
-            path="/generation/product"
-            element={
-              <PrivateRouteWithPassword>
-                <ProductGeneration />
-              </PrivateRouteWithPassword>
-            }
-          />
-        </Routes>
-      </Layout>
+      <ScrollToTop trigger={location} />
+      <Routes>
+        {/* Standalone routes — no header/footer */}
+        <Route path="/captcha/credit/en" element={<CaptchaCredit />} />
+        <Route path="/captcha/credit/fr" element={<CaptchaCreditFr />} />
+        <Route path="/captcha/cars/en" element={<CaptchaCarsEn />} />
+        <Route path="/captcha/video/en" element={<CaptchaVideoEn />} />
+
+        {/* Layout-wrapped routes */}
+        <Route
+          path="*"
+          element={
+            <Layout categories={categories}>
+              <Routes>
+                <Route path="/" element={<Home categories={categories} />} />
+                <Route path="/post/:postId" element={<Post />} />
+                <Route path="/category/:categoryId" element={<Category />} />
+                <Route
+                  path="/search"
+                  element={<Search categories={categories} />}
+                />
+                <Route path="/author/:authorId" element={<Author />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route
+                  path="/generation"
+                  element={
+                    <PrivateRouteWithPassword>
+                      <Generation />
+                    </PrivateRouteWithPassword>
+                  }
+                />
+                <Route path="/product/:productId" element={<Product />} />
+                <Route
+                  path="/generation/product"
+                  element={
+                    <PrivateRouteWithPassword>
+                      <ProductGeneration />
+                    </PrivateRouteWithPassword>
+                  }
+                />
+                <Route path="*" element={<Page404 />} />
+              </Routes>
+            </Layout>
+          }
+        />
+      </Routes>
     </Suspense>
   );
 };
