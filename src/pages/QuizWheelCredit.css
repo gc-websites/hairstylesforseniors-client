@@ -1,0 +1,377 @@
+/* =============================================
+   QuizWheelCredit — standalone spin-the-wheel prelend
+   No header / no footer layout
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+/* ── Page shell ── */
+.qw-page {
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #ede9fe 0%, #f5f3ff 40%, #e0f2fe 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem 1rem;
+}
+
+/* ── Confetti canvas ── */
+.qw-confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ── Background blobs ── */
+.qw-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+.qw-blob--tl {
+  width: 480px; height: 480px;
+  top: -140px; left: -140px;
+  background: radial-gradient(circle, #a78bfa 0%, transparent 70%);
+  animation: qwBlobPulse 8s ease-in-out infinite alternate;
+}
+.qw-blob--br {
+  width: 560px; height: 560px;
+  bottom: -160px; right: -160px;
+  background: radial-gradient(circle, #f43f7f 0%, transparent 70%);
+  animation: qwBlobPulse 10s ease-in-out infinite alternate-reverse;
+}
+@keyframes qwBlobPulse {
+  from { opacity: 0.22; transform: scale(1); }
+  to   { opacity: 0.42; transform: scale(1.15); }
+}
+
+/* ── Main content ── */
+.qw-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  width: 100%;
+  max-width: 520px;
+}
+
+/* ── Heading ── */
+.qw-heading {
+  font-size: 1.75rem;
+  font-weight: 900;
+  text-align: center;
+  color: #1e1b4b;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.qw-heading-spin {
+  color: #7c3aed;
+  text-decoration: underline;
+  text-decoration-color: #c4b5fd;
+  text-underline-offset: 4px;
+}
+.qw-heading-acc {
+  color: #7c3aed;
+}
+
+/* ── Wheel wrapper ── */
+.qw-wheel-wrap {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 12px 40px rgba(124, 58, 237, 0.28));
+}
+
+/* Outer glow ring */
+.qw-wheel-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #f43f7f, #7c3aed, #22c55e, #f97316, #38bdf8, #14b8a6, #f43f7f
+  );
+  animation: qwRingRotate 6s linear infinite;
+  z-index: 0;
+  opacity: 0.5;
+}
+.qw-wheel-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ede9fe, #f5f3ff);
+  z-index: 0;
+}
+@keyframes qwRingRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.qw-pointer {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: #7c3aed;
+  z-index: 20;
+  filter: drop-shadow(0 2px 6px rgba(124, 58, 237, 0.6));
+  line-height: 1;
+}
+
+.qw-wheel {
+  position: relative;
+  z-index: 10;
+  will-change: transform;
+  cursor: pointer;
+  width: 320px;
+  height: 320px;
+}
+.qw-wheel svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Spin button ── */
+.qw-spin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 200px;
+  min-height: 58px;
+  padding: 0 2rem;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow:
+    0 6px 20px rgba(124, 58, 237, 0.5),
+    0 2px 6px rgba(76, 29, 149, 0.3);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, filter 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+.qw-spin-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 60%, transparent 90%);
+  animation: qwShimmer 2.2s linear infinite;
+}
+@keyframes qwShimmer {
+  from { left: -100%; }
+  to   { left: 200%; }
+}
+.qw-spin-btn:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(124, 58, 237, 0.6), 0 4px 10px rgba(76, 29, 149, 0.35);
+  filter: brightness(1.08);
+}
+.qw-spin-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+.qw-spin-btn--disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.qw-spinning-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.qw-dot-loader {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: qwSpin 0.7s linear infinite;
+}
+@keyframes qwSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Trust line ── */
+.qw-trust {
+  font-size: 0.8rem;
+  color: #6d28d9;
+  font-weight: 600;
+  margin: 0;
+  opacity: 0.75;
+  letter-spacing: 0.02em;
+}
+
+/* ── Win panel ── */
+.qw-win-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(124, 58, 237, 0.2);
+  border-radius: 20px;
+  padding: 2rem 2rem 1.8rem;
+  box-shadow: 0 8px 40px rgba(124, 58, 237, 0.18), 0 2px 8px rgba(0,0,0,0.06);
+  animation: qwWinPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: center;
+  max-width: 340px;
+  width: 100%;
+}
+@keyframes qwWinPop {
+  from { opacity: 0; transform: scale(0.75); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.qw-win-badge {
+  font-size: 3.5rem;
+  line-height: 1;
+  animation: qwWinBounce 0.6s ease 0.3s both;
+}
+@keyframes qwWinBounce {
+  0%   { transform: scale(0.5) rotate(-15deg); }
+  60%  { transform: scale(1.3) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.qw-win-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #7c3aed;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0;
+}
+.qw-win-prize {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #1e1b4b;
+  letter-spacing: -0.02em;
+  margin: 0.1rem 0;
+  background: linear-gradient(135deg, #7c3aed, #f43f7f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.qw-win-sub {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0 0 0.5rem;
+}
+
+/* Claim button */
+.qw-claim-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 58px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.18s ease;
+  position: relative;
+  overflow: hidden;
+  animation: qwClaimAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+}
+@keyframes qwClaimAppear {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.qw-claim-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 60%, transparent 90%);
+  animation: qwShimmer 2s linear infinite;
+}
+.qw-claim-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  filter: brightness(1.07);
+  box-shadow: 0 10px 28px rgba(34, 197, 94, 0.6);
+}
+
+.qw-win-notice {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ── Footer ── */
+.qw-footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 700px;
+  margin-top: 2rem;
+  padding-bottom: 1rem;
+}
+.qw-divider {
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  margin-bottom: 0.8rem;
+}
+.qw-disclaimer {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  line-height: 1.65;
+  margin: 0 0 0.4rem;
+  text-align: center;
+}
+.qw-legal-links {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: center;
+  margin: 0 0 0.5rem;
+}
+.qw-link {
+  color: #7c3aed;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+.qw-link:hover { color: #a78bfa; }
+.qw-company {
+  font-size: 0.7rem;
+  color: #bbb;
+  text-align: center;
+  line-height: 1.8;
+}
+.qw-company strong { color: #aaa; font-weight: 600; }
+
+/* ── Responsive ── */
+@media (max-width: 400px) {
+  .qw-wheel-wrap { width: 290px; height: 290px; }
+  .qw-wheel { width: 270px; height: 270px; }
+  .qw-heading { font-size: 1.4rem; }
+  .qw-win-prize { font-size: 2rem; }
+}
