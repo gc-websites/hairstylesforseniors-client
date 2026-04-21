@@ -499,7 +499,9 @@
     transform 0.15s ease;
 }
 
-.hfs-comments__pagerBtn:hover:not(:disabled):not(.hfs-comments__pagerBtn--active) {
+.hfs-comments__pagerBtn:hover:not(:disabled):not(
+    .hfs-comments__pagerBtn--active
+  ) {
   border-color: var(--hfs-accent);
   color: var(--hfs-accent-strong);
   background: var(--hfs-accent-soft);
