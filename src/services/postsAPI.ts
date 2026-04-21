@@ -30,9 +30,18 @@ export const getPopularPosts = async () => {
 
 export const getPost = async documentId => {
   const post = await apiData.get(
-    `/post3s/${documentId}?populate[paragraphs][populate]=*&populate[category_3][populate]=*&populate[image][populate]=*&populate[ads][populate]=*&populate[firstAdBanner][populate]=*&populate[secondAdBanner][populate]=*&populate[author_3][populate]=*`,
+    `/post3s/${documentId}?populate[paragraphs][populate]=*&populate[category_3][populate]=*&populate[image][populate]=*&populate[ads][populate]=*&populate[firstAdBanner][populate]=*&populate[secondAdBanner][populate]=*&populate[author_3][populate]=*&populate[comments]=true`,
   );
   return post.data;
+};
+
+export const postComment = async ({ postId, username, text }) => {
+  const res = await axios.post(
+    'https://api.nice-advice.info/comment',
+    { postId, username, text, site: 'hairstyles' },
+    { headers: { 'Content-Type': 'application/json' } },
+  );
+  return res.data;
 };
 
 export const getRelatedPosts = async () => {

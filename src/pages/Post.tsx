@@ -11,6 +11,7 @@ import HorizontalAdBanner from '../views/HorizontalAdBanner';
 import RenderDescription from '../components/RenderDescription';
 import AdList from '../components/AdList';
 import InfinitePost from '../components/InfinitePost';
+import Comments from '../components/Comments';
 import { io } from 'socket.io-client';
 
 const socket = io('https://vivid-triumph-4386b82e17.strapiapp.com');
@@ -378,6 +379,8 @@ const Post = () => {
           ))}
         </div>
       </section>
+
+      <Comments postId={postId} initialComments={post.comments || []} />
 
       <Disclaimer />
 
