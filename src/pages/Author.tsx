@@ -6,6 +6,33 @@ import Loader from '../components/Loader';
 import Page404 from './Page404';
 import RenderDescription from '../components/RenderDescription';
 import Pagination from '../components/Pagination';
+import { SITE, stripHtml, useSEO } from '../utils/useSEO';
+
+const AuthorSEO = ({ author }) => {
+  const description =
+    stripHtml(author.description || '', 160) ||
+    `Articles by ${author.name} on HairStylesForSeniors – health, family, lifestyle, and wellness writing.`;
+  const url = `${SITE.ORIGIN}/author/${author.documentId}`;
+  useSEO({
+    title: `${author.name} – Author at HairStylesForSeniors`,
+    description,
+    canonical: `/author/${author.documentId}`,
+    image: author.avatar?.url,
+    type: 'profile',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      mainEntity: {
+        '@type': 'Person',
+        name: author.name,
+        description,
+        image: author.avatar?.url,
+        url,
+      },
+    },
+  });
+  return null;
+};
 
 const Author = () => {
   const { pathname } = useLocation();
@@ -46,26 +73,31 @@ const Author = () => {
 
   return (
     <div>
+      <AuthorSEO author={author} />
       <section>
-        <div className="bg-main pt-16 md:pt-36 pb-10">
+        <header className="bg-main pt-16 md:pt-36 pb-10">
           <div className="relative container">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="relative">
                 <p className="section__title pb-8 text-white text-3xl font-normal">
                   Writer
                 </p>
-                <h4 className="section__title text-white text-4xl md:text-6xl">
+                <h1 className="section__title text-white text-4xl md:text-6xl">
                   {author.name}
-                </h4>
+                </h1>
               </div>
               <img
                 src={author.avatar.url}
-                alt={author.name}
+                alt={`Portrait of ${author.name}`}
+                width={256}
+                height={256}
+                loading="eager"
+                decoding="async"
                 className="absolute md:top-8 -top-12 right-12 sm:right-0 rounded-full max-w-28 max-h-28 sm:max-w-32 sm:max-h-32 md:max-w-64 md:max-h-64"
               />
             </div>
           </div>
-        </div>
+        </header>
         <div className="container mt-8">
           <div className="max-w-full md:max-w-[70%]">
             <RenderDescription
@@ -75,9 +107,9 @@ const Author = () => {
           </div>
         </div>
         <div className="container section__padding">
-          <h4 className="section__title pb-4 text-2xl md:text-3xl">
+          <h2 className="section__title pb-4 text-2xl md:text-3xl">
             Latest from {author.name}:
-          </h4>
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 h-full">
             {posts?.map(post => (
               <Link
@@ -89,6 +121,8 @@ const Author = () => {
                   <img
                     src={post.image.url}
                     alt={post.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-300"
                   />
                 </div>

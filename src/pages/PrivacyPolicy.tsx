@@ -1,7 +1,17 @@
+import { useSEO } from '../utils/useSEO';
+
 const PrivacyPolicy = () => {
+  useSEO({
+    title: 'Privacy Policy',
+    description:
+      'Privacy Policy of HairStylesForSeniors – how we collect, use, and protect your personal data, cookies, and information.',
+    canonical: '/privacy',
+    type: 'website',
+  });
+
   return (
     <div className="container section__padding flex flex-col gap-8">
-      <h2 className="section__title text-3xl text-center">Privacy Policy</h2>
+      <h1 className="section__title text-3xl text-center">Privacy Policy</h1>
       <p className="section__description">
         This Privacy Policy was last revised and shall become effective as of
         April 1, 2022. BY ACCESSING THE SITE, YOU HAVE READ AND AGREE TO THE
@@ -28,15 +38,79 @@ const PrivacyPolicy = () => {
         </li>
       </ul>
       <p className="section__description">
-        Thank you for visiting niceadvice.com (the “Site”). The Site is an
-        Internet property of Assembly Digital Limited and its affiliated
-        companies (“Assembly”, “our”, “we” or “us”). Assembly is committed to
-        protecting your privacy. We have prepared this privacy policy (“Privacy
-        Policy”) to describe to you and to outline our practices and policies
-        associated with any information (such as Site Data, Anonymous Data, and
-        Personal Data, each as defined below) that we may collect from you, or
-        that you may share with us when you access or use the Site or use any
-        related products and/or services.
+        Thank you for visiting nice-advice.info (the “Site”). The Site is
+        operated by HairStylesForSeniors (“we”, “us”, or “our”). We are
+        committed to protecting your privacy. We have prepared this Privacy
+        Policy to describe our practices and policies associated with any
+        information (such as Site Data, Anonymous Data, and Personal Data, each
+        as defined below) that we may collect from you, or that you may share
+        with us when you access or use the Site or use any related products
+        and/or services.
+      </p>
+      <h3 className="section__title">Cookies and Similar Technologies</h3>
+      <p className="section__description">
+        We and our third-party partners (including Google) use cookies, web
+        beacons, and similar technologies to deliver, measure, and personalise
+        content and advertising on our Site. Cookies are small data files stored
+        on your device that help us recognise you and your preferences. You can
+        control cookies through your browser settings or, where applicable,
+        through the on-site consent banner. Disabling cookies may affect parts
+        of the Site’s functionality.
+      </p>
+      <h3 className="section__title">
+        Third-Party Advertising and Google AdSense
+      </h3>
+      <p className="section__description">
+        Third-party vendors, including Google, use cookies to serve ads based on
+        a user’s prior visits to this and other websites. Google’s use of
+        advertising cookies enables it and its partners to serve ads to our
+        users based on their visit to our site and/or other sites on the
+        Internet. Users may opt out of personalised advertising by visiting{' '}
+        <a
+          href="https://www.google.com/settings/ads"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="underline"
+        >
+          Google Ads Settings
+        </a>
+        . Users in the EU/EEA can manage consent through our cookie banner. For
+        more information about the cookies used by advertising partners, please
+        see{' '}
+        <a
+          href="https://policies.google.com/technologies/ads"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="underline"
+        >
+          Google’s advertising policies
+        </a>{' '}
+        and{' '}
+        <a
+          href="https://www.aboutads.info/choices/"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="underline"
+        >
+          aboutads.info
+        </a>
+        .
+      </p>
+      <h3 className="section__title">Children’s Privacy</h3>
+      <p className="section__description">
+        The Site is intended for general audiences and is not directed to
+        children under the age of 13. We do not knowingly collect personal
+        information from children. If you believe we have inadvertently
+        collected personal information from a child, please contact us so we can
+        promptly delete it.
+      </p>
+      <h3 className="section__title">Your Rights (GDPR / CCPA)</h3>
+      <p className="section__description">
+        Depending on where you live, you may have the right to access, correct,
+        delete, port, or restrict processing of your personal information, and
+        to withdraw consent or object to processing. To exercise these rights,
+        contact us via the Contact page. We respond to verifiable requests
+        within the timeframe required by applicable law.
       </p>
       <h3 className="section__title">Lawful Basis for Processing Data</h3>
       <p className="section__description">

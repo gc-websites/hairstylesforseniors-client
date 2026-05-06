@@ -42,6 +42,11 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
 
   return createPortal(
     <div
+      id="primary-navigation"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Primary navigation"
+      aria-hidden={!isBurgerOpen}
       className={`fixed top-0 left-0 w-screen h-screen z-40 bg-[#0000001e] transition-opacity duration-300 ${
         isBurgerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
@@ -53,6 +58,8 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
         }`}
       >
         <button
+          type="button"
+          aria-label="Close navigation menu"
           onClick={() => setIsBurgerOpen(false)}
           className="w-10 h-10 absolute right-6 md:h-6 md:w-6"
         >
@@ -61,6 +68,8 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
             viewBox="0,0,256,256"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
           >
             {close}
           </svg>

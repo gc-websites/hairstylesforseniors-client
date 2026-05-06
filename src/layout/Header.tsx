@@ -51,9 +51,13 @@ const Header: FC<HeaderProps> = ({ categories }) => {
   }, [location.pathname, scrollToSearch]);
 
   return (
-    <header className="border-b border-main">
+    <header className="border-b border-main" role="banner">
       <div className="flex justify-between items-center w-full container gap-x-5">
         <button
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded={isBurgerOpen}
+          aria-controls="primary-navigation"
           className="flex justify-center items-center"
           onClick={() => setIsBurgerOpen(true)}
         >
@@ -62,6 +66,8 @@ const Header: FC<HeaderProps> = ({ categories }) => {
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
           >
             {burger}
           </svg>
@@ -72,6 +78,8 @@ const Header: FC<HeaderProps> = ({ categories }) => {
         />
         <div className="flex items-center gap-4">
           <button
+            type="button"
+            aria-label="Search articles"
             className="justify-center items-center cursor-pointer"
             onClick={handleSearchClick}
           >
@@ -80,6 +88,8 @@ const Header: FC<HeaderProps> = ({ categories }) => {
               viewBox="0 0 32 32"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
             >
               {search}
             </svg>

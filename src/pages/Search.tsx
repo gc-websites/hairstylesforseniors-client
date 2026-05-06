@@ -6,8 +6,10 @@ import Pagination from '../components/Pagination';
 import Loader from '../components/Loader';
 import Categories from '../views/Categories';
 import RenderDescription from '../components/RenderDescription';
+import { useSEO } from '../utils/useSEO';
 
 const Search = ({ categories }) => {
+  // search results pages should not be indexed
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,6 +18,15 @@ const Search = ({ categories }) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('query');
+
+  useSEO({
+    title: query ? `Search: ${query}` : 'Search',
+    description: query
+      ? `Search results for "${query}" on HairStylesForSeniors.`
+      : 'Search articles on HairStylesForSeniors.',
+    canonical: '/search',
+    noindex: true,
+  });
 
   useEffect(() => {
     if (!query || query.length < 3) return;

@@ -1,20 +1,26 @@
 {
-  "name": "Nice Advice",
-  "short_name": "Advice",
+  "name": "HairStylesForSeniors",
+  "short_name": "HairStyles",
+  "description": "Articles and useful tips about health, family, sports, nutrition, and everyday life.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#0ea5e9",
+  "lang": "en",
   "icons": [
     {
       "src": "https://vivid-triumph-4386b82e17.media.strapiapp.com/preview_fe3bc00fab.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "https://vivid-triumph-4386b82e17.media.strapiapp.com/preview_fe3bc00fab.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

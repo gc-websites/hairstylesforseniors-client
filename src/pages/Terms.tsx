@@ -1,25 +1,33 @@
+import { useSEO } from '../utils/useSEO';
+
 const Terms = () => {
+  useSEO({
+    title: 'Terms of Website Use',
+    description:
+      'Terms of Use for HairStylesForSeniors – the rules and conditions that govern your access to and use of our website and content.',
+    canonical: '/terms',
+    type: 'website',
+  });
+
   return (
     <div className="container section__padding flex flex-col gap-8">
-      <h2 className="section__title text-3xl text-center">
+      <h1 className="section__title text-3xl text-center">
         Terms of Website Use
-      </h2>
+      </h1>
       <p className="section__description">
-        Thank for visiting niceadvice.com (the “Site”). By visiting this Site
-        and accessing any content or using any of the services or products
+        Thank you for visiting nice-advice.info (the “Site”). By visiting this
+        Site and accessing any content or using any of the services or products
         available through the Site, you agree to the following terms and
-        conditions. This Site is an Internet property of Assembly Digital
-        Limited and its affiliated companies (“Assembly”, “we” or “us”).
-        Assembly is granting you a limited right to access and view the content
+        conditions. This Site is operated by HairStylesForSeniors (“we”, “us”,
+        or “our”). We grant you a limited right to access and view the content
         published and made available through the Site. The Privacy Policy
-        (“Privacy Policy”) and any and all other applicable Assembly operating
-        rules, policies, and other supplemental terms and conditions or
-        documents that may be published from time to time, are expressly
-        incorporated here by reference (collective, the “Agreement”). Please
-        review the complete terms of the Agreement carefully. You may not
-        reproduce, modify, or re-distribute the Assembly content or materials
-        available on this Site in any way, unless otherwise authorized in
-        writing by Assembly.
+        (“Privacy Policy”) and any and all other applicable operating rules,
+        policies, and other supplemental terms and conditions or documents that
+        may be published from time to time, are expressly incorporated here by
+        reference (collectively, the “Agreement”). Please review the complete
+        terms of the Agreement carefully. You may not reproduce, modify, or
+        re-distribute the content or materials available on this Site in any
+        way, unless otherwise authorized in writing by us.
       </p>
       <h3 className="section__title">
         IF YOU DO NOT AGREE TO THIS AGREEMENT IN ITS ENTIRETY, YOU ARE NOT

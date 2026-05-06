@@ -3,29 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
 
     <!-- SEO Basics -->
-    <title>HairStylesForSeniors</title>
+    <title>HairStylesForSeniors – Practical Health, Family, Nutrition &amp; Lifestyle Tips</title>
     <meta
       name="description"
-      content="HairStylesForSeniors – articles and useful tips about health, family, sports, nutrition, and everyday life. Find practical advice for a better lifestyle."
+      content="HairStylesForSeniors publishes well-researched articles on health, family, sports, nutrition, body wellness, and everyday lifestyle. Discover practical, expert-reviewed advice for a healthier, happier life."
     />
     <meta
       name="keywords"
-      content="health, family, sports, human body, lifestyle, nutrition, tips, guides, advice"
+      content="health tips, family advice, sports, human body, lifestyle, nutrition, wellness guides, seniors lifestyle, healthy living, daily advice"
     />
-    <meta name="author" content="HairStylesForSeniors" />
-    <meta name="robots" content="index, follow" />
+    <meta name="author" content="HairStylesForSeniors Editorial Team" />
+    <meta name="publisher" content="HairStylesForSeniors" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="rating" content="general" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="Content-Language" content="en" />
+
+    <!-- Google AdSense ownership verification -->
+    <meta name="google-adsense-account" content="ca-pub-1088654265590051" />
 
     <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:site_name" content="HairStylesForSeniors" />
     <meta
       property="og:title"
-      content="HairStylesForSeniors – Practical Health, Family, Nutrition & Lifestyle Tips"
+      content="HairStylesForSeniors – Practical Health, Family, Nutrition &amp; Lifestyle Tips"
     />
     <meta
       property="og:description"
-      content="HairStylesForSeniors – articles and useful tips about health, family, sports, nutrition, and everyday life. Find practical advice for a better lifestyle."
+      content="HairStylesForSeniors publishes well-researched articles on health, family, sports, nutrition, body wellness, and everyday lifestyle. Discover practical, expert-reviewed advice for a healthier, happier life."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://nice-advice.info/" />
@@ -33,34 +46,47 @@
       property="og:image"
       content="https://vivid-triumph-4386b82e17.media.strapiapp.com/preview_2_bc7b8d12af.png"
     />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="HairStylesForSeniors – Health and Lifestyle Articles" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="HairStylesForSeniors – Practical Health, Family, Nutrition & Lifestyle Tips"
+      content="HairStylesForSeniors – Practical Health, Family, Nutrition &amp; Lifestyle Tips"
     />
     <meta
       name="twitter:description"
-      content="HairStylesForSeniors – articles and useful tips about health, family, sports, nutrition, and everyday life. Find practical advice for a better lifestyle."
+      content="Well-researched articles on health, family, sports, nutrition, and lifestyle. Practical advice for a healthier life."
     />
     <meta
       name="twitter:image"
       content="https://vivid-triumph-4386b82e17.media.strapiapp.com/preview_2_bc7b8d12af.png"
     />
+    <meta name="twitter:image:alt" content="HairStylesForSeniors – Health and Lifestyle" />
     <meta name="twitter:site" content="@niceadvice" />
 
     <!-- Icons -->
-    <link rel="icon" type="image/svg+xml" href="./src/assets/svg/tick.svg" />
-    <link rel="icon" type="image/png" href="./src/assets/svg/tick.svg" />
-    <link rel="apple-touch-icon" href="./src/assets/svg/tick.svg" />
-    <link rel="mask-icon" href="./src/assets/svg/tick.svg" color="#0ea5e9" />
-    <meta name="theme-color" content="#ffffff" />
-    <link rel="manifest" href="/public/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/svg/tick.svg" />
+    <link rel="icon" type="image/png" href="/src/assets/svg/tick.svg" />
+    <link rel="apple-touch-icon" href="/src/assets/svg/tick.svg" />
+    <link rel="mask-icon" href="/src/assets/svg/tick.svg" color="#0ea5e9" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Canonical URL -->
+    <!-- Canonical URL (per-page canonical is updated dynamically by the SPA) -->
     <link rel="canonical" href="https://nice-advice.info/" />
+
+    <!-- Performance: preconnect to media + API origins -->
+    <link rel="preconnect" href="https://vivid-triumph-4386b82e17.media.strapiapp.com" crossorigin />
+    <link rel="preconnect" href="https://vivid-triumph-4386b82e17.strapiapp.com" crossorigin />
+    <link rel="dns-prefetch" href="https://vivid-triumph-4386b82e17.media.strapiapp.com" />
+    <link rel="dns-prefetch" href="https://vivid-triumph-4386b82e17.strapiapp.com" />
+    <link rel="dns-prefetch" href="https://api.nice-advice.info" />
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -70,27 +96,53 @@
       rel="stylesheet"
     />
 
-    <!-- Structured Data -->
+    <!-- Structured Data: WebSite + SearchAction -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Nice Advice",
+        "name": "HairStylesForSeniors",
+        "alternateName": "Nice Advice",
         "url": "https://nice-advice.info/",
+        "inLanguage": "en",
+        "description": "Articles and useful tips about health, family, sports, nutrition, and everyday life.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "HairStylesForSeniors",
+          "url": "https://nice-advice.info/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://vivid-triumph-4386b82e17.media.strapiapp.com/tick_b2fcfe5480.svg"
+          }
+        },
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://nice-advice.info/search?q={query}",
-          "query-input": "required name=query"
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://nice-advice.info/search?query={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
         }
       }
     </script>
+    <!-- Structured Data: Organization -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "Nice Advice",
+        "name": "HairStylesForSeniors",
+        "alternateName": "Nice Advice",
         "url": "https://nice-advice.info/",
         "logo": "https://vivid-triumph-4386b82e17.media.strapiapp.com/tick_b2fcfe5480.svg",
+        "description": "Editorial publisher of practical articles on health, family, sports, nutrition, and lifestyle.",
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "email": "support@nice-advice.info",
+            "availableLanguage": ["English"]
+          }
+        ],
         "sameAs": [
           "https://www.facebook.com/niceadvice",
           "https://www.linkedin.com/company/niceadvice",
@@ -99,30 +151,34 @@
       }
     </script>
 
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DE5K8ED969"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google AdSense -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1088654265590051"
+      crossorigin="anonymous"
+    ></script>
 
-  gtag('config', 'G-DE5K8ED969');
-</script>
-    <!-- Google Tag Manager -->
-      <!-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-NZS7G3BL');</script> -->
-    <!-- End Google Tag Manager -->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
-      <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DE5K8ED969"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500
+      });
+      gtag('config', 'G-DE5K8ED969', { anonymize_ip: true });
+    </script>
+
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-      <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NZS7G3BL"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> -->
-    <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <div id="modal"></div>
     <script type="module" src="/src/main.tsx"></script>

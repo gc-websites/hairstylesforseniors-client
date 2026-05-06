@@ -15,6 +15,8 @@ const Search = lazy(() => import('./pages/Search'));
 const Author = lazy(() => import('./pages/Author'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/Terms'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
 const Generation = lazy(() => import('./pages/Generation'));
 const Product = lazy(() => import('./pages/Product'));
 const ProductGeneration = lazy(() => import('./pages/ProductGeneration'));
@@ -105,6 +107,8 @@ const App = () => {
                 <Route path="/author/:authorId" element={<Author />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/terms" element={<Terms />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route
                   path="/generation"
                   element={
