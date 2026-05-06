@@ -157,9 +157,30 @@ export const useSEO = (options: SEOOptions) => {
   ]);
 };
 
-export const stripHtml = (html: string, max = 160): string => {
-  if (!html) return '';
-  const text = html
+type RichTextChild = {
+  type?: string;
+  text?: string;
+  children?: RichTextChild[];
+};
+type RichTextBlock = { type?: string; children?: RichTextChild[] };
+
+const extractTextFromNode = (node: unknown): string => {
+  if (node == null) return '';
+  if (typeof node === 'string') return node;
+  if (Array.isArray(node)) return node.map(extractTextFromNode).join(' ');
+  if (typeof node === 'object') {
+    const obj = node as RichTextBlock & RichTextChild;
+    if (typeof obj.text === 'string') return obj.text;
+    if (Array.isArray(obj.children)) return extractTextFromNode(obj.children);
+  }
+  return '';
+};
+
+export const stripHtml = (input: unknown, max = 160): string => {
+  if (input == null) return '';
+  const raw = typeof input === 'string' ? input : extractTextFromNode(input);
+  if (!raw) return '';
+  const text = raw
     .replace(/<[^>]*>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
