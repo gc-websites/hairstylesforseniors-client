@@ -6,7 +6,7 @@ import ThemeToggle from '../components/ThemeToggle';
 
 import { search } from '../utils/Icons';
 import { burger } from '../utils/Icons';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 interface Category {
   documentId: number | string;
@@ -77,6 +77,13 @@ const Header: FC<HeaderProps> = ({ categories }) => {
           isLink
         />
         <div className="flex items-center gap-4">
+          <Link
+            to="/forum"
+            aria-label="Open community forum"
+            className="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-semibold text-main3 hover:text-main2 transition border border-main3/30 hover:border-main3 dark:text-main dark:border-main/40 dark:hover:border-main"
+          >
+            💬 Forum
+          </Link>
           <button
             type="button"
             aria-label="Search articles"

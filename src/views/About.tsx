@@ -5,16 +5,14 @@ const About = () => {
     <section className="container section__padding">
       <h2 className="section__title mb-6">About Us</h2>
       <p className="section__description mb-4">
-        Welcome to our information portal! Our mission is to provide readers
-        with the most engaging and up-to-date articles across various topics.
-        Our team of experienced writers explores and highlights subjects that
-        resonate with contemporary society.
+        Welcome to HairStylesForSeniors. We write friendly, practical hair-care
+        articles for adults 50 and up — covering the everyday questions that
+        come up as our hair (and lives) change with age.
       </p>
       <p className="section__description mb-4">
-        We believe that knowledge is power. Our materials aim to inform,
-        inspire, and broaden the horizons of our readers. Whether you're seeking
-        advice on a healthy lifestyle, technological news, or cultural reviews,
-        we have something for everyone.
+        From senior-friendly hairstyles and gentle care routines to gray
+        coverage, thinning hair, color choices, and product reviews — our team
+        of experienced writers shares trusted advice in plain language.
       </p>
 
       <div className="flex flex-wrap justify-center items-start mt-8">
@@ -29,9 +27,9 @@ const About = () => {
           </svg>
           <h3 className="section__title mb-2 text-center">Our Mission</h3>
           <p className="section__description">
-            To deliver high-quality, reliable, and diverse content that caters
-            to the interests and needs of our readers, fostering a community of
-            informed individuals.
+            Deliver reliable, easy-to-follow hair-care advice for people 50 and
+            up — written in plain language, free from jargon, and rooted in real
+            reader questions.
           </p>
         </div>
 
@@ -46,9 +44,9 @@ const About = () => {
           </svg>
           <h3 className="section__title mb-2 text-center">Our Vision</h3>
           <p className="section__description">
-            To become a leading platform for insightful articles, where readers
-            can find inspiration, knowledge, and a deeper understanding of the
-            world around them.
+            To be the go-to destination for hair care and hairstyles after 50 —
+            a place where readers feel welcomed, informed, and confident about
+            the choices they make for their hair.
           </p>
         </div>
 

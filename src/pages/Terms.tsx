@@ -15,19 +15,20 @@ const Terms = () => {
         Terms of Website Use
       </h1>
       <p className="section__description">
-        Thank you for visiting nice-advice.info (the “Site”). By visiting this
-        Site and accessing any content or using any of the services or products
-        available through the Site, you agree to the following terms and
-        conditions. This Site is operated by HairStylesForSeniors (“we”, “us”,
-        or “our”). We grant you a limited right to access and view the content
-        published and made available through the Site. The Privacy Policy
-        (“Privacy Policy”) and any and all other applicable operating rules,
-        policies, and other supplemental terms and conditions or documents that
-        may be published from time to time, are expressly incorporated here by
-        reference (collectively, the “Agreement”). Please review the complete
-        terms of the Agreement carefully. You may not reproduce, modify, or
-        re-distribute the content or materials available on this Site in any
-        way, unless otherwise authorized in writing by us.
+        Thank you for visiting hairstylesforseniors.com (the “Site”). By
+        visiting this Site and accessing any content or using any of the
+        services or products available through the Site, you agree to the
+        following terms and conditions. This Site is operated by
+        HairStylesForSeniors (“we”, “us”, or “our”). We grant you a limited
+        right to access and view the content published and made available
+        through the Site. The Privacy Policy (“Privacy Policy”) and any and all
+        other applicable operating rules, policies, and other supplemental terms
+        and conditions or documents that may be published from time to time, are
+        expressly incorporated here by reference (collectively, the
+        “Agreement”). Please review the complete terms of the Agreement
+        carefully. You may not reproduce, modify, or re-distribute the content
+        or materials available on this Site in any way, unless otherwise
+        authorized in writing by us.
       </p>
       <h3 className="section__title">
         IF YOU DO NOT AGREE TO THIS AGREEMENT IN ITS ENTIRETY, YOU ARE NOT

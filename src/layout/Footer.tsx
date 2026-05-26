@@ -47,6 +47,12 @@ const Footer: FC<FooterProps> = ({ categories }) => {
             </h2>
             <div className="flex flex-col gap-5">
               <Link
+                to="/forum"
+                className="section__description text-white font-light"
+              >
+                Community Forum
+              </Link>
+              <Link
                 to="/about"
                 className="section__description text-white font-light"
               >

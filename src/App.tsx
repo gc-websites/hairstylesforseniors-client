@@ -28,6 +28,10 @@ const QuizWheelCredit = lazy(() => import('./pages/QuizWheelCredit'));
 const QuizWheelCreditFr = lazy(() => import('./pages/QuizWheelCreditFr'));
 const ScratchCardCarsEn = lazy(() => import('./pages/ScratchCardCarsEn'));
 const ScratchCardVideoEn = lazy(() => import('./pages/ScratchCardVideoEn'));
+const Forum = lazy(() => import('./pages/Forum'));
+const ForumCategory = lazy(() => import('./pages/ForumCategory'));
+const Thread = lazy(() => import('./pages/Thread'));
+const NewThread = lazy(() => import('./pages/NewThread'));
 
 const App = () => {
   const [categories, setCategories] = useState([]);
@@ -118,6 +122,13 @@ const App = () => {
                   }
                 />
                 <Route path="/product/:productId" element={<Product />} />
+                <Route path="/forum" element={<Forum />} />
+                <Route path="/forum/new" element={<NewThread />} />
+                <Route
+                  path="/forum/c/:categoryKey"
+                  element={<ForumCategory />}
+                />
+                <Route path="/forum/t/:slug" element={<Thread />} />
                 <Route
                   path="/generation/product"
                   element={

@@ -4,7 +4,7 @@ const Page404 = () => {
   useSEO({
     title: 'Page Not Found',
     description:
-      'The page you are looking for could not be found. Browse our latest articles on health, family, and lifestyle.',
+      'The page you are looking for could not be found. Browse our latest articles on hair care, hairstyles, and confidence tips for adults 50+.',
     canonical: '/404',
     noindex: true,
   });

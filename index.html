@@ -9,14 +9,14 @@
     />
 
     <!-- SEO Basics -->
-    <title>HairStylesForSeniors – Practical Health, Family, Nutrition &amp; Lifestyle Tips</title>
+    <title>HairStylesForSeniors – Hair Care, Styles &amp; Confidence Tips for Adults 50+</title>
     <meta
       name="description"
-      content="HairStylesForSeniors publishes well-researched articles on health, family, sports, nutrition, body wellness, and everyday lifestyle. Discover practical, expert-reviewed advice for a healthier, happier life."
+      content="Friendly, practical hair-care advice for people 50 and up. Senior-friendly hairstyles, color and gray-coverage tips, hair-loss support, product reviews and a warm community forum."
     />
     <meta
       name="keywords"
-      content="health tips, family advice, sports, human body, lifestyle, nutrition, wellness guides, seniors lifestyle, healthy living, daily advice"
+      content="hairstyles for seniors, hair care for older women, hair care for older men, gray hair, hair thinning over 50, hairstyles over 60, senior hairstyles, short hair for women over 60, hair color for seniors, hair loss women over 50"
     />
     <meta name="author" content="HairStylesForSeniors Editorial Team" />
     <meta name="publisher" content="HairStylesForSeniors" />
@@ -26,6 +26,21 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="Content-Language" content="en" />
+    <meta name="application-name" content="HairStylesForSeniors" />
+    <meta name="apple-mobile-web-app-title" content="HairStylesForSeniors" />
+
+    <!-- Google Search Console verification —
+         Either: (a) set VITE_GSC_TOKEN in .env.production and Vite will inject the meta tag automatically,
+                 (b) verify via Google Analytics (already wired below, requires same Google account),
+              or (c) replace the placeholder below and uncomment.
+
+         <meta name="google-site-verification" content="REPLACE_WITH_YOUR_TOKEN" />
+    -->
+    <!--%GSC_TOKEN_META%-->
+
+    <!-- Language alternates (single-language English site) -->
+    <link rel="alternate" hreflang="en" href="https://hairstylesforseniors.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://hairstylesforseniors.com/" />
 
     <!-- Google AdSense ownership verification -->
     <meta name="google-adsense-account" content="ca-pub-1088654265590051" />
@@ -34,51 +49,50 @@
     <meta property="og:site_name" content="HairStylesForSeniors" />
     <meta
       property="og:title"
-      content="HairStylesForSeniors – Practical Health, Family, Nutrition &amp; Lifestyle Tips"
+      content="HairStylesForSeniors – Hair Care, Styles &amp; Confidence Tips for Adults 50+"
     />
     <meta
       property="og:description"
-      content="HairStylesForSeniors publishes well-researched articles on health, family, sports, nutrition, body wellness, and everyday lifestyle. Discover practical, expert-reviewed advice for a healthier, happier life."
+      content="Friendly, practical hair-care advice for people 50 and up. Senior-friendly hairstyles, color and gray-coverage tips, hair-loss support and a warm community forum."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://nice-advice.info/" />
+    <meta property="og:url" content="https://hairstylesforseniors.com/" />
     <meta
       property="og:image"
       content="https://vivid-triumph-4386b82e17.media.strapiapp.com/preview_2_bc7b8d12af.png"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="HairStylesForSeniors – Health and Lifestyle Articles" />
+    <meta property="og:image:alt" content="HairStylesForSeniors – Hair care for adults 50+" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="HairStylesForSeniors – Practical Health, Family, Nutrition &amp; Lifestyle Tips"
+      content="HairStylesForSeniors – Hair Care &amp; Styles for Adults 50+"
     />
     <meta
       name="twitter:description"
-      content="Well-researched articles on health, family, sports, nutrition, and lifestyle. Practical advice for a healthier life."
+      content="Practical, friendly hair-care tips for people 50 and up. Styles, color, hair loss, products and a community forum."
     />
     <meta
       name="twitter:image"
       content="https://vivid-triumph-4386b82e17.media.strapiapp.com/preview_2_bc7b8d12af.png"
     />
-    <meta name="twitter:image:alt" content="HairStylesForSeniors – Health and Lifestyle" />
-    <meta name="twitter:site" content="@niceadvice" />
+    <meta name="twitter:image:alt" content="HairStylesForSeniors – Hair care for adults 50+" />
 
     <!-- Icons -->
-    <link rel="icon" type="image/svg+xml" href="/src/assets/svg/tick.svg" />
-    <link rel="icon" type="image/png" href="/src/assets/svg/tick.svg" />
-    <link rel="apple-touch-icon" href="/src/assets/svg/tick.svg" />
-    <link rel="mask-icon" href="/src/assets/svg/tick.svg" color="#0ea5e9" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/tick.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/tick.svg" />
+    <link rel="apple-touch-icon" href="/tick.svg" />
+    <link rel="mask-icon" href="/tick.svg" color="#4BC8BE" />
+    <meta name="theme-color" content="#4BC8BE" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#039185" media="(prefers-color-scheme: dark)" />
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Canonical URL (per-page canonical is updated dynamically by the SPA) -->
-    <link rel="canonical" href="https://nice-advice.info/" />
+    <link rel="canonical" href="https://hairstylesforseniors.com/" />
 
     <!-- Performance: preconnect to media + API origins -->
     <link rel="preconnect" href="https://vivid-triumph-4386b82e17.media.strapiapp.com" crossorigin />
@@ -102,14 +116,13 @@
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "HairStylesForSeniors",
-        "alternateName": "Nice Advice",
-        "url": "https://nice-advice.info/",
+        "url": "https://hairstylesforseniors.com/",
         "inLanguage": "en",
-        "description": "Articles and useful tips about health, family, sports, nutrition, and everyday life.",
+        "description": "Friendly, practical hair-care advice for adults 50 and up: hairstyles, color, hair loss, products and a community forum.",
         "publisher": {
           "@type": "Organization",
           "name": "HairStylesForSeniors",
-          "url": "https://nice-advice.info/",
+          "url": "https://hairstylesforseniors.com/",
           "logo": {
             "@type": "ImageObject",
             "url": "https://vivid-triumph-4386b82e17.media.strapiapp.com/tick_b2fcfe5480.svg"
@@ -119,7 +132,7 @@
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://nice-advice.info/search?query={search_term_string}"
+            "urlTemplate": "https://hairstylesforseniors.com/search?query={search_term_string}"
           },
           "query-input": "required name=search_term_string"
         }
@@ -131,22 +144,16 @@
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "HairStylesForSeniors",
-        "alternateName": "Nice Advice",
-        "url": "https://nice-advice.info/",
+        "url": "https://hairstylesforseniors.com/",
         "logo": "https://vivid-triumph-4386b82e17.media.strapiapp.com/tick_b2fcfe5480.svg",
-        "description": "Editorial publisher of practical articles on health, family, sports, nutrition, and lifestyle.",
-        "contactPoint": [
-          {
-            "@type": "ContactPoint",
-            "contactType": "customer support",
-            "email": "support@nice-advice.info",
-            "availableLanguage": ["English"]
-          }
-        ],
-        "sameAs": [
-          "https://www.facebook.com/niceadvice",
-          "https://www.linkedin.com/company/niceadvice",
-          "https://twitter.com/niceadvice"
+        "description": "Editorial publisher of practical hair-care articles and a friendly community forum for adults 50 and up.",
+        "knowsAbout": [
+          "hairstyles for seniors",
+          "hair care for older adults",
+          "gray hair",
+          "hair loss",
+          "hair color",
+          "hair styling"
         ]
       }
     </script>
@@ -181,6 +188,13 @@
   <body>
     <div id="root"></div>
     <div id="modal"></div>
+    <noscript>
+      <p style="padding:24px;font-family:sans-serif">
+        HairStylesForSeniors requires JavaScript. Please enable JavaScript in
+        your browser to read articles, browse hairstyles, and join the community
+        forum.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

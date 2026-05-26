@@ -1,15 +1,21 @@
 {
   "name": "HairStylesForSeniors",
   "short_name": "HairStyles",
-  "description": "Articles and useful tips about health, family, sports, nutrition, and everyday life.",
+  "description": "Friendly, practical hair-care advice and a community forum for adults 50 and up.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#0ea5e9",
+  "theme_color": "#4BC8BE",
   "lang": "en",
   "icons": [
+    {
+      "src": "/tick.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
     {
       "src": "https://vivid-triumph-4386b82e17.media.strapiapp.com/preview_fe3bc00fab.png",
       "sizes": "192x192",

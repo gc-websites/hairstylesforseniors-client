@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
 import { close } from '../utils/Icons';
 
 import NavBar from './NavBar';
@@ -82,6 +83,14 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
           setIsBurgerOpen={setIsBurgerOpen}
           categories={categories}
         />
+        <hr className="w-full border-t-2 border-additionalText dark:border-white m-0 opacity-20" />
+        <Link
+          to="/forum"
+          onClick={() => setIsBurgerOpen(false)}
+          className="font-poppins text-xl text-additionalText dark:text-white inline-flex items-center gap-2"
+        >
+          💬 Community Forum
+        </Link>
         <hr className="w-full border-t-2 border-additionalText dark:border-white m-0 opacity-20" />
         <div className="flex flex-col gap-4">
           <h4 className="font-inter text-lg">Follow us:</h4>

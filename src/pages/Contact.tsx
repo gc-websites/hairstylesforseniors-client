@@ -1,25 +1,27 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSEO } from '../utils/useSEO';
+import { SITE, useSEO } from '../utils/useSEO';
+
+const CONTACT_EMAIL = 'support@hairstylesforseniors.com';
 
 const Contact = () => {
   useSEO({
     title: 'Contact Us',
     description:
-      'Contact HairStylesForSeniors – send editorial questions, corrections, advertising enquiries, or general feedback to our team.',
+      'Contact HairStylesForSeniors — send editorial questions, corrections, advertising enquiries, or general feedback to our team.',
     canonical: '/contact',
     type: 'website',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'ContactPage',
       name: 'Contact HairStylesForSeniors',
-      url: 'https://nice-advice.info/contact',
+      url: `${SITE.ORIGIN}/contact`,
       description: 'Get in touch with the HairStylesForSeniors editorial team.',
       mainEntity: {
         '@type': 'Organization',
         name: 'HairStylesForSeniors',
-        email: 'support@nice-advice.info',
-        url: 'https://nice-advice.info/',
+        email: CONTACT_EMAIL,
+        url: `${SITE.ORIGIN}/`,
       },
     },
   });
@@ -38,7 +40,7 @@ const Contact = () => {
         'message',
       )}`,
     );
-    window.location.href = `mailto:support@nice-advice.info?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
     setSubmitted(true);
     form.reset();
   };
@@ -50,11 +52,8 @@ const Contact = () => {
         We read every message. For editorial corrections, partnership ideas,
         advertising enquiries, or general feedback, please use the form below or
         email us directly at{' '}
-        <a
-          href="mailto:support@nice-advice.info"
-          className="text-main underline"
-        >
-          support@nice-advice.info
+        <a href={`mailto:${CONTACT_EMAIL}`} className="text-main underline">
+          {CONTACT_EMAIL}
         </a>
         . We typically reply within 2–3 business days.
       </p>

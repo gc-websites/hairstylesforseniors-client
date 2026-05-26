@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 const SITE_NAME = 'HairStylesForSeniors';
-const SITE_ORIGIN = 'https://nice-advice.info';
+const SITE_ORIGIN = 'https://hairstylesforseniors.com';
 const DEFAULT_IMAGE =
   'https://vivid-triumph-4386b82e17.media.strapiapp.com/preview_2_bc7b8d12af.png';
 
@@ -97,7 +97,7 @@ export const useSEO = (options: SEOOptions) => {
       ? title.includes(SITE_NAME)
         ? title
         : `${title} | ${SITE_NAME}`
-      : `${SITE_NAME} – Practical Health, Family, Nutrition & Lifestyle Tips`;
+      : `${SITE_NAME} – Hair Care, Styles & Confidence Tips for Adults 50+`;
 
     document.title = fullTitle;
 

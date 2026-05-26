@@ -95,7 +95,7 @@ const InfinitePost = ({ postIds, getReadingCount }) => {
                     {post.author_3.name}
                   </h5>
                 </Link>
-                <img src={dot} alt="dot" className="w-2 h-2" />
+                <img src={dot} alt="" aria-hidden="true" className="w-2 h-2" />
                 <p className="section__description text-additionalText text-sm">
                   {new Intl.DateTimeFormat('en-US', {
                     month: 'short',
@@ -185,7 +185,12 @@ const InfinitePost = ({ postIds, getReadingCount }) => {
                     <h5 className="section__title text-sm font-bold">
                       {post.author_3.name}
                     </h5>
-                    <img src={dot} alt="dot" className="w-2 h-2" />
+                    <img
+                      src={dot}
+                      alt=""
+                      aria-hidden="true"
+                      className="w-2 h-2"
+                    />
                     <p className="section__description text-additionalText text-xs">
                       {new Intl.DateTimeFormat('en-US', {
                         month: 'short',

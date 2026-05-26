@@ -11,7 +11,7 @@ import { SITE, stripHtml, useSEO } from '../utils/useSEO';
 const AuthorSEO = ({ author }) => {
   const description =
     stripHtml(author.description || '', 160) ||
-    `Articles by ${author.name} on HairStylesForSeniors – health, family, lifestyle, and wellness writing.`;
+    `Articles by ${author.name} on HairStylesForSeniors – hair care, styles, color, and confidence tips for adults 50+.`;
   const url = `${SITE.ORIGIN}/author/${author.documentId}`;
   useSEO({
     title: `${author.name} – Author at HairStylesForSeniors`,

@@ -6,7 +6,7 @@ import About from '../views/About';
 import Disclaimer from '../views/Disclaimer';
 import SearchBar from '../views/SearchBar';
 import Newsletter from '../views/Newsletter';
-import { useSEO } from '../utils/useSEO';
+import { SITE, useSEO } from '../utils/useSEO';
 
 interface Category {
   documentId: number | string;
@@ -19,24 +19,24 @@ interface HomeProps {
 
 const Home: FC<HomeProps> = ({ categories }) => {
   useSEO({
-    title: 'Practical Health, Family, Nutrition & Lifestyle Tips',
+    title: 'Hair Care, Styles & Confidence Tips for Adults 50+',
     description:
-      'HairStylesForSeniors – well-researched articles and practical tips on health, family, sports, nutrition, body wellness, and everyday lifestyle. Read trusted advice for a healthier life.',
+      'HairStylesForSeniors — friendly, practical hair-care advice for people 50 and up. Senior-friendly hairstyles, color and gray-coverage tips, hair-loss support, product reviews, and a warm community forum.',
     canonical: '/',
     type: 'website',
     keywords:
-      'health tips, family advice, sports, lifestyle, nutrition, wellness, healthy living, daily advice',
+      'hairstyles for seniors, hair care for older women, gray hair, hair thinning over 50, senior hairstyles, hair color for seniors, short hair women over 60',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       name: 'HairStylesForSeniors – Articles & Tips',
-      url: 'https://nice-advice.info/',
+      url: `${SITE.ORIGIN}/`,
       description:
-        'Editorial articles and practical guides on health, family, sports, nutrition, and lifestyle.',
+        'Editorial articles and practical guides on hair care, hairstyles, color, and hair loss for adults 50 and up.',
       hasPart: categories?.slice(0, 10).map(c => ({
         '@type': 'CollectionPage',
         name: c.name,
-        url: `https://nice-advice.info/category/${c.documentId}`,
+        url: `${SITE.ORIGIN}/category/${c.documentId}`,
       })),
     },
   });

@@ -38,8 +38,8 @@ const PrivacyPolicy = () => {
         </li>
       </ul>
       <p className="section__description">
-        Thank you for visiting nice-advice.info (the “Site”). The Site is
-        operated by HairStylesForSeniors (“we”, “us”, or “our”). We are
+        Thank you for visiting hairstylesforseniors.com (the “Site”). The Site
+        is operated by HairStylesForSeniors (“we”, “us”, or “our”). We are
         committed to protecting your privacy. We have prepared this Privacy
         Policy to describe our practices and policies associated with any
         information (such as Site Data, Anonymous Data, and Personal Data, each

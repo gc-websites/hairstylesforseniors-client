@@ -36,7 +36,10 @@ const Hero = () => {
 
   return (
     <section className="container section__padding pt-0">
-      <h1 className="section__title mb-6 invisible">Nice Advice</h1>
+      <h1 className="sr-only">
+        HairStylesForSeniors — Hair Care, Styles &amp; Confidence Tips for
+        Adults 50+
+      </h1>
       {popularPosts && popularPosts.length > 0 && (
         <div className="grid md:grid-cols-[70%_30%] gap-6">
           <Link
@@ -54,7 +57,7 @@ const Hero = () => {
                   {popularPosts[0].author_3.name}
                 </p>
               </h5>
-              <img src={dot} alt="dot" className="w-2 h-2" />
+              <img src={dot} alt="" aria-hidden="true" className="w-2 h-2" />
               <p className="section__description text-additionalText text-sm">
                 {new Intl.DateTimeFormat('en-US', {
                   month: 'short',
@@ -103,7 +106,12 @@ const Hero = () => {
                       {post.author_3.name}
                     </p>
                   </h5>
-                  <img src={dot} alt="dot" className="w-2 h-2" />
+                  <img
+                    src={dot}
+                    alt=""
+                    aria-hidden="true"
+                    className="w-2 h-2"
+                  />
                   <p className="section__description text-additionalText text-xs">
                     {new Intl.DateTimeFormat('en-US', {
                       month: 'short',
