@@ -42,7 +42,12 @@ const App = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (window.cookieconsent) {
+    // The cookie banner is intrusive on the captcha prelander — don't
+    // initialise it on that page (other pages keep it as before).
+    const onCaptchaPage = window.location.pathname.startsWith(
+      '/captcha/digital-marketing/en',
+    );
+    if (window.cookieconsent && !onCaptchaPage) {
       window.cookieconsent.initialise({
         palette: {
           popup: { background: '#000' },
