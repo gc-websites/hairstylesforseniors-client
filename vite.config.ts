@@ -151,6 +151,7 @@ export default defineConfig(async () => {
           '/captcha/credit/fr',
           '/captcha/cars/en',
           '/captcha/video/en',
+          '/captcha/digital-marketing/en',
           '/rtcredit/en',
           '/rtcredit/fr',
           '/worldcars/en',
