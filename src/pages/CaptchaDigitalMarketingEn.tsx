@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import './CaptchaCredit.css'; // Reuse the shared captcha stylesheet
+import './CaptchaCredit.css'; // Shared captcha stylesheet
+import './CaptchaDigitalMarketingEn.css'; // Fail state + second button
+
+type Status = 'verify' | 'success' | 'fail';
 
 const CaptchaDigitalMarketingEn = () => {
-  const [clicked, setClicked] = useState(false);
+  const [status, setStatus] = useState<Status>('verify');
   const [particles, setParticles] = useState<
     { id: number; x: number; y: number; size: number; delay: number }[]
   >([]);
@@ -18,12 +21,15 @@ const CaptchaDigitalMarketingEn = () => {
     setParticles(generated);
   }, []);
 
-  const handleButtonClick = () => {
-    // One click is enough to pass. No redirect for now — we just show the
-    // success state. To enable a redirect later, navigate from here, e.g.:
-    // window.location.href = 'https://...';
-    setClicked(true);
-  };
+  // "I'm not a robot" passes the check. No redirect for now — we just show
+  // the success state. To enable a redirect later, navigate from here, e.g.:
+  // window.location.href = 'https://...';
+  const handlePass = () => setStatus('success');
+
+  // "I am a robot" fails the check and offers a retry.
+  const handleFail = () => setStatus('fail');
+
+  const handleRetry = () => setStatus('verify');
 
   return (
     <div className="captcha-page">
@@ -50,9 +56,11 @@ const CaptchaDigitalMarketingEn = () => {
       <main className="captcha-card" role="main">
         {/* Shield icon */}
         <div
-          className={`captcha-shield-wrap ${clicked ? 'captcha-shield-wrap--success' : ''}`}
+          className={`captcha-shield-wrap ${
+            status === 'success' ? 'captcha-shield-wrap--success' : ''
+          } ${status === 'fail' ? 'captcha-shield-wrap--fail' : ''}`}
         >
-          {clicked ? (
+          {status === 'success' && (
             <svg
               className="captcha-shield-icon captcha-shield-icon--check"
               viewBox="0 0 64 64"
@@ -85,7 +93,44 @@ const CaptchaDigitalMarketingEn = () => {
                 </linearGradient>
               </defs>
             </svg>
-          ) : (
+          )}
+
+          {status === 'fail' && (
+            <svg
+              className="captcha-shield-icon captcha-shield-icon--x"
+              viewBox="0 0 64 64"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                d="M32 4L8 14v18c0 13.255 10.32 24.594 24 27 13.68-2.406 24-13.745 24-27V14L32 4z"
+                fill="url(#shieldGradFailDigitalEn)"
+              />
+              <path
+                d="M24 24l16 16M40 24L24 40"
+                stroke="#fff"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <defs>
+                <linearGradient
+                  id="shieldGradFailDigitalEn"
+                  x1="8"
+                  y1="4"
+                  x2="56"
+                  y2="58"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#f87171" />
+                  <stop offset="1" stopColor="#dc2626" />
+                </linearGradient>
+              </defs>
+            </svg>
+          )}
+
+          {status === 'verify' && (
             <svg
               className="captcha-shield-icon"
               viewBox="0 0 64 64"
@@ -122,22 +167,27 @@ const CaptchaDigitalMarketingEn = () => {
 
         {/* Heading */}
         <h1
-          className={`captcha-heading ${clicked ? 'captcha-heading--success' : ''}`}
+          className={`captcha-heading ${
+            status === 'success' ? 'captcha-heading--success' : ''
+          } ${status === 'fail' ? 'captcha-heading--fail' : ''}`}
         >
-          {clicked
-            ? 'Verification Successful!'
-            : "Please confirm you're not a robot to continue"}
+          {status === 'success' && 'Verification Successful!'}
+          {status === 'fail' && 'Verification Failed'}
+          {status === 'verify' &&
+            "Please confirm you're not a robot to continue"}
         </h1>
 
         {/* Subtext */}
         <p className="captcha-subtext">
-          {clicked
-            ? "You're all set — thanks for confirming."
-            : 'This quick check helps us keep the experience safe and spam-free.'}
+          {status === 'success' && "You're all set — thanks for confirming."}
+          {status === 'fail' &&
+            "That response didn't pass our check. Please try again."}
+          {status === 'verify' &&
+            'This quick check helps us keep the experience safe and spam-free.'}
         </p>
 
-        {/* Trust badges row */}
-        {!clicked && (
+        {/* Trust badges row (verify only) */}
+        {status === 'verify' && (
           <div className="captcha-badges" aria-label="Security features">
             <div className="captcha-badge">
               <svg
@@ -191,19 +241,55 @@ const CaptchaDigitalMarketingEn = () => {
           </div>
         )}
 
-        {/* CTA Button — one click passes the check */}
-        {!clicked && (
+        {/* Verify state — two choices */}
+        {status === 'verify' && (
+          <div className="captcha-btn-group">
+            <button
+              id="captcha-digital-marketing-en-btn"
+              className="captcha-btn captcha-btn--verify"
+              onClick={handlePass}
+              aria-label="I'm not a robot"
+            >
+              <span className="captcha-btn-text">I'M NOT A ROBOT</span>
+              <svg
+                className="captcha-btn-arrow"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+
+            <button
+              id="captcha-digital-marketing-en-robot-btn"
+              className="captcha-btn captcha-btn--robot"
+              onClick={handleFail}
+              aria-label="I am a robot"
+            >
+              <span className="captcha-btn-text">I AM A ROBOT</span>
+            </button>
+          </div>
+        )}
+
+        {/* Fail state — try again */}
+        {status === 'fail' && (
           <button
-            id="captcha-digital-marketing-en-btn"
-            className="captcha-btn captcha-btn--verify"
-            onClick={handleButtonClick}
-            aria-label="I'm not a robot"
+            id="captcha-digital-marketing-en-retry-btn"
+            className="captcha-btn captcha-btn--retry"
+            onClick={handleRetry}
+            aria-label="Try again"
           >
-            <span className="captcha-btn-text">I'M NOT A ROBOT</span>
             <svg
-              className="captcha-btn-arrow"
-              width="22"
-              height="22"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -212,9 +298,10 @@ const CaptchaDigitalMarketingEn = () => {
               strokeLinejoin="round"
               aria-hidden="true"
             >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
+              <polyline points="23 4 23 10 17 10" />
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
             </svg>
+            <span className="captcha-btn-text">TRY AGAIN</span>
           </button>
         )}
       </main>
