@@ -1,14 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './CaptchaCredit.css'; // Shared captcha stylesheet
 import './CaptchaDigitalMarketingEn.css'; // Fail state + second button
 
 type Status = 'verify' | 'success' | 'fail';
+
+const REDIRECT_URL = 'https://nice-advice.info/en/v/digital-marketing';
+const REDIRECT_DELAY_MS = 1000;
+
+// Forward any incoming query params (utm_*, pixel, etc.) to the destination,
+// matching the behaviour of the other captcha prelanders.
+const buildRedirectUrl = (): string => {
+  try {
+    const url = new URL(REDIRECT_URL);
+    new URLSearchParams(window.location.search).forEach((value, key) =>
+      url.searchParams.set(key, value),
+    );
+    return url.toString();
+  } catch {
+    return REDIRECT_URL;
+  }
+};
 
 const CaptchaDigitalMarketingEn = () => {
   const [status, setStatus] = useState<Status>('verify');
   const [particles, setParticles] = useState<
     { id: number; x: number; y: number; size: number; delay: number }[]
   >([]);
+  const redirectTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const generated = Array.from({ length: 18 }, (_, i) => ({
@@ -21,15 +39,27 @@ const CaptchaDigitalMarketingEn = () => {
     setParticles(generated);
   }, []);
 
-  // "I'm not a robot" passes the check. No redirect for now — we just show
-  // the success state. To enable a redirect later, navigate from here, e.g.:
-  // window.location.href = 'https://...';
-  const handlePass = () => setStatus('success');
+  // "I'm not a robot" passes the check: show the success state, then redirect
+  // to the offer after a short delay.
+  const handlePass = () => {
+    setStatus('success');
+    redirectTimer.current = setTimeout(() => {
+      window.location.href = buildRedirectUrl();
+    }, REDIRECT_DELAY_MS);
+  };
 
   // "I am a robot" fails the check and offers a retry.
   const handleFail = () => setStatus('fail');
 
   const handleRetry = () => setStatus('verify');
+
+  // Cancel a pending redirect if the user leaves before it fires.
+  useEffect(
+    () => () => {
+      if (redirectTimer.current) clearTimeout(redirectTimer.current);
+    },
+    [],
+  );
 
   return (
     <div className="captcha-page">
@@ -179,7 +209,8 @@ const CaptchaDigitalMarketingEn = () => {
 
         {/* Subtext */}
         <p className="captcha-subtext">
-          {status === 'success' && "You're all set — thanks for confirming."}
+          {status === 'success' &&
+            'Verification complete. Redirecting you now…'}
           {status === 'fail' &&
             "That response didn't pass our check. Please try again."}
           {status === 'verify' &&
