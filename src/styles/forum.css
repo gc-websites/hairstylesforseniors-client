@@ -37,9 +37,16 @@
 /* ── Hero / page header ──────────────────────────────── */
 .hfs-forum__hero {
   position: relative;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(75, 200, 190, 0.18), transparent 55%),
-    radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.16), transparent 50%),
+  background: radial-gradient(
+      circle at 0% 0%,
+      rgba(75, 200, 190, 0.18),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(124, 58, 237, 0.16),
+      transparent 50%
+    ),
     linear-gradient(180deg, var(--hfs-card) 0%, var(--hfs-input-bg) 100%);
   border: 1px solid var(--hfs-card-border);
   border-radius: 22px;
@@ -111,7 +118,11 @@
   font-weight: 700;
   font-size: 1rem;
   color: #fff;
-  background: linear-gradient(135deg, var(--hfs-accent) 0%, var(--hfs-accent-strong) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--hfs-accent) 0%,
+    var(--hfs-accent-strong) 100%
+  );
   box-shadow: 0 6px 18px rgba(3, 145, 133, 0.28);
   transition:
     transform 0.15s ease,
@@ -139,7 +150,9 @@
   font-size: 0.95rem;
   text-decoration: none;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
 }
 
 .hfs-forum__ctaGhost:hover {
@@ -164,7 +177,11 @@
   width: 4px;
   height: 22px;
   border-radius: 4px;
-  background: linear-gradient(180deg, var(--hfs-accent) 0%, var(--hfs-accent-strong) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--hfs-accent) 0%,
+    var(--hfs-accent-strong) 100%
+  );
 }
 
 /* ── Category grid (Forum landing) ───────────────────── */
@@ -331,8 +348,7 @@
 }
 
 .hfs-forum__threadCard--pinned {
-  background:
-    linear-gradient(135deg, rgba(245, 158, 11, 0.06), transparent 60%),
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), transparent 60%),
     var(--hfs-card);
   border-color: rgba(245, 158, 11, 0.32);
 }
@@ -554,7 +570,9 @@
   border-radius: 9px;
   cursor: pointer;
   font-family: inherit;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .hfs-forum__sortTab:hover {
@@ -625,7 +643,12 @@
   position: absolute;
   inset: 0 0 auto 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--hfs-accent) 0%, var(--hfs-accent-strong) 50%, #7c3aed 100%);
+  background: linear-gradient(
+    90deg,
+    var(--hfs-accent) 0%,
+    var(--hfs-accent-strong) 50%,
+    #7c3aed 100%
+  );
   opacity: 0.85;
 }
 
@@ -709,7 +732,9 @@
   background: var(--hfs-card);
   border: 1px solid var(--hfs-card-border);
   border-radius: 14px;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
 .hfs-forum__reply:hover {
@@ -811,7 +836,10 @@
   font-family: inherit;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .hfs-forum__replyAction:hover:not(:disabled) {
@@ -955,9 +983,16 @@
   font-weight: 700;
   font-size: 0.95rem;
   color: #fff;
-  background: linear-gradient(135deg, var(--hfs-accent) 0%, var(--hfs-accent-strong) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--hfs-accent) 0%,
+    var(--hfs-accent-strong) 100%
+  );
   box-shadow: 0 6px 18px rgba(3, 145, 133, 0.28);
-  transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease,
+    box-shadow 0.2s ease;
   font-family: inherit;
 }
 
@@ -1001,7 +1036,9 @@
   font-size: 0.92rem;
   cursor: pointer;
   font-family: inherit;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .hfs-forum__cancel:hover {
@@ -1110,7 +1147,8 @@
   background: var(--hfs-accent-soft);
 }
 
-.dark .hfs-forum__pagerBtn:hover:not(:disabled):not(.hfs-forum__pagerBtn--active) {
+.dark
+  .hfs-forum__pagerBtn:hover:not(:disabled):not(.hfs-forum__pagerBtn--active) {
   color: var(--hfs-accent);
 }
 
@@ -1120,7 +1158,11 @@
 }
 
 .hfs-forum__pagerBtn--active {
-  background: linear-gradient(135deg, var(--hfs-accent) 0%, var(--hfs-accent-strong) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--hfs-accent) 0%,
+    var(--hfs-accent-strong) 100%
+  );
   border-color: transparent;
   color: #fff;
   cursor: default;
@@ -1189,7 +1231,11 @@
   font-weight: 800;
   letter-spacing: 0.06em;
   color: #fff;
-  background: linear-gradient(135deg, var(--hfs-accent) 0%, var(--hfs-accent-strong) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--hfs-accent) 0%,
+    var(--hfs-accent-strong) 100%
+  );
   border-radius: 999px;
   text-transform: uppercase;
   box-shadow: 0 1px 4px rgba(3, 145, 133, 0.32);
@@ -1230,7 +1276,9 @@
   font-size: 0.82rem;
   font-family: inherit;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
   flex-shrink: 0;
 }
 
@@ -1338,7 +1386,9 @@
   font-family: inherit;
   font-size: 0.9rem;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .hfs-forum__search::placeholder {
