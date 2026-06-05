@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import './CaptchaCredit.css'; // Shared captcha stylesheet
 import './CaptchaDigitalMarketingEn.css'; // Fail state + second button
+import { trackStep, getSessionId, getSessionStart } from '../utils/track';
 
 type Status = 'verify' | 'success' | 'fail';
 
@@ -15,6 +16,9 @@ const buildRedirectUrl = (): string => {
     new URLSearchParams(window.location.search).forEach((value, key) =>
       url.searchParams.set(key, value),
     );
+    // Forward the unified session so the journey continues across domains.
+    url.searchParams.set('na_sid', getSessionId());
+    url.searchParams.set('na_t0', String(getSessionStart()));
     return url.toString();
   } catch {
     return REDIRECT_URL;
@@ -39,9 +43,18 @@ const CaptchaDigitalMarketingEn = () => {
     setParticles(generated);
   }, []);
 
+  // Track the captcha step into the unified funnel journey (Strapi via /track-click).
+  const shownTracked = useRef(false);
+  useEffect(() => {
+    if (shownTracked.current) return;
+    shownTracked.current = true;
+    trackStep('captcha_shown', { step: 'captcha', domain: 'hairstyles' });
+  }, []);
+
   // "I'm not a robot" passes the check: show the success state, then redirect
   // to the offer after a short delay.
   const handlePass = () => {
+    trackStep('captcha_passed', { step: 'captcha', domain: 'hairstyles' });
     setStatus('success');
     redirectTimer.current = setTimeout(() => {
       window.location.href = buildRedirectUrl();
