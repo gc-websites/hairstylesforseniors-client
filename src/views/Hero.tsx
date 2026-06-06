@@ -56,7 +56,7 @@ const Hero = () => {
   const sidePosts = rest.slice(0, 2);
 
   return (
-    <section className="container section__padding pt-0">
+    <section className="container section__padding pt-8 md:pt-12">
       <h1 className="sr-only">
         HairStylesForSeniors — Hair Care, Styles &amp; Confidence Tips for
         Adults 50+
