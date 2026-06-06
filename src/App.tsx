@@ -6,7 +6,7 @@ import Layout from './layout/Layout';
 import Loader from './components/Loader';
 import Page404 from './pages/Page404';
 import ScrollToTop from './utils/ScrollToTop';
-import PrivateRouteWithPassword from './components/PrivateRouteWithPassword';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const Home = lazy(() => import('./pages/Home'));
 const Post = lazy(() => import('./pages/Post'));
@@ -17,20 +17,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
-const Generation = lazy(() => import('./pages/Generation'));
-const Product = lazy(() => import('./pages/Product'));
-const ProductGeneration = lazy(() => import('./pages/ProductGeneration'));
-const CaptchaCredit = lazy(() => import('./pages/CaptchaCredit'));
-const CaptchaCreditFr = lazy(() => import('./pages/CaptchaCreditFr'));
-const CaptchaCarsEn = lazy(() => import('./pages/CaptchaCarsEn'));
-const CaptchaVideoEn = lazy(() => import('./pages/CaptchaVideoEn'));
-const CaptchaDigitalMarketingEn = lazy(
-  () => import('./pages/CaptchaDigitalMarketingEn'),
-);
-const QuizWheelCredit = lazy(() => import('./pages/QuizWheelCredit'));
-const QuizWheelCreditFr = lazy(() => import('./pages/QuizWheelCreditFr'));
-const ScratchCardCarsEn = lazy(() => import('./pages/ScratchCardCarsEn'));
-const ScratchCardVideoEn = lazy(() => import('./pages/ScratchCardVideoEn'));
+const Articles = lazy(() => import('./pages/Articles'));
 const Forum = lazy(() => import('./pages/Forum'));
 const ForumCategory = lazy(() => import('./pages/ForumCategory'));
 const Thread = lazy(() => import('./pages/Thread'));
@@ -38,16 +25,27 @@ const NewThread = lazy(() => import('./pages/NewThread'));
 
 const App = () => {
   const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
-    // The cookie banner is intrusive on the captcha prelander — don't
-    // initialise it on that page (other pages keep it as before).
-    const onCaptchaPage = window.location.pathname.startsWith(
-      '/captcha/digital-marketing/en',
-    );
-    if (window.cookieconsent && !onCaptchaPage) {
+    // Google Consent Mode v2: gtag defaults to denied (set in index.html). When
+    // the visitor accepts/declines via the cookie banner, update consent so
+    // AdSense and Analytics honour the choice (and personalised ads can serve
+    // for users who consent, e.g. in the EEA).
+    const updateConsent = (granted: boolean) => {
+      const gtag = (window as unknown as { gtag?: (...a: unknown[]) => void })
+        .gtag;
+      if (!gtag) return;
+      const v = granted ? 'granted' : 'denied';
+      gtag('consent', 'update', {
+        ad_storage: v,
+        ad_user_data: v,
+        ad_personalization: v,
+        analytics_storage: v,
+      });
+    };
+
+    if (window.cookieconsent) {
       window.cookieconsent.initialise({
         palette: {
           popup: { background: '#000' },
@@ -62,100 +60,67 @@ const App = () => {
           link: 'Details',
           href: '/privacy', // твоя страница политики
         },
+        onInitialise: function (this: { hasConsented(): boolean }) {
+          updateConsent(this.hasConsented());
+        },
+        onStatusChange: function (this: { hasConsented(): boolean }) {
+          updateConsent(this.hasConsented());
+        },
+        onRevokeChoice: function () {
+          updateConsent(false);
+        },
       });
     }
   }, []);
 
+  // Categories power the nav menu. They are a NICE-TO-HAVE for the chrome, not a
+  // gate for the whole site: if this call fails or is slow, we still render the
+  // full layout and route content (the nav just shows fewer links until it
+  // resolves). Never blank the site or return a sitewide 404 on this fetch —
+  // doing so previously showed crawlers an empty/404 page with the ad script
+  // loaded ("ads on screens without publisher content").
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       try {
         const data = await getCategories();
-        setCategories(data.data);
+        setCategories(data?.data ?? []);
       } catch (error) {
         console.log(error);
-      } finally {
-        setIsLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (categories.length === 0) {
-    return <Page404 />;
-  }
-
   return (
-    <Suspense fallback={<Loader />}>
+    <ErrorBoundary>
       <ScrollToTop trigger={location} />
-      <Routes>
-        {/* Standalone routes — no header/footer */}
-        <Route path="/captcha/credit/en" element={<CaptchaCredit />} />
-        <Route path="/captcha/credit/fr" element={<CaptchaCreditFr />} />
-        <Route path="/captcha/cars/en" element={<CaptchaCarsEn />} />
-        <Route path="/captcha/video/en" element={<CaptchaVideoEn />} />
-        <Route
-          path="/captcha/digital-marketing/en"
-          element={<CaptchaDigitalMarketingEn />}
-        />
-        <Route path="/rtcredit/en" element={<QuizWheelCredit />} />
-        <Route path="/rtcredit/fr" element={<QuizWheelCreditFr />} />
-        <Route path="/worldcars/en" element={<ScratchCardCarsEn />} />
-        <Route path="/videomkt/en" element={<ScratchCardVideoEn />} />
-
-        {/* Layout-wrapped routes */}
-        <Route
-          path="*"
-          element={
-            <Layout categories={categories}>
-              <Routes>
-                <Route path="/" element={<Home categories={categories} />} />
-                <Route path="/post/:postId" element={<Post />} />
-                <Route path="/category/:categoryId" element={<Category />} />
-                <Route
-                  path="/search"
-                  element={<Search categories={categories} />}
-                />
-                <Route path="/author/:authorId" element={<Author />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route
-                  path="/generation"
-                  element={
-                    <PrivateRouteWithPassword>
-                      <Generation />
-                    </PrivateRouteWithPassword>
-                  }
-                />
-                <Route path="/product/:productId" element={<Product />} />
-                <Route path="/forum" element={<Forum />} />
-                <Route path="/forum/new" element={<NewThread />} />
-                <Route
-                  path="/forum/c/:categoryKey"
-                  element={<ForumCategory />}
-                />
-                <Route path="/forum/t/:slug" element={<Thread />} />
-                <Route
-                  path="/generation/product"
-                  element={
-                    <PrivateRouteWithPassword>
-                      <ProductGeneration />
-                    </PrivateRouteWithPassword>
-                  }
-                />
-                <Route path="*" element={<Page404 />} />
-              </Routes>
-            </Layout>
-          }
-        />
-      </Routes>
-    </Suspense>
+      <Layout categories={categories}>
+        <ErrorBoundary>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="/" element={<Home categories={categories} />} />
+              <Route path="/post/:postId" element={<Post />} />
+              <Route path="/category/:categoryId" element={<Category />} />
+              <Route
+                path="/search"
+                element={<Search categories={categories} />}
+              />
+              <Route path="/author/:authorId" element={<Author />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/articles" element={<Articles />} />
+              <Route path="/forum" element={<Forum />} />
+              <Route path="/forum/new" element={<NewThread />} />
+              <Route path="/forum/c/:categoryKey" element={<ForumCategory />} />
+              <Route path="/forum/t/:slug" element={<Thread />} />
+              <Route path="*" element={<Page404 />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
+      </Layout>
+    </ErrorBoundary>
   );
 };
 

@@ -26,9 +26,16 @@ const Forum = () => {
     canonical: '/forum',
     jsonLd: {
       '@context': 'https://schema.org',
-      '@type': 'DiscussionForumPosting',
+      '@type': 'CollectionPage',
       name: 'HairStylesForSeniors Community Forum',
       url: `${SITE.ORIGIN}/forum`,
+      description:
+        'Community discussions about hairstyles, hair care, color, products and confidence for adults 50+.',
+      isPartOf: {
+        '@type': 'WebSite',
+        name: SITE.NAME,
+        url: `${SITE.ORIGIN}/`,
+      },
     },
   });
 

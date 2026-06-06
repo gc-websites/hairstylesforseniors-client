@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
       <h1 className="section__title text-3xl text-center">Privacy Policy</h1>
       <p className="section__description">
         This Privacy Policy was last revised and shall become effective as of
-        April 1, 2022. BY ACCESSING THE SITE, YOU HAVE READ AND AGREE TO THE
+        June 6, 2026. BY ACCESSING THE SITE, YOU HAVE READ AND AGREE TO THE
         TERMS AND CONDITIONS OF THIS PRIVACY POLICY IN ITS ENTIRETY.
       </p>
       <ul className="section__description list-disc flex flex-col gap-4">
@@ -129,8 +129,8 @@ const PrivacyPolicy = () => {
           Legitimate Interest. We will process your Personal Data based on
           Legitimate Interest, and particularly where it is used for marketing
           and business purposes, and to contact you to start a conversation
-          regarding your use of the Site or any Assembly newsletters that you
-          wish to join.
+          regarding your use of the Site or any HairStylesForSeniors newsletters
+          that you wish to join.
         </li>
         <li>
           Legal Obligation. We may also process your Personal Data based on
@@ -166,31 +166,33 @@ const PrivacyPolicy = () => {
         however, we will not share any Anonymous Data if such information is,
         contains, or will be linked to your Personal Data, unless we have given
         you notice, as described in this Privacy Policy, and you have given us
-        authorization to do so. Assembly will use Personal Data and IP addresses
-        to identify users of the Site if and when we feel it is necessary to
-        enforce compliance with the Site’s policies or to protect our services,
-        the Site, or other users of the Site and/or services.
+        authorization to do so. HairStylesForSeniors will use Personal Data and
+        IP addresses to identify users of the Site if and when we feel it is
+        necessary to enforce compliance with the Site’s policies or to protect
+        our services, the Site, or other users of the Site and/or services.
       </p>
       <h3 className="section__title">Security of Data</h3>
       <p className="section__description">
-        Assembly is committed to protecting the security of any Personal Data
-        that is collected by Assembly. We use a variety of industry-standard
-        security technologies and procedures to help protect any Personal Data
-        from unauthorized access, use, or disclosure. Despite these measures, no
-        method of transmission over the Internet, or method of electronic
-        storage is 100% secure. Assembly cannot fully eliminate security risks
-        associated with the collection and storage of any Personal Data,
-        including without limitation, any mistakes and security breaches that
-        may happen. While we strive to use commercially acceptable means to
-        protect your Personal Data, we cannot guarantee its absolute security.
-        In the unlikely event of a data breach where your Personal Data has been
-        compromised, Assembly will promptly notify you, the applicable
+        HairStylesForSeniors is committed to protecting the security of any
+        Personal Data that is collected by HairStylesForSeniors. We use a
+        variety of industry-standard security technologies and procedures to
+        help protect any Personal Data from unauthorized access, use, or
+        disclosure. Despite these measures, no method of transmission over the
+        Internet, or method of electronic storage is 100% secure.
+        HairStylesForSeniors cannot fully eliminate security risks associated
+        with the collection and storage of any Personal Data, including without
+        limitation, any mistakes and security breaches that may happen. While we
+        strive to use commercially acceptable means to protect your Personal
+        Data, we cannot guarantee its absolute security. In the unlikely event
+        of a data breach where your Personal Data has been compromised,
+        HairStylesForSeniors will promptly notify you, the applicable
         authorities and supervisory authorities or data protection authorities.
-        If you are located in the EU/EEA and Assembly is required to transfer
-        your Personal Data in accordance with this Privacy Policy, we exert
-        commercially reasonable efforts to ensure that any transfer of your
-        Personal Data outside of the EU/EEA is protected under industry-standard
-        contractual clauses and any subsequent data protection safeguards.
+        If you are located in the EU/EEA and HairStylesForSeniors is required to
+        transfer your Personal Data in accordance with this Privacy Policy, we
+        exert commercially reasonable efforts to ensure that any transfer of
+        your Personal Data outside of the EU/EEA is protected under
+        industry-standard contractual clauses and any subsequent data protection
+        safeguards.
       </p>
       <h3 className="section__title">Changes to This Privacy Policy</h3>
       <p className="section__description">
@@ -202,13 +204,6 @@ const PrivacyPolicy = () => {
         Your continued use of the Site following the posting of changes to this
         Privacy Policy will constitute your acknowledgment and acceptance of any
         and all changes.
-      </p>
-      <h3 className="section__title">Amazon user agreement</h3>
-      <p className="section__description">
-        HairStylesForSeniors is a participant in the Amazon Services LLC
-        Associates Program, an affiliate advertising program designed to provide
-        a means for sites to earn advertising fees by advertising and linking to
-        Amazon.com.
       </p>
     </div>
   );

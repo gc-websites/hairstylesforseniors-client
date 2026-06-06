@@ -23,7 +23,7 @@ const Categories: FC<CategoriesProps> = ({ categories }) => {
             className="relative block w-full max-w-sm rounded-lg overflow-hidden shadow-md transition-all duration-300 group hover:shadow-xl"
           >
             <img
-              src={image.url}
+              src={image?.url}
               alt={name}
               className="object-cover w-full md:h-96 h-72 filter sepia-[.25] transition-all duration-300 group-hover:brightness-75"
             />

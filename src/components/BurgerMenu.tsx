@@ -92,6 +92,27 @@ const BurgerMenu: FC<BurgerMenuProps> = ({
           💬 Community Forum
         </Link>
         <hr className="w-full border-t-2 border-additionalText dark:border-white m-0 opacity-20" />
+        <nav
+          aria-label="Site pages"
+          className="flex flex-col gap-5 font-poppins text-xl text-additionalText dark:text-white"
+        >
+          <Link to="/articles" onClick={() => setIsBurgerOpen(false)}>
+            All Articles
+          </Link>
+          <Link to="/about" onClick={() => setIsBurgerOpen(false)}>
+            About Us
+          </Link>
+          <Link to="/contact" onClick={() => setIsBurgerOpen(false)}>
+            Contact
+          </Link>
+          <Link to="/privacy" onClick={() => setIsBurgerOpen(false)}>
+            Privacy Policy
+          </Link>
+          <Link to="/terms" onClick={() => setIsBurgerOpen(false)}>
+            Terms of Use
+          </Link>
+        </nav>
+        <hr className="w-full border-t-2 border-additionalText dark:border-white m-0 opacity-20" />
         <div className="flex flex-col gap-4">
           <h4 className="font-inter text-lg">Follow us:</h4>
           <Socials

@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 import Loader from '../components/Loader';
 import Page404 from './Page404';
+import LoadError from '../components/LoadError';
 import Pagination from '../components/Pagination';
 import Disclaimer from '../views/Disclaimer';
 import RenderDescription from '../components/RenderDescription';
@@ -80,6 +81,7 @@ const Category = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const { pathname } = useLocation();
   const categoryId = pathname.split('/').pop();
   const pageSize = 10;
@@ -106,6 +108,7 @@ const Category = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      setLoadError(false);
       try {
         const category = await getCategory(categoryId);
         const posts = await getPostsByCategory(
@@ -114,13 +117,14 @@ const Category = () => {
           pageSize,
         );
         const related = await getRelatedPosts();
-        setCategory(category.data);
-        setRelatedPosts(related.data);
-        setPosts(posts.data.reverse());
-        setPageCount(posts.meta.pagination.pageCount);
+        setCategory(category?.data ?? {});
+        setRelatedPosts(related?.data ?? []);
+        setPosts((posts?.data ?? []).reverse());
+        setPageCount(posts?.meta?.pagination?.pageCount ?? 1);
         window.scrollTo(0, 0);
       } catch (error) {
         console.log(error);
+        setLoadError(true);
       } finally {
         setIsLoading(false);
       }
@@ -130,6 +134,10 @@ const Category = () => {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (loadError) {
+    return <LoadError />;
   }
 
   if (!category || Object.keys(category).length === 0) {
@@ -164,23 +172,31 @@ const Category = () => {
       >
         <div>
           <div>
-            <header className="relative vignette-container">
-              <img
-                src={category.image.url}
-                alt={category.name}
-                width={1200}
-                height={400}
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-                className="w-full object-cover object-center rounded max-h-96 mb-6"
-              />
-              <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-4 z-40 rounded">
-                <h1 className="section__title text-white md:text-4xl text-xl font-bold text-left">
+            {category.image?.url ? (
+              <header className="relative vignette-container">
+                <img
+                  src={category.image.url}
+                  alt={category.name}
+                  width={1200}
+                  height={400}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="w-full object-cover object-center rounded max-h-96 mb-6"
+                />
+                <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 p-4 z-40 rounded">
+                  <h1 className="section__title text-white md:text-4xl text-xl font-bold text-left">
+                    {category.name}
+                  </h1>
+                </div>
+              </header>
+            ) : (
+              <header className="py-6 mb-6">
+                <h1 className="section__title text-mainText md:text-4xl text-xl font-bold text-left">
                   {category.name}
                 </h1>
-              </div>
-            </header>
+              </header>
+            )}
 
             <div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 h-full">
@@ -190,15 +206,17 @@ const Category = () => {
                     to={`/post/${post.documentId}`}
                     className="group p-4 hover:shadow-lg rounded-lg bg-white dark:bg-additionalText transition duration-300 flex flex-col"
                   >
-                    <div className="w-full aspect-[4/3] overflow-hidden rounded-lg">
-                      <img
-                        src={post.image.url}
-                        alt={post.title}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-300"
-                      />
-                    </div>
+                    {post.image?.url && (
+                      <div className="w-full aspect-[4/3] overflow-hidden rounded-lg">
+                        <img
+                          src={post.image.url}
+                          alt={post.title}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-300"
+                        />
+                      </div>
+                    )}
                     <div className="mt-3 flex flex-col gap-4">
                       <h2 className="section__title text-2xl md:text-3xl text-mainText">
                         {post.title}

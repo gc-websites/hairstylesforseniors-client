@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import dot from '../assets/svg/dot.svg';
 import Loader from '../components/Loader';
-import Page404 from '../pages/Page404';
 import RenderDescription from '../components/RenderDescription';
 
 const Hero = () => {
@@ -38,8 +37,12 @@ const Hero = () => {
     post => post?.image?.url && post?.author_3?.avatar?.url,
   );
 
+  // The Hero is a homepage enhancement, not the page itself. If there are no
+  // featured posts (empty/failed feed), render nothing and let the rest of the
+  // homepage (search, categories, about, newsletter) show — never blank the
+  // whole homepage with a 404 just because this one feed was empty.
   if (featuredPosts.length === 0) {
-    return <Page404 />;
+    return null;
   }
 
   return (

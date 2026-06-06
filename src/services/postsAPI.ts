@@ -29,15 +29,24 @@ export const getPopularPosts = async () => {
 };
 
 export const getPost = async documentId => {
+  // Only populate what the article actually renders. The ads / firstAdBanner /
+  // secondAdBanner relations were removed from the UI, so populating them just
+  // bloated the payload (and slowed prerendering) for no reason.
   const post = await apiData.get(
-    `/post3s/${documentId}?populate[paragraphs][populate]=*&populate[category_3][populate]=*&populate[image][populate]=*&populate[ads][populate]=*&populate[firstAdBanner][populate]=*&populate[secondAdBanner][populate]=*&populate[author_3][populate]=*&populate[comments]=true`,
+    `/post3s/${documentId}?populate[paragraphs][populate]=*&populate[category_3][populate]=*&populate[image][populate]=*&populate[author_3][populate]=*&populate[comments]=true`,
   );
   return post.data;
 };
 
+// Comment submission backend. Override with VITE_COMMENT_API in
+// .env.production to point at your own neutral host instead of the default.
+const COMMENT_API =
+  (import.meta as unknown as { env?: { VITE_COMMENT_API?: string } }).env
+    ?.VITE_COMMENT_API || 'https://api.nice-advice.info/comment';
+
 export const postComment = async ({ postId, username, text }) => {
   const res = await axios.post(
-    'https://api.nice-advice.info/comment',
+    COMMENT_API,
     { postId, username, text, site: 'hairstyles' },
     { headers: { 'Content-Type': 'application/json' } },
   );
@@ -95,10 +104,34 @@ export const getSearchedPosts = async (query, page = 1, pageSize = 10) => {
 };
 
 export const getNewPosts = async (page = 1, pageSize = 10) => {
+  // Callers only use the documentId of each result (to drive the "keep reading"
+  // infinite feed), so fetch ONLY that field — `populate=*` here pulled every
+  // relation of 10 full posts (megabytes) just to read their ids.
   const posts = await apiData.get(
-    `/post3s?pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`,
+    `/post3s?fields[0]=documentId&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
   );
   return posts.data;
+};
+
+// Lightweight list of EVERY published article (id + title + category only) for
+// the /articles archive page. Paginated so all posts are returned, but with a
+// minimal field set so the payload stays small even with hundreds of articles.
+export const getAllPostsLite = async () => {
+  const pageSize = 100;
+  const maxPages = 50; // hard cap against accidental infinite loops
+  const all = [];
+  let page = 1;
+  while (page <= maxPages) {
+    const res = await apiData.get(
+      `/post3s?fields[0]=documentId&fields[1]=title&fields[2]=createdAt&populate[category_3][fields][0]=name&populate[category_3][fields][1]=documentId&sort=createdAt:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
+    );
+    const data = res.data?.data ?? [];
+    all.push(...data);
+    const pageCount = res.data?.meta?.pagination?.pageCount ?? 1;
+    if (page >= pageCount) break;
+    page += 1;
+  }
+  return all;
 };
 
 export const signUpForNewsletter = async email => {

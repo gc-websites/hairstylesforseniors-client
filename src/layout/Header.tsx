@@ -78,6 +78,18 @@ const Header: FC<HeaderProps> = ({ categories }) => {
         />
         <div className="flex items-center gap-4">
           <Link
+            to="/articles"
+            className="hidden md:inline-flex items-center px-3 py-1.5 rounded-md text-sm font-semibold text-main3 hover:text-main2 transition dark:text-main"
+          >
+            Articles
+          </Link>
+          <Link
+            to="/about"
+            className="hidden md:inline-flex items-center px-3 py-1.5 rounded-md text-sm font-semibold text-main3 hover:text-main2 transition dark:text-main"
+          >
+            About
+          </Link>
+          <Link
             to="/forum"
             aria-label="Open community forum"
             className="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-semibold text-main3 hover:text-main2 transition border border-main3/30 hover:border-main3 dark:text-main dark:border-main/40 dark:hover:border-main"

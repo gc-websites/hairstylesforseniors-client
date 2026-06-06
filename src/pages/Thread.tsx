@@ -55,6 +55,19 @@ const Thread = () => {
     ? stripHtml(thread.body || '', 160) || `Discussion: ${thread.title}`
     : 'Forum thread';
 
+  // Keep low-value / auto-seeded threads out of the index. Google flags
+  // auto-generated and thin, unmoderated UGC as low-value content — exactly the
+  // signal we must avoid for AdSense. A thread earns indexing once it has real
+  // human substance (a meaningful body or actual replies).
+  const commentTotal = thread?.commentCount ?? comments.length;
+  const bodyLen = thread?.body
+    ? stripHtml(thread.body, 100000).trim().length
+    : 0;
+  const isLowValueThread =
+    !!thread &&
+    ((thread.isAutoCreated === true && commentTotal < 2) ||
+      (bodyLen < 120 && commentTotal < 1));
+
   useSEO({
     title: seoTitle,
     description: seoDescription,
@@ -67,7 +80,7 @@ const Thread = () => {
     publishedTime: thread?.createdAt,
     modifiedTime: thread?.updatedAt || thread?.createdAt,
     author: thread?.authorName,
-    noindex: notFound,
+    noindex: notFound || isLowValueThread,
     jsonLd: thread
       ? {
           '@context': 'https://schema.org',

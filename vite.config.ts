@@ -99,6 +99,7 @@ const buildDynamicRoutes = async (): Promise<string[]> => {
     return [
       '/about',
       '/contact',
+      '/articles',
       '/privacy',
       '/terms',
       '/forum',
@@ -112,6 +113,7 @@ const buildDynamicRoutes = async (): Promise<string[]> => {
     return [
       '/about',
       '/contact',
+      '/articles',
       '/privacy',
       '/terms',
       '/forum',
@@ -143,42 +145,23 @@ export default defineConfig(async () => {
       Sitemap({
         hostname: 'https://hairstylesforseniors.com',
         dynamicRoutes,
-        exclude: [
-          '/generation',
-          '/generation/product',
-          '/search',
-          '/captcha/credit/en',
-          '/captcha/credit/fr',
-          '/captcha/cars/en',
-          '/captcha/video/en',
-          '/captcha/digital-marketing/en',
-          '/rtcredit/en',
-          '/rtcredit/fr',
-          '/worldcars/en',
-          '/videomkt/en',
-          '/product/*',
-          '/forum/new',
-        ],
+        // Only genuinely thin/utility routes are excluded. The arbitrage funnel
+        // and affiliate/admin routes were removed from the site entirely, so
+        // there is nothing left to fence off here.
+        exclude: ['/search', '/forum/new', '/404'],
         changefreq: 'weekly',
         priority: 0.7,
+        // A single rule for all crawlers. We intentionally do NOT add separate
+        // Allow:/ overrides for Mediapartners-Google / AdsBot-Google: those let
+        // the AdSense crawlers bypass the disallow list, which previously gave
+        // them access to the (now-deleted) funnel pages. Letting the AdSense
+        // bots inherit the same rules as everyone else is correct.
         robots: [
           {
             userAgent: '*',
             allow: '/',
-            disallow: [
-              '/generation',
-              '/search',
-              '/captcha/',
-              '/rtcredit/',
-              '/worldcars/',
-              '/videomkt/',
-              '/product/',
-              '/forum/new',
-            ],
+            disallow: ['/search', '/forum/new'],
           },
-          { userAgent: 'Mediapartners-Google', allow: '/' },
-          { userAgent: 'AdsBot-Google', allow: '/' },
-          { userAgent: 'Googlebot-Image', allow: '/' },
         ],
       }),
     ],

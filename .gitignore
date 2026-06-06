@@ -12,6 +12,21 @@ dist
 dist-ssr
 *.local
 
+# Article-enrichment / content-ops operational files (local only, not site source)
+.article-backups/
+batch-input.json
+enrichment.json
+classify-input.json
+classify-output.json
+classify-result.json
+apply-classify-report.json
+pilot.mjs
+prep-batch.mjs
+apply-batch.mjs
+prep-classify.mjs
+apply-classify.mjs
+unpub-test.mjs
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

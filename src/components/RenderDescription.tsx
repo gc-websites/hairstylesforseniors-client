@@ -3,13 +3,17 @@ const RenderDescription = ({
   className = '',
   truncate = false,
 }) => {
+  if (!Array.isArray(description) || description.length === 0) {
+    return null;
+  }
+
   const renderParagraph = (block, index) => {
     return (
       <p
         key={index}
         className={`${className} ${truncate ? 'line-clamp-3' : ''}`}
       >
-        {block.children.map((child, childIndex) => {
+        {(block?.children || []).map((child, childIndex) => {
           if (child.type === 'text') {
             return child.text;
           } else if (child.type === 'link') {

@@ -1,0 +1,38 @@
+# Apache config for the HairStylesForSeniors prerendered SPA.
+# This file is copied into dist/ by Vite at build time, so it deploys with the site.
+
+Options -MultiViews
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1) Serve real files and directories as-is (hashed /assets, robots.txt,
+  #    sitemap.xml, ads.txt, prerendered <route>/index.html, etc.).
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 2) Pretty URL -> prerendered file: /about -> /about/index.html when it exists.
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^(.+?)/?$ /$1/index.html [L]
+
+  # 3) SPA fallback: anything else is handled client-side by index.html.
+  #    (The in-app router renders the noindex 404 view for unknown URLs.)
+  RewriteRule ^ /index.html [L]
+</IfModule>
+
+# Optional real 404 document for non-HTML/unknown asset requests.
+ErrorDocument 404 /404.html
+
+# Caching: hashed assets are immutable; never cache HTML so updated
+# prerenders/SPA shells are picked up immediately.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2?|svg|png|jpg|jpeg|webp|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

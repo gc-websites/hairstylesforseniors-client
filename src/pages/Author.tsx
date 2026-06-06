@@ -4,6 +4,7 @@ import { getAuthor, getPostsByAuthor } from '../services/postsAPI';
 
 import Loader from '../components/Loader';
 import Page404 from './Page404';
+import LoadError from '../components/LoadError';
 import RenderDescription from '../components/RenderDescription';
 import Pagination from '../components/Pagination';
 import { SITE, stripHtml, useSEO } from '../utils/useSEO';
@@ -38,6 +39,7 @@ const Author = () => {
   const { pathname } = useLocation();
   const authorId = pathname.split('/').pop();
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [author, setAuthor] = useState({});
   const [posts, setPosts] = useState([]);
   const [pageCount, setPageCount] = useState(1);
@@ -47,15 +49,17 @@ const Author = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      setLoadError(false);
       try {
         const author = await getAuthor(authorId);
         const posts = await getPostsByAuthor(authorId, currentPage, pageSize);
-        setAuthor(author.data);
-        setPosts(posts.data);
-        setPageCount(posts.meta.pagination.pageCount);
+        setAuthor(author?.data ?? {});
+        setPosts(posts?.data ?? []);
+        setPageCount(posts?.meta?.pagination?.pageCount ?? 1);
         window.scrollTo(0, 0);
       } catch (error) {
         console.log(error);
+        setLoadError(true);
       } finally {
         setIsLoading(false);
       }
@@ -65,6 +69,10 @@ const Author = () => {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (loadError) {
+    return <LoadError />;
   }
 
   if (!author || Object.keys(author).length === 0) {
@@ -86,15 +94,17 @@ const Author = () => {
                   {author.name}
                 </h1>
               </div>
-              <img
-                src={author.avatar.url}
-                alt={`Portrait of ${author.name}`}
-                width={256}
-                height={256}
-                loading="eager"
-                decoding="async"
-                className="absolute md:top-8 -top-12 right-12 sm:right-0 rounded-full max-w-28 max-h-28 sm:max-w-32 sm:max-h-32 md:max-w-64 md:max-h-64"
-              />
+              {author.avatar?.url && (
+                <img
+                  src={author.avatar.url}
+                  alt={`Portrait of ${author.name}`}
+                  width={256}
+                  height={256}
+                  loading="eager"
+                  decoding="async"
+                  className="absolute md:top-8 -top-12 right-12 sm:right-0 rounded-full max-w-28 max-h-28 sm:max-w-32 sm:max-h-32 md:max-w-64 md:max-h-64"
+                />
+              )}
             </div>
           </div>
         </header>
@@ -117,15 +127,17 @@ const Author = () => {
                 to={`/post/${post.documentId}`}
                 className="group p-4 hover:shadow-lg rounded-lg bg-white dark:bg-additionalText transition duration-300 flex flex-col"
               >
-                <div className="w-full aspect-[4/3] overflow-hidden rounded-lg">
-                  <img
-                    src={post.image.url}
-                    alt={post.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-300"
-                  />
-                </div>
+                {post.image?.url && (
+                  <div className="w-full aspect-[4/3] overflow-hidden rounded-lg">
+                    <img
+                      src={post.image.url}
+                      alt={post.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-300"
+                    />
+                  </div>
+                )}
                 <div className="mt-3 flex flex-col gap-4">
                   <h3 className="section__title text-2xl md:text-3xl text-mainText">
                     {post.title}
