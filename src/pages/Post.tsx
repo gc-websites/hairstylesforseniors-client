@@ -14,6 +14,50 @@ import Comments from '../components/Comments';
 import { io } from 'socket.io-client';
 import { SITE, stripHtml, useSEO } from '../utils/useSEO';
 
+// Flatten a Strapi block's inline text (incl. link text).
+const blockText = block =>
+  (block?.children || [])
+    .map(c =>
+      c?.type === 'link'
+        ? (c.children || []).map(x => x?.text || '').join('')
+        : c?.text || '',
+    )
+    .join('')
+    .trim();
+
+// Build FAQPage JSON-LD from a "Frequently Asked Questions" section, pairing
+// each heading (question) with the paragraph(s) that follow it (answer).
+const buildFaqSchema = paragraphs => {
+  const faq = (paragraphs || []).find(p =>
+    /frequently asked|faq/i.test(p?.subtitle || ''),
+  );
+  if (!faq || !Array.isArray(faq.description)) return null;
+  const qa = [];
+  let cur = null;
+  for (const block of faq.description) {
+    const txt = blockText(block);
+    if (!txt) continue;
+    if (block.type === 'heading') {
+      if (cur && cur.a) qa.push(cur);
+      cur = { q: txt, a: '' };
+    } else if (cur) {
+      cur.a += (cur.a ? ' ' : '') + txt;
+    }
+  }
+  if (cur && cur.a) qa.push(cur);
+  const valid = qa.filter(x => x.q && x.a);
+  if (valid.length < 2) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: valid.map(x => ({
+      '@type': 'Question',
+      name: x.q,
+      acceptedAnswer: { '@type': 'Answer', text: x.a },
+    })),
+  };
+};
+
 const PostSEO = ({ post }) => {
   const description =
     stripHtml(post.description || '', 160) ||
@@ -94,7 +138,11 @@ const PostSEO = ({ post }) => {
     modifiedTime: post.updatedAt || post.createdAt,
     author: post.author_3?.name,
     keywords: post.category_3?.name,
-    jsonLd: [articleJsonLd, breadcrumbJsonLd],
+    jsonLd: [
+      articleJsonLd,
+      breadcrumbJsonLd,
+      buildFaqSchema(post.paragraphs),
+    ].filter(Boolean),
   });
 
   return null;
