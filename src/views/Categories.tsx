@@ -14,25 +14,46 @@ interface CategoriesProps {
 const Categories: FC<CategoriesProps> = ({ categories }) => {
   return (
     <section className="container section__padding">
-      <h2 className="section__title mb-6 text-mainText">Categories</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+      <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
+        <p className="font-poppins text-main font-semibold uppercase tracking-wider text-sm mb-3">
+          Browse by topic
+        </p>
+        <h2 className="section__title text-3xl md:text-4xl text-mainText mb-4">
+          Explore Our Categories
+        </h2>
+        <p className="section__description text-base">
+          Friendly, practical advice for every part of your hair journey — from
+          everyday care and gray coverage to special-occasion styles.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories?.map(({ name, documentId, image }) => (
           <Link
             key={documentId}
             to={`/category/${documentId}`}
-            className="relative block w-full max-w-sm rounded-lg overflow-hidden shadow-md transition-all duration-300 group hover:shadow-xl"
+            className="group relative block rounded-2xl overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-main focus:ring-offset-2"
           >
             <img
               src={image?.url}
               alt={name}
-              className="object-cover w-full md:h-96 h-72 filter sepia-[.25] transition-all duration-300 group-hover:brightness-75"
+              loading="lazy"
+              decoding="async"
+              className="object-cover w-full h-60 sm:h-64 transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col justify-end gap-6 transition-all duration-300 group-hover:bg-opacity-50 p-6">
-              <span className="text-white font-inter text-3xl font-bold">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+            <div className="absolute inset-0 flex flex-col justify-end gap-1.5 p-6">
+              <h3 className="text-white font-inter text-2xl font-bold leading-tight">
                 {name}
-              </span>
-              <span className="text-white font-inter text-xl font-bold relative inline-block after:absolute after:left-0 after:bottom-0 after:w-2/3 after:h-[2px] after:bg-main after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 group-hover:after:scale-x-100 group-hover:after:origin-bottom-left">
-                Explore articles →
+              </h3>
+              <span className="text-white/90 font-inter text-sm font-semibold inline-flex items-center gap-1.5">
+                Explore articles
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  →
+                </span>
               </span>
             </div>
           </Link>

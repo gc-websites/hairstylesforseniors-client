@@ -20,11 +20,16 @@ const SearchBar = () => {
 
   return (
     <section className="bg-main2" id="search">
-      <div className="container section__padding flex flex-col gap-10">
-        <h2 className="section__title text-white">
-          Search on HairStylesForSeniors
-        </h2>
-        <div className="relative w-full">
+      <div className="container section__padding flex flex-col gap-8">
+        <div className="text-center">
+          <p className="font-poppins text-white/80 font-semibold uppercase tracking-wider text-sm mb-2">
+            Find what you need
+          </p>
+          <h2 className="section__title text-white text-3xl md:text-4xl">
+            Search HairStylesForSeniors
+          </h2>
+        </div>
+        <div className="relative w-full max-w-2xl mx-auto">
           <svg
             className="absolute left-3 top-1/2 -translate-y-1/2 fill-white w-5 h-5 pointer-events-none"
             viewBox="0 0 32 32"
