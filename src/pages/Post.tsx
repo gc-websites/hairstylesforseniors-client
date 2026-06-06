@@ -326,7 +326,7 @@ const Post = () => {
                 width={1200}
                 height={900}
                 loading="eager"
-                fetchPriority="high"
+                fetchpriority="high"
                 decoding="async"
                 className="w-full h-full object-cover object-center transform"
               />

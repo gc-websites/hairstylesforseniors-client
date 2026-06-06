@@ -75,7 +75,7 @@ const Hero = () => {
               src={lead.image.url}
               alt={lead.title}
               loading="eager"
-              fetchPriority="high"
+              fetchpriority="high"
               decoding="async"
               className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-105"
             />

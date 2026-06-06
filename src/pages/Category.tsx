@@ -180,7 +180,7 @@ const Category = () => {
                   width={1200}
                   height={400}
                   loading="eager"
-                  fetchPriority="high"
+                  fetchpriority="high"
                   decoding="async"
                   className="w-full object-cover object-center rounded max-h-96 mb-6"
                 />
