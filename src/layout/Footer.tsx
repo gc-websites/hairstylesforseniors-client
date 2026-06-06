@@ -85,9 +85,22 @@ const Footer: FC<FooterProps> = ({ categories }) => {
               <button
                 type="button"
                 aria-label="Open contact form"
-                className="border rounded p-2 self-start"
+                className="mt-1 inline-flex items-center gap-2 self-start whitespace-nowrap rounded-full border border-white/70 px-5 py-2.5 font-poppins text-base font-semibold text-white transition-colors hover:bg-white hover:text-main2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-main2"
                 onClick={handleFormOpen}
               >
+                <svg
+                  className="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <polyline points="3 7 12 13 21 7" />
+                </svg>
                 Contact us
               </button>
             </div>
